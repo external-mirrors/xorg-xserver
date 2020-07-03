@@ -23,7 +23,6 @@ apt-get install -y \
 	ccache \
 	dpkg-dev \
 	flex \
-	gcc-mingw-w64-i686 \
 	git \
 	libaudit-dev \
 	libbsd-dev \
@@ -102,11 +101,9 @@ apt-get install -y \
 	libxv-dev \
 	libxvmc-dev \
 	libxxf86vm-dev \
-	libz-mingw-w64-dev \
 	linux-libc-dev \
 	mesa-common-dev \
 	meson \
-	mingw-w64-tools \
 	nettle-dev \
 	pkg-config \
 	python3-attr \
@@ -122,8 +119,6 @@ apt-get install -y \
 	xkb-data \
 	xtrans-dev \
 	xutils-dev
-
-.gitlab-ci/cross-prereqs-build.sh i686-w64-mingw32
 
 cd /root
 
@@ -188,6 +183,15 @@ meson setup _build -Dtests=disabled -Ddocumentation=[] -Dliboeffis=enabled
 ninja -C _build -j${FDO_CI_CONCURRENT:-4} install
 cd ..
 rm -rf libei
+
+# ** FIXME **
+# Install libxshmfence with xshmfence_get_size() API
+git clone https://gitlab.freedesktop.org/ofourdan/libxshmfence --depth 1 --branch xshmfence-get-size
+cd libxshmfence
+meson _build
+ninja -C _build -j${FDO_CI_CONCURRENT:-4} install
+cd ..
+rm -rf libxshmfence
 
 git clone https://gitlab.freedesktop.org/mesa/piglit.git
 cd piglit
