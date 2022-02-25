@@ -433,9 +433,12 @@ xwl_output_find_mode(struct xwl_output *xwl_output,
             width = xwl_output->mode_width;
             height = xwl_output->mode_height;
         }
-        else if (output->modes) {
-            /* else return the mode at first idx 0 */
-            return output->modes[0];
+        else {
+            output_get_logical_mode(xwl_output, &width, &height);
+
+            if (output->numModes &&
+                (width <= 0 || height <= 0))
+                return output->modes[0];
         }
     }
 
@@ -604,6 +607,7 @@ xwl_output_set_emulated_mode(struct xwl_output *xwl_output, ClientPtr client,
                              RRModePtr mode, Bool from_vidmode)
 {
     int old_emulated_width, old_emulated_height;
+    int logical_width, logical_height;
     int new_emulated_width, new_emulated_height;
 
     DebugF("XWAYLAND: xwl_output_set_emulated_mode from %s: %dx%d\n",
@@ -613,8 +617,9 @@ xwl_output_set_emulated_mode(struct xwl_output *xwl_output, ClientPtr client,
     xwl_output_get_emulated_root_size(xwl_output, client,
                                       &old_emulated_width, &old_emulated_height);
 
-    /* modes[0] is the actual (not-emulated) output mode */
-    if (mode == xwl_output->randr_output->modes[0])
+    /* Skip the logical (not-emulated) output mode */
+    output_get_logical_mode(xwl_output, &logical_width, &logical_height);
+    if (mode->mode.width == logical_width && mode->mode.height == logical_height)
         xwl_output_remove_emulated_mode_for_client(xwl_output, client);
     else
         xwl_output_add_emulated_mode_for_client(xwl_output, client, mode, from_vidmode);
