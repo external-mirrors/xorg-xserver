@@ -378,25 +378,44 @@ output_get_rr_modes(struct xwl_output *xwl_output,
     RRModePtr *rr_modes;
     int i;
 
-    rr_modes = xallocarray(ARRAY_SIZE(xwl_output_fake_modes) + 1, sizeof(RRModePtr));
+    rr_modes = xallocarray(ARRAY_SIZE(xwl_output_fake_modes) + 2, sizeof(RRModePtr));
     if (!rr_modes)
         goto err;
 
-    /* Add actual output mode */
-    rr_modes[0] = xwayland_cvt(width, height, xwl_output->refresh / 1000.0, 0, 0);
-    if (!rr_modes[0])
+    *count = 0;
+
+    if (xwl_screen_has_resolution_change_emulation(xwl_screen) &&
+        (width > xwl_output->mode_width ||
+         (width == xwl_output->mode_width && height > xwl_output->mode_height))) {
+        /* Add native output mode as preferred */
+        rr_modes[0] = xwayland_cvt(xwl_output->mode_width, xwl_output->mode_height,
+                                   xwl_output->refresh / 1000.0, 0, 0);
+        if (!rr_modes[0])
+            goto err;
+
+        *count = 1;
+    }
+
+    /* Add logical output mode */
+    rr_modes[*count] = xwayland_cvt(width, height, xwl_output->refresh / 1000.0, 0, 0);
+    if (!rr_modes[*count])
         goto err;
 
-    *count = 1;
+    (*count)++;
 
     if (!xwl_screen_has_resolution_change_emulation(xwl_screen) && !xwl_screen->force_xrandr_emulation)
         return rr_modes;
 
     /* Add fake modes */
     for (i = 0; i < ARRAY_SIZE(xwl_output_fake_modes); i++) {
-        /* Skip actual output mode, already added */
+        /* Skip logical output mode, already added */
         if (xwl_output_fake_modes[i][0] == width &&
             xwl_output_fake_modes[i][1] == height)
+            continue;
+
+        /* Skip native output mode, already added */
+        if (xwl_output_fake_modes[i][0] == xwl_output->mode_width &&
+            xwl_output_fake_modes[i][1] == xwl_output->mode_height)
             continue;
 
         /* Skip modes which are too big, avoid downscaling */
@@ -660,6 +679,7 @@ apply_output_change(struct xwl_output *xwl_output)
     struct xwl_output *it;
     int logical_width, logical_height, count, has_this_output = 0;
     RRModePtr *randr_modes;
+    RRModePtr default_mode;
 
     /* Clear out the "done" received flags */
     xwl_output->wl_output_done = FALSE;
@@ -670,8 +690,15 @@ apply_output_change(struct xwl_output *xwl_output)
     if (xwl_output->randr_output) {
         /* Build a fresh modes array using the current refresh rate */
         randr_modes = output_get_rr_modes(xwl_output, logical_width, logical_height, &count);
+
+        if (randr_modes[0]->mode.width == logical_width &&
+            randr_modes[0]->mode.height == logical_height)
+            default_mode = randr_modes[0];
+        else
+            default_mode = randr_modes[1];
+
         RROutputSetModes(xwl_output->randr_output, randr_modes, count, 1);
-        RRCrtcNotify(xwl_output->randr_crtc, randr_modes[0],
+        RRCrtcNotify(xwl_output->randr_crtc, default_mode,
                      xwl_output->logical_x, xwl_output->logical_y,
                      xwl_output->rotation, NULL, 1, &xwl_output->randr_output);
         /* RROutputSetModes takes ownership of the passed in modes, so we only
