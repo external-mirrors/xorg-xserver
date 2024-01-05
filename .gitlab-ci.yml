@@ -97,4 +97,6 @@ mingw-cross-build:
 workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_OPEN_MERGE_REQUESTS
+      when: never
     - if: $CI_PIPELINE_SOURCE == 'push'
