@@ -452,7 +452,6 @@ if build_xorg
             'Xprintf.h',
             'callback.h',
             'client.h',
-            'closestr.h',
             'closure.h',
             'colormap.h',
             'colormapst.h',
