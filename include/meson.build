@@ -507,7 +507,6 @@ if build_xorg
             'xkbstr.h',
             'xkbrules.h',
             'Xprintf.h',
-            'xserver_poll.h',
             'xserver-properties.h',
         ],
         install_dir: xorgsdkdir,
