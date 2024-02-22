@@ -45,6 +45,8 @@
 #include <propertyst.h>
 #include <version-config.h>
 
+#include "os/osdep.h"
+
 #include "xwayland-screen.h"
 #include "xwayland-vidmode.h"
 
