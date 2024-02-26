@@ -59,6 +59,7 @@
 #include "xf86Priv.h"
 #include "xf86Config.h"
 #include "xf86Xinput.h"
+#include "XIstubs.h"
 #include "xf86Optrec.h"
 #include "mipointer.h"
 #include "extinit.h"

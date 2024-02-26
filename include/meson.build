@@ -442,7 +442,6 @@ endif
 if build_xorg
     install_data(
         [
-            'XIstubs.h',
             'Xprintf.h',
             'callback.h',
             'client.h',
