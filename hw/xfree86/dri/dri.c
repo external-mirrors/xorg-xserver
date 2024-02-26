@@ -46,6 +46,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <errno.h>
 
 #include <X11/X.h>
+#include <X11/Xfuncproto.h>
 #include <X11/Xproto.h>
 #include "xf86drm.h"
 #include "misc.h"

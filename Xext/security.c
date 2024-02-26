@@ -28,6 +28,9 @@ in this Software without prior written authorization from The Open Group.
 #include <dix-config.h>
 #endif
 
+#include <X11/extensions/securproto.h>
+#include <X11/Xfuncproto.h>
+
 #include "scrnintstr.h"
 #include "inputstr.h"
 #include "windowstr.h"
@@ -37,7 +40,6 @@ in this Software without prior written authorization from The Open Group.
 #include "registry.h"
 #include "xacestr.h"
 #include "securitysrv.h"
-#include <X11/extensions/securproto.h>
 #include "extinit.h"
 #include "protocol-versions.h"
 

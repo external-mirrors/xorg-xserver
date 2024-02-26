@@ -79,13 +79,14 @@ OR PERFORMANCE OF THIS SOFTWARE.
 #include <dix-config.h>
 #endif
 
-#include <X11/Xos.h>
+#include <errno.h>
 #include <stdio.h>
-#include <time.h>
-#include <sys/stat.h>
 #include <stdarg.h>
 #include <stdlib.h>             /* for malloc() */
-#include <errno.h>
+#include <sys/stat.h>
+#include <time.h>
+#include <X11/Xfuncproto.h>
+#include <X11/Xos.h>
 
 #include "input.h"
 #include "opaque.h"

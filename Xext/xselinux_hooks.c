@@ -34,6 +34,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <libaudit.h>
 
 #include <X11/Xatom.h>
+#include <X11/Xfuncproto.h>
+
 #include "selection.h"
 #include "inputstr.h"
 #include "scrnintstr.h"
