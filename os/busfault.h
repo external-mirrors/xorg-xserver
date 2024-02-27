@@ -25,6 +25,8 @@
 
 #include <dix-config.h>
 
+#include <X11/Xdefs.h>
+
 #ifdef BUSFAULT
 
 #include <sys/types.h>
