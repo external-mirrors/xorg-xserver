@@ -493,7 +493,6 @@ if build_xorg
             'ptrveloc.h',
             'region.h',
             'regionstr.h',
-            'registry.h',
             'resource.h',
             'rgb.h',
             'screenint.h',
