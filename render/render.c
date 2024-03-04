@@ -646,7 +646,7 @@ ProcRenderFreePicture(ClientPtr client)
     REQUEST_SIZE_MATCH(xRenderFreePictureReq);
 
     VERIFY_PICTURE(pPicture, stuff->picture, client, DixDestroyAccess);
-    FreeResource(stuff->picture, RT_NONE);
+    FreeResource(stuff->picture, X11_RESTYPE_NONE);
     return Success;
 }
 
@@ -927,7 +927,7 @@ ProcRenderCreateGlyphSet(ClientPtr client)
         return BadAlloc;
     /* security creation/labeling check */
     rc = XaceHook(XACE_RESOURCE_ACCESS, client, stuff->gsid, GlyphSetType,
-                  glyphSet, RT_NONE, NULL, DixCreateAccess);
+                  glyphSet, X11_RESTYPE_NONE, NULL, DixCreateAccess);
     if (rc != Success)
         return rc;
     if (!AddResource(stuff->gsid, GlyphSetType, (void *) glyphSet))
@@ -977,7 +977,7 @@ ProcRenderFreeGlyphSet(ClientPtr client)
         client->errorValue = stuff->glyphset;
         return rc;
     }
-    FreeResource(stuff->glyphset, RT_NONE);
+    FreeResource(stuff->glyphset, X11_RESTYPE_NONE);
     return Success;
 }
 
@@ -1632,7 +1632,7 @@ ProcRenderCreateCursor(ClientPtr client)
                          &pCursor, client, stuff->cid);
     if (rc != Success)
         goto bail;
-    if (!AddResource(stuff->cid, RT_CURSOR, (void *) pCursor)) {
+    if (!AddResource(stuff->cid, X11_RESTYPE_CURSOR, (void *) pCursor)) {
         rc = BadAlloc;
         goto bail;
     }
@@ -1802,7 +1802,7 @@ ProcRenderCreateAnimCursor(ClientPtr client)
     elt = (xAnimCursorElt *) (stuff + 1);
     for (i = 0; i < ncursor; i++) {
         ret = dixLookupResourceByType((void **) (cursors + i), elt->cursor,
-                                      RT_CURSOR, client, DixReadAccess);
+                                      X11_RESTYPE_CURSOR, client, DixReadAccess);
         if (ret != Success) {
             free(cursors);
             return ret;
@@ -1816,7 +1816,7 @@ ProcRenderCreateAnimCursor(ClientPtr client)
     if (ret != Success)
         return ret;
 
-    if (AddResource(stuff->cid, RT_CURSOR, (void *) pCursor))
+    if (AddResource(stuff->cid, X11_RESTYPE_CURSOR, (void *) pCursor))
         return Success;
     return BadAlloc;
 }
@@ -1860,7 +1860,7 @@ ProcRenderCreateSolidFill(ClientPtr client)
         return error;
     /* security creation/labeling check */
     error = XaceHook(XACE_RESOURCE_ACCESS, client, stuff->pid, PictureType,
-                     pPicture, RT_NONE, NULL, DixCreateAccess);
+                     pPicture, X11_RESTYPE_NONE, NULL, DixCreateAccess);
     if (error != Success)
         return error;
     if (!AddResource(stuff->pid, PictureType, (void *) pPicture))
@@ -1899,7 +1899,7 @@ ProcRenderCreateLinearGradient(ClientPtr client)
         return error;
     /* security creation/labeling check */
     error = XaceHook(XACE_RESOURCE_ACCESS, client, stuff->pid, PictureType,
-                     pPicture, RT_NONE, NULL, DixCreateAccess);
+                     pPicture, X11_RESTYPE_NONE, NULL, DixCreateAccess);
     if (error != Success)
         return error;
     if (!AddResource(stuff->pid, PictureType, (void *) pPicture))
@@ -1939,7 +1939,7 @@ ProcRenderCreateRadialGradient(ClientPtr client)
         return error;
     /* security creation/labeling check */
     error = XaceHook(XACE_RESOURCE_ACCESS, client, stuff->pid, PictureType,
-                     pPicture, RT_NONE, NULL, DixCreateAccess);
+                     pPicture, X11_RESTYPE_NONE, NULL, DixCreateAccess);
     if (error != Success)
         return error;
     if (!AddResource(stuff->pid, PictureType, (void *) pPicture))
@@ -1978,7 +1978,7 @@ ProcRenderCreateConicalGradient(ClientPtr client)
         return error;
     /* security creation/labeling check */
     error = XaceHook(XACE_RESOURCE_ACCESS, client, stuff->pid, PictureType,
-                     pPicture, RT_NONE, NULL, DixCreateAccess);
+                     pPicture, X11_RESTYPE_NONE, NULL, DixCreateAccess);
     if (error != Success)
         return error;
     if (!AddResource(stuff->pid, PictureType, (void *) pPicture))

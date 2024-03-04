@@ -198,7 +198,7 @@ SecurityDeleteAuthorization(void *value, XID id)
             .authId = pAuth->id
         };
         WriteEventsToClient(rClient(pEventClient), 1, (xEvent *) &are);
-        FreeResource(pEventClient->resource, RT_NONE);
+        FreeResource(pEventClient->resource, X11_RESTYPE_NONE);
     }
 
     /* kill all clients using this auth */
@@ -304,7 +304,7 @@ SecurityAuthorizationExpired(OsTimerPtr timer, CARD32 time, void *pval)
                                                    pAuth->secondsRemaining);
     }
     else {
-        FreeResource(pAuth->id, RT_NONE);
+        FreeResource(pAuth->id, X11_RESTYPE_NONE);
         return 0;
     }
 }                               /* SecurityAuthorizationExpired */
@@ -368,7 +368,7 @@ SecurityEventSelectForAuthorization(SecurityAuthorizationPtr pAuth,
          pEventClient; pEventClient = pEventClient->next) {
         if (SameClient(pEventClient, client)) {
             if (mask == 0)
-                FreeResource(pEventClient->resource, RT_NONE);
+                FreeResource(pEventClient->resource, X11_RESTYPE_NONE);
             else
                 pEventClient->mask = mask;
             return Success;
@@ -580,7 +580,7 @@ ProcSecurityRevokeAuthorization(ClientPtr client)
     if (rc != Success)
         return rc;
 
-    FreeResource(stuff->authId, RT_NONE);
+    FreeResource(stuff->authId, X11_RESTYPE_NONE);
     return Success;
 }                               /* ProcSecurityRevokeAuthorization */
 

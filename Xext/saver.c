@@ -474,7 +474,7 @@ CreateSaverWindow(ScreenPtr pScreen)
     pSaver = &pScreen->screensaver;
     if (pSaver->pWindow) {
         pSaver->pWindow = NullWindow;
-        FreeResource(pSaver->wid, RT_NONE);
+        FreeResource(pSaver->wid, X11_RESTYPE_NONE);
         if (pPriv) {
             UninstallSaverColormap(pScreen);
             pPriv->hasWindow = FALSE;
@@ -518,7 +518,7 @@ CreateSaverWindow(ScreenPtr pScreen)
         CursorPtr cursor;
         if (!pWin->optional)
             if (!MakeWindowOptional(pWin)) {
-                FreeResource(pWin->drawable.id, RT_NONE);
+                FreeResource(pWin->drawable.id, X11_RESTYPE_NONE);
                 return FALSE;
             }
         cursor = RefCursor(pAttr->pCursor);
@@ -570,7 +570,7 @@ DestroySaverWindow(ScreenPtr pScreen)
     pSaver = &pScreen->screensaver;
     if (pSaver->pWindow) {
         pSaver->pWindow = NullWindow;
-        FreeResource(pSaver->wid, RT_NONE);
+        FreeResource(pSaver->wid, X11_RESTYPE_NONE);
     }
     pPriv->hasWindow = FALSE;
     CheckScreenPrivate(pScreen);
@@ -1034,7 +1034,7 @@ ScreenSaverSetAttributes(ClientPtr client)
             }
             else {
                 ret = dixLookupResourceByType((void **) &pCursor, cursorID,
-                                              RT_CURSOR, client, DixUseAccess);
+                                              X11_RESTYPE_CURSOR, client, DixUseAccess);
                 if (ret != Success) {
                     client->errorValue = cursorID;
                     goto PatchUp;
@@ -1231,7 +1231,7 @@ ProcScreenSaverSuspend(ClientPtr client)
         if (suspend == TRUE)
             this->count++;
         else if (--this->count == 0)
-            FreeResource(this->clientResource, RT_NONE);
+            FreeResource(this->clientResource, X11_RESTYPE_NONE);
 
         return Success;
     }

@@ -2456,7 +2456,7 @@ ProcRecordFreeContext(ClientPtr client)
 
     REQUEST_SIZE_MATCH(xRecordFreeContextReq);
     VERIFY_CONTEXT(pContext, stuff->context, client);
-    FreeResource(stuff->context, RT_NONE);
+    FreeResource(stuff->context, X11_RESTYPE_NONE);
     return Success;
 }                               /* ProcRecordFreeContext */
 
