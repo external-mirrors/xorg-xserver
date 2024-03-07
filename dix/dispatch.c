@@ -104,6 +104,9 @@ Equipment Corporation.
 #include "windowstr.h"
 #include <X11/fonts/fontstruct.h>
 #include <X11/fonts/libxfont2.h>
+
+#include "os/osdep.h"
+
 #include "dixfontstr.h"
 #include "gcstruct.h"
 #include "selection.h"
