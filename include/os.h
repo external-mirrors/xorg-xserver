@@ -93,8 +93,6 @@ typedef struct _NewClientRec *NewClientPtr;
 extern void ddxBeforeReset(void);
 #endif
 
-extern _X_EXPORT Bool WaitForSomething(Bool clients_are_ready);
-
 extern _X_EXPORT int ReadRequestFromClient(ClientPtr /*client */ );
 
 extern _X_EXPORT int ReadFdFromClient(ClientPtr client);
