@@ -245,4 +245,6 @@ extern void (*OsVendorVErrorFProc) (const char *, va_list args)
 void MakeClientGrabPervious(ClientPtr client);
 void MakeClientGrabImpervious(ClientPtr client);
 
+int OnlyListenToOneClient(ClientPtr client);
+
 #endif                          /* _OSDEP_H_ */
