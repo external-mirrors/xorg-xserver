@@ -563,7 +563,7 @@ AddPassiveGrabToList(ClientPtr client, GrabPtr pGrab)
 
     pGrab->next = pGrab->window->optional->passiveGrabs;
     pGrab->window->optional->passiveGrabs = pGrab;
-    if (AddResource(pGrab->resource, RT_PASSIVEGRAB, (void *) pGrab))
+    if (AddResource(pGrab->resource, X11_RESTYPE_PASSIVEGRAB, (void *) pGrab))
         return Success;
     return BadAlloc;
 }
@@ -660,7 +660,7 @@ DeletePassiveGrabFromList(GrabPtr pMinuendGrab)
                 FreeGrab(pNewGrab);
                 ok = FALSE;
             }
-            else if (!AddResource(pNewGrab->resource, RT_PASSIVEGRAB,
+            else if (!AddResource(pNewGrab->resource, X11_RESTYPE_PASSIVEGRAB,
                                   (void *) pNewGrab))
                 ok = FALSE;
             else

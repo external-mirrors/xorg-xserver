@@ -999,7 +999,7 @@ ProcPanoramiXShmCreatePixmap(ClientPtr client)
 
         if (pMap) {
             result = XaceHook(XACE_RESOURCE_ACCESS, client, stuff->pid,
-                              RT_PIXMAP, pMap, X11_RESTYPE_NONE, NULL, DixCreateAccess);
+                              X11_RESTYPE_PIXMAP, pMap, X11_RESTYPE_NONE, NULL, DixCreateAccess);
             if (result != Success) {
                 pDraw->pScreen->DestroyPixmap(pMap);
                 break;
@@ -1008,7 +1008,7 @@ ProcPanoramiXShmCreatePixmap(ClientPtr client)
             shmdesc->refcnt++;
             pMap->drawable.serialNumber = NEXT_SERIAL_NUMBER;
             pMap->drawable.id = newPix->info[j].id;
-            if (!AddResource(newPix->info[j].id, RT_PIXMAP, (void *) pMap)) {
+            if (!AddResource(newPix->info[j].id, X11_RESTYPE_PIXMAP, (void *) pMap)) {
                 result = BadAlloc;
                 break;
             }
@@ -1113,7 +1113,7 @@ ProcShmCreatePixmap(ClientPtr client)
                                                    shmdesc->addr +
                                                    stuff->offset);
     if (pMap) {
-        rc = XaceHook(XACE_RESOURCE_ACCESS, client, stuff->pid, RT_PIXMAP,
+        rc = XaceHook(XACE_RESOURCE_ACCESS, client, stuff->pid, X11_RESTYPE_PIXMAP,
                       pMap, X11_RESTYPE_NONE, NULL, DixCreateAccess);
         if (rc != Success) {
             pDraw->pScreen->DestroyPixmap(pMap);
@@ -1123,7 +1123,7 @@ ProcShmCreatePixmap(ClientPtr client)
         shmdesc->refcnt++;
         pMap->drawable.serialNumber = NEXT_SERIAL_NUMBER;
         pMap->drawable.id = stuff->pid;
-        if (AddResource(stuff->pid, RT_PIXMAP, (void *) pMap)) {
+        if (AddResource(stuff->pid, X11_RESTYPE_PIXMAP, (void *) pMap)) {
             return Success;
         }
     }

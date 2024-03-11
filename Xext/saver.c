@@ -450,7 +450,7 @@ UninstallSaverColormap(ScreenPtr pScreen)
 
     if (pPriv && pPriv->installedMap != None) {
         rc = dixLookupResourceByType((void **) &pCmap, pPriv->installedMap,
-                                     RT_COLORMAP, serverClient,
+                                     X11_RESTYPE_COLORMAP, serverClient,
                                      DixUninstallAccess);
         if (rc == Success)
             (*pCmap->pScreen->UninstallColormap) (pCmap);
@@ -498,7 +498,7 @@ CreateSaverWindow(ScreenPtr pScreen)
     if (!pWin)
         return FALSE;
 
-    if (!AddResource(pWin->drawable.id, RT_WINDOW, pWin))
+    if (!AddResource(pWin->drawable.id, X11_RESTYPE_WINDOW, pWin))
         return FALSE;
 
     mask = 0;
@@ -546,7 +546,7 @@ CreateSaverWindow(ScreenPtr pScreen)
     if (wantMap == None || IsMapInstalled(wantMap, pWin))
         return TRUE;
 
-    result = dixLookupResourceByType((void **) &pCmap, wantMap, RT_COLORMAP,
+    result = dixLookupResourceByType((void **) &pCmap, wantMap, X11_RESTYPE_COLORMAP,
                                      serverClient, DixInstallAccess);
     if (result != Success)
         return TRUE;
@@ -899,7 +899,7 @@ ScreenSaverSetAttributes(ClientPtr client)
             else {
                 ret =
                     dixLookupResourceByType((void **) &pPixmap, pixID,
-                                            RT_PIXMAP, client, DixReadAccess);
+                                            X11_RESTYPE_PIXMAP, client, DixReadAccess);
                 if (ret == Success) {
                     if ((pPixmap->drawable.depth != depth) ||
                         (pPixmap->drawable.pScreen != pScreen)) {
@@ -931,7 +931,7 @@ ScreenSaverSetAttributes(ClientPtr client)
             else {
                 ret =
                     dixLookupResourceByType((void **) &pPixmap, pixID,
-                                            RT_PIXMAP, client, DixReadAccess);
+                                            X11_RESTYPE_PIXMAP, client, DixReadAccess);
                 if (ret == Success) {
                     if ((pPixmap->drawable.depth != depth) ||
                         (pPixmap->drawable.pScreen != pScreen)) {
@@ -1014,7 +1014,7 @@ ScreenSaverSetAttributes(ClientPtr client)
             break;
         case CWColormap:
             cmap = (Colormap) * pVlist;
-            ret = dixLookupResourceByType((void **) &pCmap, cmap, RT_COLORMAP,
+            ret = dixLookupResourceByType((void **) &pCmap, cmap, X11_RESTYPE_COLORMAP,
                                           client, DixUseAccess);
             if (ret != Success) {
                 client->errorValue = cmap;
