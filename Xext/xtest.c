@@ -33,6 +33,12 @@
 #include <X11/X.h>
 #include <X11/Xproto.h>
 #include <X11/Xatom.h>
+#include <X11/extensions/xtestproto.h>
+#include <X11/extensions/XI.h>
+#include <X11/extensions/XIproto.h>
+
+#include "os/osdep.h"
+
 #include "misc.h"
 #include "os.h"
 #include "dixstruct.h"
@@ -45,9 +51,6 @@
 #include "mi.h"
 #include "xkbsrv.h"
 #include "xkbstr.h"
-#include <X11/extensions/xtestproto.h>
-#include <X11/extensions/XI.h>
-#include <X11/extensions/XIproto.h>
 #include "exglobals.h"
 #include "mipointer.h"
 #include "xserver-properties.h"

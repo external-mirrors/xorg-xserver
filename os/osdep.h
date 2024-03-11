@@ -242,4 +242,7 @@ extern void (*OsVendorVErrorFProc) (const char *, va_list args)
     _X_ATTRIBUTE_PRINTF(1, 0);
 #endif
 
+void MakeClientGrabPervious(ClientPtr client);
+void MakeClientGrabImpervious(ClientPtr client);
+
 #endif                          /* _OSDEP_H_ */
