@@ -128,6 +128,9 @@ Equipment Corporation.
 #include "client.h"
 #include "xfixesint.h"
 
+// temporary workaround for win32/mingw32 name clash
+#undef CreateWindow
+
 #ifdef XSERVER_DTRACE
 #include "registry.h"
 #include "probes.h"
