@@ -247,4 +247,6 @@ void MakeClientGrabImpervious(ClientPtr client);
 
 int OnlyListenToOneClient(ClientPtr client);
 
+void ListenToAllClients(void);
+
 #endif                          /* _OSDEP_H_ */
