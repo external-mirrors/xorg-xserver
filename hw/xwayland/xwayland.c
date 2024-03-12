@@ -33,6 +33,9 @@
 #include <errno.h>
 
 #include <X11/Xatom.h>
+
+#include "os/xserver_poll.h"
+
 #include <selection.h>
 #include <micmap.h>
 #include <misyncshm.h>
@@ -41,7 +44,6 @@
 #include <glx_extinit.h>
 #include <opaque.h>
 #include <os.h>
-#include <xserver_poll.h>
 #include <propertyst.h>
 #include <version-config.h>
 
