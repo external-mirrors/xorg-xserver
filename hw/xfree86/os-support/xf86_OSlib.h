@@ -206,12 +206,6 @@ struct pcvtid {
 #ifndef CONSOLE_X_BELL
 #define CONSOLE_X_BELL _IOW('t',123,int[2])
 #endif
-#ifndef CONSOLE_X_TV_ON
-#define CONSOLE_X_TV_ON _IOW('t',155,int)
-#endif
-#ifndef CONSOLE_X_TV_OFF
-#define CONSOLE_X_TV_OFF _IO('t',156)
-#endif
 
 #if defined(USE_I386_IOPL) || defined(USE_AMD64_IOPL)
 #include <machine/sysarch.h>
