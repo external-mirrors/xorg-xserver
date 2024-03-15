@@ -41,6 +41,14 @@
 #include <stdlib.h>
 #include <errno.h>
 
+#ifndef CONSOLE_X_MODE_ON
+#define CONSOLE_X_MODE_ON _IO('t',121)
+#endif
+
+#ifndef CONSOLE_X_MODE_OFF
+#define CONSOLE_X_MODE_OFF _IO('t',122)
+#endif
+
 static Bool KeepTty = FALSE;
 
 #ifdef PCCONS_SUPPORT
