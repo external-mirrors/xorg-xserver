@@ -207,10 +207,6 @@ struct pcvtid {
 #define CONSOLE_X_BELL _IOW('t',123,int[2])
 #endif
 
-#if defined(USE_I386_IOPL) || defined(USE_AMD64_IOPL)
-#include <machine/sysarch.h>
-#endif
-
 #define CLEARDTR_SUPPORT
 
 #endif                          /* __FreeBSD__ || __NetBSD__ || __OpenBSD__ || __DragonFly__ */
