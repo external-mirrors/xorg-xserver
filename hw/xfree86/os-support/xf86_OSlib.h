@@ -320,8 +320,6 @@ struct pcvtid {
 /* Generic                                                                */
 /**************************************************************************/
 
-#include <sys/wait.h>           /* May need to adjust this for other OSs */
-
 /* For PATH_MAX */
 #include "misc.h"
 
