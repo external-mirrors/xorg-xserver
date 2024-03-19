@@ -28,9 +28,11 @@
 #endif
 
 #include <X11/X.h>
+
 #include "xf86.h"
 #include "xf86Priv.h"
 #include "xf86_OSlib.h"
+#include "xf86_OSproc.h"
 
 /*
  * Handle the VT-switching interface for BSD OSs that use USL-style ioctl()s.

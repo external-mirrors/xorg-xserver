@@ -34,6 +34,7 @@
 #include "xf86.h"
 #include "xf86Priv.h"
 #include "xf86_OSlib.h"
+#include "xf86_OSproc.h"
 
 #include <sys/utsname.h>
 #include <sys/ioctl.h>
