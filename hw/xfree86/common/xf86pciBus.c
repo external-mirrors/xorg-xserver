@@ -283,14 +283,14 @@ xf86ParsePciBusString(const char *busID, int *bus, int *device, int *func)
     if (d != NULL) {
         *(d++) = 0;
         for (i = 0; d[i] != 0; i++) {
-            if (!isdigit(d[i])) {
+            if (!isdigit((unsigned char)d[i])) {
                 free(s);
                 return FALSE;
             }
         }
     }
     for (i = 0; p[i] != 0; i++) {
-        if (!isdigit(p[i])) {
+        if (!isdigit((unsigned char)p[i])) {
             free(s);
             return FALSE;
         }
@@ -304,7 +304,7 @@ xf86ParsePciBusString(const char *busID, int *bus, int *device, int *func)
         return FALSE;
     }
     for (i = 0; p[i] != 0; i++) {
-        if (!isdigit(p[i])) {
+        if (!isdigit((unsigned char)p[i])) {
             free(s);
             return FALSE;
         }
@@ -317,7 +317,7 @@ xf86ParsePciBusString(const char *busID, int *bus, int *device, int *func)
         return TRUE;
     }
     for (i = 0; p[i] != 0; i++) {
-        if (!isdigit(p[i])) {
+        if (!isdigit((unsigned char)p[i])) {
             free(s);
             return FALSE;
         }
