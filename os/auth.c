@@ -78,15 +78,6 @@ static struct protocol protocols[] = {
 #endif
      },
 #endif
-#ifdef SECURE_RPC
-    {(unsigned short) 9, "SUN-DES-1",
-     SecureRPCAdd, SecureRPCCheck, SecureRPCReset,
-     SecureRPCFromID, SecureRPCRemove,
-#ifdef XCSECURITY
-     NULL
-#endif
-     },
-#endif
 };
 
 #define NUM_AUTHORIZATION  ARRAY_SIZE(protocols)
