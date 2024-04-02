@@ -768,11 +768,11 @@ XkbProcessArguments(int argc, char *argv[], int i)
         else {
             XkbWantAccessX = 1;
 
-            if (((i + 1) < argc) && (isdigit(argv[i + 1][0]))) {
+            if (((i + 1) < argc) && (isdigit((unsigned char)argv[i + 1][0]))) {
                 XkbDfltAccessXTimeout = atoi(argv[++i]);
                 j++;
 
-                if (((i + 1) < argc) && (isdigit(argv[i + 1][0]))) {
+                if (((i + 1) < argc) && (isdigit((unsigned char)argv[i + 1][0]))) {
                     /*
                      * presumption that the reasonably useful range of
                      * values fits in 0..MAXINT since SunOS 4 doesn't
@@ -782,14 +782,14 @@ XkbProcessArguments(int argc, char *argv[], int i)
                         strtol(argv[++i], NULL, 16);
                     j++;
                 }
-                if (((i + 1) < argc) && (isdigit(argv[i + 1][0]))) {
+                if (((i + 1) < argc) && (isdigit((unsigned char)argv[i + 1][0]))) {
                     if (argv[++i][0] == '1')
                         XkbDfltAccessXFeedback = XkbAccessXFeedbackMask;
                     else
                         XkbDfltAccessXFeedback = 0;
                     j++;
                 }
-                if (((i + 1) < argc) && (isdigit(argv[i + 1][0]))) {
+                if (((i + 1) < argc) && (isdigit((unsigned char)argv[i + 1][0]))) {
                     XkbDfltAccessXOptions = (unsigned short)
                         strtol(argv[++i], NULL, 16);
                     j++;
