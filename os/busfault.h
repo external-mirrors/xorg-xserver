@@ -27,6 +27,8 @@
 
 #include <X11/Xdefs.h>
 
+#include "misc.h"                         /* for TRUE/FALSE */
+
 #ifdef BUSFAULT
 
 #include <sys/types.h>
