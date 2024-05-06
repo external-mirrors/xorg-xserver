@@ -486,7 +486,7 @@ AllocGlyphCursor(Font source, unsigned sourceChar, Font mask, unsigned maskChar,
  *************************************************************/
 
 CursorPtr
-CreateRootCursor(char *unused1, unsigned int unused2)
+CreateRootCursor(void)
 {
     CursorPtr curs;
     FontPtr cursorfont;
