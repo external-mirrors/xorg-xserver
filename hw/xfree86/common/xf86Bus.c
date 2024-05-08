@@ -298,7 +298,7 @@ int
 xf86AllocateEntity(void)
 {
     xf86NumEntities++;
-    xf86Entities = xnfreallocarray(xf86Entities,
+    xf86Entities = XNFreallocarray(xf86Entities,
                                    xf86NumEntities, sizeof(EntityPtr));
     xf86Entities[xf86NumEntities - 1] = xnfcalloc(1, sizeof(EntityRec));
     xf86Entities[xf86NumEntities - 1]->entityPrivates =
@@ -356,11 +356,11 @@ xf86AddEntityToScreen(ScrnInfoPtr pScrn, int entityIndex)
     }
 
     pScrn->numEntities++;
-    pScrn->entityList = xnfreallocarray(pScrn->entityList,
+    pScrn->entityList = XNFreallocarray(pScrn->entityList,
                                         pScrn->numEntities, sizeof(int));
     pScrn->entityList[pScrn->numEntities - 1] = entityIndex;
     xf86Entities[entityIndex]->inUse = TRUE;
-    pScrn->entityInstanceList = xnfreallocarray(pScrn->entityInstanceList,
+    pScrn->entityInstanceList = XNFreallocarray(pScrn->entityInstanceList,
                                                 pScrn->numEntities,
                                                 sizeof(int));
     pScrn->entityInstanceList[pScrn->numEntities - 1] = 0;
@@ -458,7 +458,7 @@ xf86AddDevToEntity(int entityIndex, GDevPtr dev)
 
     pEnt = xf86Entities[entityIndex];
     pEnt->numInstances++;
-    pEnt->devices = xnfreallocarray(pEnt->devices,
+    pEnt->devices = XNFreallocarray(pEnt->devices,
                                     pEnt->numInstances, sizeof(GDevPtr));
     pEnt->devices[pEnt->numInstances - 1] = dev;
     dev->claimed = TRUE;
@@ -652,7 +652,7 @@ xf86AllocateEntityPrivateIndex(void)
     idx = xf86EntityPrivateCount++;
     for (i = 0; i < xf86NumEntities; i++) {
         pEnt = xf86Entities[i];
-        nprivs = xnfreallocarray(pEnt->entityPrivates,
+        nprivs = XNFreallocarray(pEnt->entityPrivates,
                                  xf86EntityPrivateCount, sizeof(DevUnion));
         /* Zero the new private */
         memset(&nprivs[idx], 0, sizeof(DevUnion));
