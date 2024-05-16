@@ -125,7 +125,7 @@ ProcXGrabDeviceButton(ClientPtr client)
     }
     else {
         mdev = PickKeyboard(client);
-        ret = XaceHook(XACE_DEVICE_ACCESS, client, mdev, DixUseAccess);
+        ret = XaceHookDeviceAccess(client, mdev, DixUseAccess);
         if (ret != Success)
             return ret;
     }
