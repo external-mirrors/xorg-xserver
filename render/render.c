@@ -926,7 +926,7 @@ ProcRenderCreateGlyphSet(ClientPtr client)
     if (!glyphSet)
         return BadAlloc;
     /* security creation/labeling check */
-    rc = XaceHook(XACE_RESOURCE_ACCESS, client, stuff->gsid, GlyphSetType,
+    rc = XaceHookResourceAccess(client, stuff->gsid, GlyphSetType,
                   glyphSet, X11_RESTYPE_NONE, NULL, DixCreateAccess);
     if (rc != Success)
         return rc;
@@ -1859,7 +1859,7 @@ ProcRenderCreateSolidFill(ClientPtr client)
     if (!pPicture)
         return error;
     /* security creation/labeling check */
-    error = XaceHook(XACE_RESOURCE_ACCESS, client, stuff->pid, PictureType,
+    error = XaceHookResourceAccess(client, stuff->pid, PictureType,
                      pPicture, X11_RESTYPE_NONE, NULL, DixCreateAccess);
     if (error != Success)
         return error;
@@ -1898,7 +1898,7 @@ ProcRenderCreateLinearGradient(ClientPtr client)
     if (!pPicture)
         return error;
     /* security creation/labeling check */
-    error = XaceHook(XACE_RESOURCE_ACCESS, client, stuff->pid, PictureType,
+    error = XaceHookResourceAccess(client, stuff->pid, PictureType,
                      pPicture, X11_RESTYPE_NONE, NULL, DixCreateAccess);
     if (error != Success)
         return error;
@@ -1938,7 +1938,7 @@ ProcRenderCreateRadialGradient(ClientPtr client)
     if (!pPicture)
         return error;
     /* security creation/labeling check */
-    error = XaceHook(XACE_RESOURCE_ACCESS, client, stuff->pid, PictureType,
+    error = XaceHookResourceAccess(client, stuff->pid, PictureType,
                      pPicture, X11_RESTYPE_NONE, NULL, DixCreateAccess);
     if (error != Success)
         return error;
@@ -1977,7 +1977,7 @@ ProcRenderCreateConicalGradient(ClientPtr client)
     if (!pPicture)
         return error;
     /* security creation/labeling check */
-    error = XaceHook(XACE_RESOURCE_ACCESS, client, stuff->pid, PictureType,
+    error = XaceHookResourceAccess(client, stuff->pid, PictureType,
                      pPicture, X11_RESTYPE_NONE, NULL, DixCreateAccess);
     if (error != Success)
         return error;
