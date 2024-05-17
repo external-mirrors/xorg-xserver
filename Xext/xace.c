@@ -130,13 +130,19 @@ int XaceHookScreensaverAccess(ClientPtr client, ScreenPtr screen, Mask access_mo
     return rec.status;
 }
 
+int XaceHookAuthAvail(ClientPtr client, XID authId)
+{
+    XaceAuthAvailRec rec = { client, authId };
+    CallCallbacks(&XaceHooks[XACE_AUTH_AVAIL], &rec);
+    return Success;
+}
+
 /* Entry point for hook functions.  Called by Xserver.
  */
 int
 XaceHook(int hook, ...)
 {
     union {
-        XaceAuthAvailRec auth;
         XaceKeyAvailRec key;
     } u;
     int *prv = NULL;            /* points to return value from callback */
@@ -153,11 +159,6 @@ XaceHook(int hook, ...)
      * sets calldata directly to a single argument (with no return result)
      */
     switch (hook) {
-    case XACE_AUTH_AVAIL:
-        u.auth.client = va_arg(ap, ClientPtr);
-        u.auth.authId = va_arg(ap, XID);
-
-        break;
     case XACE_KEY_AVAIL:
         u.key.event = va_arg(ap, xEventPtr);
         u.key.keybd = va_arg(ap, DeviceIntPtr);
