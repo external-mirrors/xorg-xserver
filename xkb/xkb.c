@@ -6956,7 +6956,7 @@ ProcXkbSetDebuggingFlags(ClientPtr client)
     REQUEST(xkbSetDebuggingFlagsReq);
     REQUEST_AT_LEAST_SIZE(xkbSetDebuggingFlagsReq);
 
-    rc = XaceHook(XACE_SERVER_ACCESS, client, DixDebugAccess);
+    rc = XaceHookServerAccess(client, DixDebugAccess);
     if (rc != Success)
         return rc;
 

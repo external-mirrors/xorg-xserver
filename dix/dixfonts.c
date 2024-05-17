@@ -805,7 +805,7 @@ ListFonts(ClientPtr client, unsigned char *pattern, unsigned length,
     if (length > XLFDMAXFONTNAMELEN)
         return BadAlloc;
 
-    i = XaceHook(XACE_SERVER_ACCESS, client, DixGetAttrAccess);
+    i = XaceHookServerAccess(client, DixGetAttrAccess);
     if (i != Success)
         return i;
 
@@ -1051,7 +1051,7 @@ StartListFontsWithInfo(ClientPtr client, int length, unsigned char *pattern,
     if (length > XLFDMAXFONTNAMELEN)
         return BadAlloc;
 
-    i = XaceHook(XACE_SERVER_ACCESS, client, DixGetAttrAccess);
+    i = XaceHookServerAccess(client, DixGetAttrAccess);
     if (i != Success)
         return i;
 
@@ -1674,7 +1674,7 @@ SetFontPathElements(int npaths, unsigned char *paths, int *bad, Bool persist)
 int
 SetFontPath(ClientPtr client, int npaths, unsigned char *paths)
 {
-    int err = XaceHook(XACE_SERVER_ACCESS, client, DixManageAccess);
+    int err = XaceHookServerAccess(client, DixManageAccess);
 
     if (err != Success)
         return err;
@@ -1762,7 +1762,7 @@ GetFontPath(ClientPtr client, int *count, int *length, unsigned char **result)
     int len;
     FontPathElementPtr fpe;
 
-    i = XaceHook(XACE_SERVER_ACCESS, client, DixGetAttrAccess);
+    i = XaceHookServerAccess(client, DixGetAttrAccess);
     if (i != Success)
         return i;
 
