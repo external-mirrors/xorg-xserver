@@ -333,12 +333,6 @@ ProcRRXineramaDispatch(ClientPtr client)
 /* SProc */
 
 static int _X_COLD
-SProcRRXineramaQueryVersion(ClientPtr client)
-{
-    return ProcRRXineramaQueryVersion(client);
-}
-
-static int _X_COLD
 SProcRRXineramaGetState(ClientPtr client)
 {
     REQUEST(xPanoramiXGetStateReq);
@@ -366,25 +360,13 @@ SProcRRXineramaGetScreenSize(ClientPtr client)
     return ProcRRXineramaGetScreenSize(client);
 }
 
-static int _X_COLD
-SProcRRXineramaIsActive(ClientPtr client)
-{
-    return ProcRRXineramaIsActive(client);
-}
-
-static int _X_COLD
-SProcRRXineramaQueryScreens(ClientPtr client)
-{
-    return ProcRRXineramaQueryScreens(client);
-}
-
 int
 SProcRRXineramaDispatch(ClientPtr client)
 {
     REQUEST(xReq);
     switch (stuff->data) {
     case X_PanoramiXQueryVersion:
-        return SProcRRXineramaQueryVersion(client);
+        return ProcRRXineramaQueryVersion(client);
     case X_PanoramiXGetState:
         return SProcRRXineramaGetState(client);
     case X_PanoramiXGetScreenCount:
@@ -392,9 +374,9 @@ SProcRRXineramaDispatch(ClientPtr client)
     case X_PanoramiXGetScreenSize:
         return SProcRRXineramaGetScreenSize(client);
     case X_XineramaIsActive:
-        return SProcRRXineramaIsActive(client);
+        return ProcRRXineramaIsActive(client);
     case X_XineramaQueryScreens:
-        return SProcRRXineramaQueryScreens(client);
+        return ProcRRXineramaQueryScreens(client);
     }
     return BadRequest;
 }
