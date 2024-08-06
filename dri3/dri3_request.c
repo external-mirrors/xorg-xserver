@@ -671,8 +671,6 @@ sproc_dri3_query_version(ClientPtr client)
 {
     REQUEST(xDRI3QueryVersionReq);
     REQUEST_SIZE_MATCH(xDRI3QueryVersionReq);
-
-    swaps(&stuff->length);
     swapl(&stuff->majorVersion);
     swapl(&stuff->minorVersion);
     return (*proc_dri3_vector[stuff->dri3ReqType]) (client);
@@ -683,8 +681,6 @@ sproc_dri3_open(ClientPtr client)
 {
     REQUEST(xDRI3OpenReq);
     REQUEST_SIZE_MATCH(xDRI3OpenReq);
-
-    swaps(&stuff->length);
     swapl(&stuff->drawable);
     swapl(&stuff->provider);
     return (*proc_dri3_vector[stuff->dri3ReqType]) (client);
@@ -695,8 +691,6 @@ sproc_dri3_pixmap_from_buffer(ClientPtr client)
 {
     REQUEST(xDRI3PixmapFromBufferReq);
     REQUEST_SIZE_MATCH(xDRI3PixmapFromBufferReq);
-
-    swaps(&stuff->length);
     swapl(&stuff->pixmap);
     swapl(&stuff->drawable);
     swapl(&stuff->size);
@@ -711,8 +705,6 @@ sproc_dri3_buffer_from_pixmap(ClientPtr client)
 {
     REQUEST(xDRI3BufferFromPixmapReq);
     REQUEST_SIZE_MATCH(xDRI3BufferFromPixmapReq);
-
-    swaps(&stuff->length);
     swapl(&stuff->pixmap);
     return (*proc_dri3_vector[stuff->dri3ReqType]) (client);
 }
@@ -722,8 +714,6 @@ sproc_dri3_fence_from_fd(ClientPtr client)
 {
     REQUEST(xDRI3FenceFromFDReq);
     REQUEST_SIZE_MATCH(xDRI3FenceFromFDReq);
-
-    swaps(&stuff->length);
     swapl(&stuff->drawable);
     swapl(&stuff->fence);
     return (*proc_dri3_vector[stuff->dri3ReqType]) (client);
@@ -734,8 +724,6 @@ sproc_dri3_fd_from_fence(ClientPtr client)
 {
     REQUEST(xDRI3FDFromFenceReq);
     REQUEST_SIZE_MATCH(xDRI3FDFromFenceReq);
-
-    swaps(&stuff->length);
     swapl(&stuff->drawable);
     swapl(&stuff->fence);
     return (*proc_dri3_vector[stuff->dri3ReqType]) (client);
@@ -746,8 +734,6 @@ sproc_dri3_get_supported_modifiers(ClientPtr client)
 {
     REQUEST(xDRI3GetSupportedModifiersReq);
     REQUEST_SIZE_MATCH(xDRI3GetSupportedModifiersReq);
-
-    swaps(&stuff->length);
     swapl(&stuff->window);
     return (*proc_dri3_vector[stuff->dri3ReqType]) (client);
 }
@@ -757,8 +743,6 @@ sproc_dri3_pixmap_from_buffers(ClientPtr client)
 {
     REQUEST(xDRI3PixmapFromBuffersReq);
     REQUEST_SIZE_MATCH(xDRI3PixmapFromBuffersReq);
-
-    swaps(&stuff->length);
     swapl(&stuff->pixmap);
     swapl(&stuff->window);
     swaps(&stuff->width);
@@ -780,8 +764,6 @@ sproc_dri3_buffers_from_pixmap(ClientPtr client)
 {
     REQUEST(xDRI3BuffersFromPixmapReq);
     REQUEST_SIZE_MATCH(xDRI3BuffersFromPixmapReq);
-
-    swaps(&stuff->length);
     swapl(&stuff->pixmap);
     return (*proc_dri3_vector[stuff->dri3ReqType]) (client);
 }
@@ -802,8 +784,6 @@ sproc_dri3_import_syncobj(ClientPtr client)
 {
     REQUEST(xDRI3ImportSyncobjReq);
     REQUEST_SIZE_MATCH(xDRI3ImportSyncobjReq);
-
-    swaps(&stuff->length);
     swapl(&stuff->syncobj);
     swapl(&stuff->drawable);
     return (*proc_dri3_vector[stuff->dri3ReqType]) (client);
@@ -814,8 +794,6 @@ sproc_dri3_free_syncobj(ClientPtr client)
 {
     REQUEST(xDRI3FreeSyncobjReq);
     REQUEST_SIZE_MATCH(xDRI3FreeSyncobjReq);
-
-    swaps(&stuff->length);
     swapl(&stuff->syncobj);
     return (*proc_dri3_vector[stuff->dri3ReqType]) (client);
 }
