@@ -340,7 +340,6 @@ sproc_present_query_version(ClientPtr client)
     REQUEST(xPresentQueryVersionReq);
     REQUEST_SIZE_MATCH(xPresentQueryVersionReq);
 
-    swaps(&stuff->length);
     swapl(&stuff->majorVersion);
     swapl(&stuff->minorVersion);
     return (*proc_present_vector[stuff->presentReqType]) (client);
@@ -352,7 +351,6 @@ sproc_present_pixmap(ClientPtr client)
     REQUEST(xPresentPixmapReq);
     REQUEST_AT_LEAST_SIZE(xPresentPixmapReq);
 
-    swaps(&stuff->length);
     swapl(&stuff->window);
     swapl(&stuff->pixmap);
     swapl(&stuff->valid);
@@ -372,7 +370,6 @@ sproc_present_notify_msc(ClientPtr client)
     REQUEST(xPresentNotifyMSCReq);
     REQUEST_SIZE_MATCH(xPresentNotifyMSCReq);
 
-    swaps(&stuff->length);
     swapl(&stuff->window);
     swapll(&stuff->target_msc);
     swapll(&stuff->divisor);
@@ -386,7 +383,6 @@ sproc_present_select_input (ClientPtr client)
     REQUEST(xPresentSelectInputReq);
     REQUEST_SIZE_MATCH(xPresentSelectInputReq);
 
-    swaps(&stuff->length);
     swapl(&stuff->window);
     swapl(&stuff->eventMask);
     return (*proc_present_vector[stuff->presentReqType]) (client);
@@ -397,7 +393,6 @@ sproc_present_query_capabilities (ClientPtr client)
 {
     REQUEST(xPresentQueryCapabilitiesReq);
     REQUEST_SIZE_MATCH(xPresentQueryCapabilitiesReq);
-    swaps(&stuff->length);
     swapl(&stuff->target);
     return (*proc_present_vector[stuff->presentReqType]) (client);
 }
@@ -409,8 +404,6 @@ sproc_present_pixmap_synced(ClientPtr client)
 {
     REQUEST(xPresentPixmapSyncedReq);
     REQUEST_AT_LEAST_SIZE(xPresentPixmapSyncedReq);
-
-    swaps(&stuff->length);
 
     swapl(&stuff->window);
 
