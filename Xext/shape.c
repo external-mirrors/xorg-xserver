@@ -265,7 +265,7 @@ ProcShapeRectangles(ClientPtr client)
         client->errorValue = stuff->ordering;
         return BadValue;
     }
-    nrects = ((stuff->length << 2) - sizeof(xShapeRectanglesReq));
+    nrects = ((client->req_len << 2) - sizeof(xShapeRectanglesReq));
     if (nrects & 4)
         return BadLength;
     nrects >>= 3;
