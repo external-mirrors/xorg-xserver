@@ -335,9 +335,6 @@ ProcRRXineramaDispatch(ClientPtr client)
 static int _X_COLD
 SProcRRXineramaQueryVersion(ClientPtr client)
 {
-    REQUEST(xPanoramiXQueryVersionReq);
-    swaps(&stuff->length);
-    REQUEST_SIZE_MATCH(xPanoramiXQueryVersionReq);
     return ProcRRXineramaQueryVersion(client);
 }
 
@@ -345,7 +342,6 @@ static int _X_COLD
 SProcRRXineramaGetState(ClientPtr client)
 {
     REQUEST(xPanoramiXGetStateReq);
-    swaps(&stuff->length);
     REQUEST_SIZE_MATCH(xPanoramiXGetStateReq);
     swapl(&stuff->window);
     return ProcRRXineramaGetState(client);
@@ -355,7 +351,6 @@ static int _X_COLD
 SProcRRXineramaGetScreenCount(ClientPtr client)
 {
     REQUEST(xPanoramiXGetScreenCountReq);
-    swaps(&stuff->length);
     REQUEST_SIZE_MATCH(xPanoramiXGetScreenCountReq);
     swapl(&stuff->window);
     return ProcRRXineramaGetScreenCount(client);
@@ -365,7 +360,6 @@ static int _X_COLD
 SProcRRXineramaGetScreenSize(ClientPtr client)
 {
     REQUEST(xPanoramiXGetScreenSizeReq);
-    swaps(&stuff->length);
     REQUEST_SIZE_MATCH(xPanoramiXGetScreenSizeReq);
     swapl(&stuff->window);
     swapl(&stuff->screen);
@@ -375,18 +369,12 @@ SProcRRXineramaGetScreenSize(ClientPtr client)
 static int _X_COLD
 SProcRRXineramaIsActive(ClientPtr client)
 {
-    REQUEST(xXineramaIsActiveReq);
-    swaps(&stuff->length);
-    REQUEST_SIZE_MATCH(xXineramaIsActiveReq);
     return ProcRRXineramaIsActive(client);
 }
 
 static int _X_COLD
 SProcRRXineramaQueryScreens(ClientPtr client)
 {
-    REQUEST(xXineramaQueryScreensReq);
-    swaps(&stuff->length);
-    REQUEST_SIZE_MATCH(xXineramaQueryScreensReq);
     return ProcRRXineramaQueryScreens(client);
 }
 
