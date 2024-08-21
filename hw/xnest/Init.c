@@ -47,7 +47,7 @@ is" without express or implied warranty.
 #include "dpmsproc.h"
 #endif
 
-Bool xnestDoFullGeneration = True;
+Bool xnestDoFullGeneration = TRUE;
 
 #ifdef GLXEXT
 void
@@ -131,7 +131,7 @@ CloseInput(void)
 void
 ddxGiveUp(enum ExitCode error)
 {
-    xnestDoFullGeneration = True;
+    xnestDoFullGeneration = TRUE;
     xnestCloseDisplay();
 }
 
