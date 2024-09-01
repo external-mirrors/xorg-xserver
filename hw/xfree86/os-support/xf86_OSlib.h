@@ -81,10 +81,9 @@
 #include <stddef.h>
 
 /**************************************************************************/
-/* SVR4, including Solaris                                                */
+/* Solaris or illumos-based system                                        */
 /**************************************************************************/
-#if (defined(SVR4)) && \
-    (defined(__sun) || defined(__i386__))
+#if defined(__SVR4) && defined(__sun)
 #include <sys/ioctl.h>
 #include <signal.h>
 #include <termio.h>
@@ -92,16 +91,10 @@
 
 #include <errno.h>
 
-#if !defined(__sun) || defined(HAVE_SYS_VT_H)
+#ifdef HAVE_SYS_VT_H
 #define HAS_USL_VTS
 #endif
-#if !defined(__sun)
-#include <sys/emap.h>
-#endif
-#if   defined(HAS_USL_VTS)
-#if !defined(__sun)
-#include <sys/at_ansi.h>
-#endif
+#ifdef HAS_USL_VTS
 #include <sys/kd.h>
 #include <sys/vt.h>
 
@@ -109,21 +102,12 @@ extern _X_HIDDEN void xf86VTAcquire(int);
 extern _X_HIDDEN void xf86VTRelease(int);
 #endif
 
-#if defined(__sun)
 #include <sys/fbio.h>
 extern _X_HIDDEN char xf86SolarisFbDev[PATH_MAX];
-#endif                          /* __sun */
 
-#if !defined(VT_ACKACQ)
-#define VT_ACKACQ 2
-#endif                          /* !VT_ACKACQ */
-
-#if !(defined(__sun) && defined (SVR4))
-#define DEV_MEM "/dev/pmem"
-#endif
 #define CLEARDTR_SUPPORT
 
-#endif                          /* SVR4 */
+#endif                          /* SVR4 && __sun */
 
 /**************************************************************************/
 /* Linux or Glibc-based system                                            */
