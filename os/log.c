@@ -75,6 +75,8 @@ OR PERFORMANCE OF THIS SOFTWARE.
  * authorization from the copyright holder(s) and author(s).
  */
 
+#define _POSIX_THREAD_SAFE_FUNCTIONS // for localtime_r on mingw32
+
 #ifdef HAVE_DIX_CONFIG_H
 #include <dix-config.h>
 #endif
@@ -618,11 +620,7 @@ LogSWrite(int verb, const char *buf, size_t len, Bool end_line)
                 struct tm tm;
                 char fmt_tm[32];
 
-#ifdef WIN32
-                localtime_s(&tm, &t);
-#else
                 localtime_r(&t, &tm);
-#endif
                 strftime(fmt_tm, sizeof(fmt_tm) - 1, "%Y-%m-%d %H:%M:%S", &tm);
 
                 fprintf(logFile, "[%s] ", fmt_tm);
