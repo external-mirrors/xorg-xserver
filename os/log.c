@@ -93,11 +93,6 @@ OR PERFORMANCE OF THIS SOFTWARE.
 #include "input.h"
 #include "opaque.h"
 
-#ifdef WIN32
-#include <process.h>
-#define getpid(x) _getpid(x)
-#endif
-
 #ifdef XF86BIGFONT
 #include "xf86bigfontsrv.h"
 #endif
