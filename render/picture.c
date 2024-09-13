@@ -26,6 +26,8 @@
 #include <dix-config.h>
 #endif
 
+#include "os/osdep.h"
+
 #include "misc.h"
 #include "scrnintstr.h"
 #include "os.h"

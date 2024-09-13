@@ -48,11 +48,19 @@ SOFTWARE.
 #include <dix-config.h>
 #endif
 
+#include <math.h>
+#include <pixman.h>
 #include <X11/X.h>
-#include "misc.h"
-#include "resource.h"
 #include <X11/Xproto.h>
 #include <X11/Xatom.h>
+#include <X11/extensions/XI.h>
+#include <X11/extensions/XI2.h>
+#include <X11/extensions/XIproto.h>
+
+#include "os/osdep.h"
+
+#include "misc.h"
+#include "resource.h"
 #include "windowstr.h"
 #include "inputstr.h"
 #include "scrnintstr.h"
@@ -71,11 +79,6 @@ SOFTWARE.
 #include "eventstr.h"
 #include "dixgrabs.h"
 
-#include <X11/extensions/XI.h>
-#include <X11/extensions/XI2.h>
-#include <X11/extensions/XIproto.h>
-#include <math.h>
-#include <pixman.h>
 #include "exglobals.h"
 #include "exevents.h"
 #include "xiquerydevice.h"      /* for SizeDeviceClasses */

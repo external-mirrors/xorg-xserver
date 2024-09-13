@@ -32,6 +32,8 @@ in this Software without prior written authorization from The Open Group.
 #include <X11/extensions/securproto.h>
 #include <X11/Xfuncproto.h>
 
+#include "os/osdep.h"
+
 #include "scrnintstr.h"
 #include "inputstr.h"
 #include "windowstr.h"

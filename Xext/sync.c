@@ -58,6 +58,10 @@ PERFORMANCE OF THIS SOFTWARE.
 #include <X11/X.h>
 #include <X11/Xproto.h>
 #include <X11/Xmd.h>
+#include <X11/extensions/syncproto.h>
+
+#include "os/osdep.h"
+
 #include "scrnintstr.h"
 #include "os.h"
 #include "extnsionst.h"
@@ -65,7 +69,6 @@ PERFORMANCE OF THIS SOFTWARE.
 #include "pixmapstr.h"
 #include "resource.h"
 #include "opaque.h"
-#include <X11/extensions/syncproto.h>
 #include "syncsrv.h"
 #include "syncsdk.h"
 #include "protocol-versions.h"

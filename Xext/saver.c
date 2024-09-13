@@ -32,6 +32,10 @@ in this Software without prior written authorization from the X Consortium.
 
 #include <X11/X.h>
 #include <X11/Xproto.h>
+#include <X11/extensions/saverproto.h>
+
+#include "os/osdep.h"
+
 #include "misc.h"
 #include "os.h"
 #include "windowstr.h"
@@ -41,7 +45,6 @@ in this Software without prior written authorization from the X Consortium.
 #include "dixstruct.h"
 #include "resource.h"
 #include "opaque.h"
-#include <X11/extensions/saverproto.h>
 #include "gcstruct.h"
 #include "cursorstr.h"
 #include "colormapst.h"
@@ -60,6 +63,10 @@ in this Software without prior written authorization from the X Consortium.
 #include <stdio.h>
 
 #include "extinit.h"
+
+// temporary workaround for win32/mingw32 name clash
+// see: https://gitlab.freedesktop.org/xorg/xserver/-/merge_requests/1355
+#undef CreateWindow
 
 static int ScreenSaverEventBase = 0;
 
