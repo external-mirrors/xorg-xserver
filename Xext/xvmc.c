@@ -44,8 +44,6 @@ static RESTYPE XvMCRTContext;
 static RESTYPE XvMCRTSurface;
 static RESTYPE XvMCRTSubpicture;
 
-int (*XvMCScreenInitProc)(ScreenPtr, int, XvMCAdaptorPtr) = NULL;
-
 typedef struct {
     int num_adaptors;
     XvMCAdaptorPtr adaptors;
