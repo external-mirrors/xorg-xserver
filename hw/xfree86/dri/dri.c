@@ -631,6 +631,8 @@ DRIScreenInit(ScreenPtr pScreen, DRIInfoPtr pDRIInfo, int *pDRMFD)
     return TRUE;
 }
 
+static Bool DRIDestroyWindow(WindowPtr pWin);
+
 Bool
 DRIFinishScreenInit(ScreenPtr pScreen)
 {
@@ -1917,7 +1919,7 @@ DRITreeTraversal(WindowPtr pWin, void *data)
     return WT_WALKCHILDREN;
 }
 
-Bool
+static Bool
 DRIDestroyWindow(WindowPtr pWin)
 {
     ScreenPtr pScreen = pWin->drawable.pScreen;
