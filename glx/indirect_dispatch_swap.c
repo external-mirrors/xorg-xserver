@@ -24,14 +24,18 @@
  * OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#ifdef HAVE_DIX_CONFIG_H
+#include <dix-config.h>
+#endif
 
 #include <inttypes.h>
+
 #include "glxserver.h"
 #include "indirect_size.h"
 #include "indirect_size_get.h"
 #include "indirect_dispatch.h"
-#include "glxbyteorder.h"
 #include "indirect_util.h"
+#include "misc.h"
 #include "singlesize.h"
 
 #define __GLX_PAD(x)  (((x) + 3) & ~3)
