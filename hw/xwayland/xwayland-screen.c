@@ -914,6 +914,10 @@ xwl_screen_validate_options(int argc, char **argv)
         else if (strcmp(argv[i], "-rootless") == 0) {
             rootless = TRUE;
         }
+        else if (strcmp(argv[i], "+iglx") == 0) {
+            ErrorF("Invalid argument, '+iglx' (indirect GLX context) is not supported\n");
+            return FALSE;
+        }
     }
 
     if (rootless && use_fixed_size) {
