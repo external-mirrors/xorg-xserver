@@ -1779,18 +1779,22 @@ xwl_unrealize_window(WindowPtr window)
 {
     ScreenPtr screen = window->drawable.pScreen;
     struct xwl_screen *xwl_screen = xwl_screen_get(screen);
-    struct xwl_window *xwl_window = xwl_window_get(window);
+    struct xwl_window *xwl_window = xwl_window_from_window(window);
     Bool ret;
-
-    if (xwl_window) {
-        unregister_damage(xwl_window);
-        xwl_window_dispose(xwl_window);
-    }
 
     screen->UnrealizeWindow = xwl_screen->UnrealizeWindow;
     ret = (*screen->UnrealizeWindow) (window);
     xwl_screen->UnrealizeWindow = screen->UnrealizeWindow;
     screen->UnrealizeWindow = xwl_unrealize_window;
+
+    if (xwl_window) {
+        if (window == xwl_window->toplevel) {
+            unregister_damage(xwl_window);
+            xwl_window_dispose(xwl_window);
+        } else if (window == xwl_window->surface_window) {
+            xwl_window_update_surface_window(xwl_window);
+        }
+    }
 
     return ret;
 }
