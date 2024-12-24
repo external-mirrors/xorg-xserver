@@ -1627,13 +1627,17 @@ xwl_realize_window(WindowPtr window)
         }
     }
 
+    if (xwl_screen->rootless ?
+        (window->drawable.class == InputOutput &&
+         window->parent == window->drawable.pScreen->root) :
+        !window->parent) {
+        if (!register_damage(window))
+            return FALSE;
+    }
+
     xwl_window = ensure_surface_for_window(window);
     if (!xwl_window)
         return FALSE;
-
-    if (window == xwl_window->surface_window &&
-        !window_get_damage(window))
-        return register_damage(window);
 
     return TRUE;
 }
