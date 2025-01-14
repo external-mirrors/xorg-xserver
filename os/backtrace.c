@@ -92,13 +92,13 @@ print_registers(int frame, unw_cursor_t cursor)
     ErrorFSigSafe("Registers at frame #%d:\n", frame);
 
     for (i = 0; i < num_regs; i++) {
-        uint64_t val;
+        unw_word_t val;
         ret = unw_get_reg(&cursor, regs[i].regnum, &val);
         if (ret < 0) {
             ErrorFSigSafe("unw_get_reg(%s) failed: %s [%d]\n",
                           regs[i].name, unw_strerror(ret), ret);
         } else {
-            ErrorFSigSafe("  %s: 0x%" PRIx64 "\n", regs[i].name, val);
+            ErrorFSigSafe("  %s: 0x%" PRIxPTR "\n", regs[i].name, val);
         }
     }
 }
