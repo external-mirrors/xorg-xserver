@@ -202,8 +202,8 @@ SyncAddTriggerToSyncObject(SyncTrigger * pTrigger)
             return Success;
     }
 
-    if (!(pCur = malloc(sizeof(SyncTriggerList))))
-        return BadAlloc;
+    /* Failure is not an option, it's succeed or burst! */
+    pCur = XNFalloc(sizeof(SyncTriggerList));
 
     pCur->pTrigger = pTrigger;
     pCur->next = pTrigger->pSync->pTriglist;
@@ -411,8 +411,7 @@ SyncInitTrigger(ClientPtr client, SyncTrigger * pTrigger, XID syncObject,
      *  a new counter on a trigger
      */
     if (newSyncObject) {
-        if ((rc = SyncAddTriggerToSyncObject(pTrigger)) != Success)
-            return rc;
+        SyncAddTriggerToSyncObject(pTrigger);
     }
     else if (pCounter && IsSystemCounter(pCounter)) {
         SyncComputeBracketValues(pCounter);
