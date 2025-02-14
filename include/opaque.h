@@ -54,7 +54,6 @@ extern _X_EXPORT Bool disableBackingStore;
 extern _X_EXPORT Bool enableBackingStore;
 extern _X_EXPORT Bool enableIndirectGLX;
 extern _X_EXPORT Bool PartialNetwork;
-extern _X_EXPORT Bool RunFromSigStopParent;
 
 #ifdef RLIMIT_DATA
 extern _X_EXPORT int limitDataSpace;

@@ -580,7 +580,6 @@ UseMsg(void)
 #endif
     ErrorF("-dumbSched             Disable smart scheduling and threaded input, enable old behavior\n");
     ErrorF("-schedInterval int     Set scheduler interval in msec\n");
-    ErrorF("-sigstop               Enable SIGSTOP based startup\n");
     ErrorF("+extension name        Enable extension\n");
     ErrorF("-extension name        Disable extension\n");
     ListStaticExtensions();
@@ -1030,9 +1029,6 @@ ProcessCommandLine(int argc, char *argv[])
             }
             else
                 UseMsg();
-        }
-        else if (strcmp(argv[i], "-sigstop") == 0) {
-            RunFromSigStopParent = TRUE;
         }
         else if (strcmp(argv[i], "+extension") == 0) {
             if (++i < argc) {
