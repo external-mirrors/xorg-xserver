@@ -106,6 +106,8 @@
 #ifndef _PCI_H
 #define _PCI_H 1
 
+#include <X11/Xdefs.h>
+
 #include "xf86Pci.h"
 
 /*
@@ -144,5 +146,7 @@ extern void osPciInit(void);
 #else
 #error No PCI support available for this architecture/OS combination
 #endif
+
+Bool xf86scanpci(void);
 
 #endif                          /* _PCI_H */
