@@ -36,7 +36,7 @@
 
 DevPrivateKeyRec GEClientPrivateKeyRec;
 
-GEExtension GEExtensions[MAXEXTENSIONS];
+static GEExtension GEExtensions[MAXEXTENSIONS];
 
 /* Major available requests */
 static const int version_requests[] = {
