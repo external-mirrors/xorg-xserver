@@ -140,7 +140,6 @@ Equipment Corporation.
 #include "dispatch.h"
 
 #include <X11/extensions/ge.h>
-#include "geext.h"
 #include "geint.h"
 
 #include "eventstr.h"

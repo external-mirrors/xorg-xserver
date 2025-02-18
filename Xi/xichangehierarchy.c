@@ -45,7 +45,6 @@
 #include "extnsionst.h"
 #include "exevents.h"
 #include "exglobals.h"
-#include "geext.h"
 #include "misc.h"
 #include "xace.h"
 #include "xiquerydevice.h"      /* for GetDeviceUse */
