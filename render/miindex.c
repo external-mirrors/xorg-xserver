@@ -25,9 +25,6 @@
 #include <dix-config.h>
 #endif
 
-#ifndef _MIINDEX_H_
-#define _MIINDEX_H_
-
 #include "scrnintstr.h"
 #include "gcstruct.h"
 #include "pixmapstr.h"
@@ -328,5 +325,3 @@ miUpdateIndexed(ScreenPtr pScreen,
         }
     }
 }
-
-#endif                          /* _MIINDEX_H_ */
