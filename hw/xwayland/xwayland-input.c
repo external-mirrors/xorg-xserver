@@ -1206,10 +1206,13 @@ keyboard_handle_keymap(void *data, struct wl_keyboard *keyboard,
     }
 
     XkbDeviceApplyKeymap(xwl_seat->keyboard, xkb);
+    xwl_seat->keyboard->hasDdxKeymap = TRUE;
 
     master = GetMaster(xwl_seat->keyboard, MASTER_KEYBOARD);
-    if (master)
+    if (master) {
         XkbDeviceApplyKeymap(master, xkb);
+        master->hasDdxKeymap = TRUE;
+    }
 
     XkbFreeKeyboard(xkb, XkbAllComponentsMask, TRUE);
 
