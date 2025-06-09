@@ -1925,7 +1925,9 @@ drmmode_set_gamma_lut(drmmode_crtc_private_ptr drmmode_crtc,
     }
 
     uint32_t blob_id;
-    if (drmModeCreatePropertyBlob(drmmode->fd, lut, sizeof(lut), &blob_id)) {
+    if (drmModeCreatePropertyBlob(drmmode->fd, lut,
+                                  sizeof(struct drm_color_lut) * size,
+                                  &blob_id)) {
         free(lut);
         return;
     }
