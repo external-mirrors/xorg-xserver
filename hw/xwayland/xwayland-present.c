@@ -741,6 +741,7 @@ xwl_present_check_flip(RRCrtcPtr crtc,
     WindowPtr toplvl_window = xwl_present_toplvl_pixmap_window(present_window);
     struct xwl_window *xwl_window = xwl_window_from_window(present_window);
     ScreenPtr screen = pixmap->drawable.pScreen;
+    PixmapPtr window_pixmap = screen->GetWindowPixmap(present_window);
 
     if (reason)
         *reason = PRESENT_FLIP_REASON_UNKNOWN;
@@ -761,9 +762,11 @@ xwl_present_check_flip(RRCrtcPtr crtc,
     if (valid)
         return FALSE;
 
-    /* Flip pixmap must have same dimensions as window */
+    /* Flip pixmap must have same dimensions as the window and its pixmap */
     if (present_window->drawable.width != pixmap->drawable.width ||
-            present_window->drawable.height != pixmap->drawable.height)
+        present_window->drawable.height != pixmap->drawable.height ||
+        pixmap->drawable.width != window_pixmap->drawable.width ||
+        pixmap->drawable.height != window_pixmap->drawable.height)
         return FALSE;
 
     if (!xwl_pixmap_get_wl_buffer(pixmap))
@@ -781,7 +784,7 @@ xwl_present_check_flip(RRCrtcPtr crtc,
      * window's, e.g. because a client redirected this window or one of its
      * parents.
      */
-    if (screen->GetWindowPixmap(xwl_window->surface_window) != screen->GetWindowPixmap(present_window))
+    if (screen->GetWindowPixmap(xwl_window->surface_window) != window_pixmap)
         return FALSE;
 
     /*
