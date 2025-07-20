@@ -32,8 +32,6 @@
 #include <xwin-config.h>
 #endif
 
-#include "os/osdep.h"
-
 #include <../xfree86/common/xorgVersion.h>
 #include "win.h"
 

@@ -79,6 +79,7 @@ OR PERFORMANCE OF THIS SOFTWARE.
 
 #include <dix-config.h>
 
+#include <X11/Xos.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -86,7 +87,6 @@ OR PERFORMANCE OF THIS SOFTWARE.
 #include <sys/stat.h>
 #include <time.h>
 #include <X11/Xfuncproto.h>
-#include <X11/Xos.h>
 
 #include "dix/dix_priv.h"
 #include "dix/input_priv.h"
@@ -96,6 +96,7 @@ OR PERFORMANCE OF THIS SOFTWARE.
 #include "os/osdep.h"
 
 #include "opaque.h"
+#include "osdep.h"
 
 #ifdef XF86BIGFONT
 #include "xf86bigfontsrv.h"

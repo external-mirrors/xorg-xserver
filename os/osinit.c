@@ -46,11 +46,14 @@ SOFTWARE.
 
 #include <dix-config.h>
 
-#include <errno.h>
 #include <stdio.h>
-#include <signal.h>
 #include <X11/X.h>
+#include "os.h"
+#include "osdep.h"
+#include "opaque.h"
 #include <X11/Xos.h>
+#include <signal.h>
+#include <errno.h>
 #ifdef HAVE_DLFCN_H
 #include <dlfcn.h>
 #endif
@@ -60,12 +63,9 @@ SOFTWARE.
 
 #include "dix/dix_priv.h"
 #include "os/busfault.h"
-#include "os/osdep.h"
 #include "os/serverlock.h"
 
 #include "misc.h"
-#include "os.h"
-#include "opaque.h"
 #include "dixstruct.h"
 #include "dixstruct_priv.h"
 

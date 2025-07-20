@@ -32,7 +32,6 @@
 #include <X11/Xmd.h>
 
 #include "os/cmdline.h"
-#include "os/osdep.h"
 
 #include "compiler.h"
 #include "linux.h"

@@ -91,7 +91,9 @@ SOFTWARE.
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
 #endif
+
 #include <sys/uio.h>
+
 #endif                          /* WIN32 */
 
 #include "dix/dix_priv.h"

@@ -20,7 +20,6 @@ is" without express or implied warranty.
 #include <X11/Xproto.h>
 
 #include "os/client_priv.h"
-#include "os/osdep.h"
 
 #include "screenint.h"
 #include "input.h"

@@ -39,8 +39,6 @@
 #include <sys/kd.h>
 #endif
 
-#include "os/osdep.h"
-
 /*
  * Applications see VT number as consecutive integers starting from 1.
  * VT number			VT device

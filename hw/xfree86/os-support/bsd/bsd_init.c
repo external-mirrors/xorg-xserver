@@ -43,8 +43,6 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#include "os/osdep.h"
-
 #ifndef CONSOLE_X_MODE_ON
 #define CONSOLE_X_MODE_ON _IO('t',121)
 #endif
