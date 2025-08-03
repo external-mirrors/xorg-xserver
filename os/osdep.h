@@ -251,7 +251,7 @@ Bool WaitForSomething(Bool clients_are_ready);
 void CloseDownConnection(ClientPtr client);
 
 #if __has_builtin(__builtin_popcountl)
-# define Ones __builtin_popcountl
+# define Xpopcountl __builtin_popcountl
 #else
 /*
  * Count the number of bits set to 1 in a 32-bit word.
@@ -259,7 +259,7 @@ void CloseDownConnection(ClientPtr client);
  * https://dspace.mit.edu/handle/1721.1/6086
  */
 static inline int
-Ones(unsigned long mask)
+Xpopcountl(unsigned long mask)
 {
     unsigned long y;
 
@@ -268,5 +268,6 @@ Ones(unsigned long mask)
     return (((y + (y >> 3)) & 030707070707) % 077);
 }
 #endif
+#define Ones Xpopcountl
 
 #endif                          /* _OSDEP_H_ */

@@ -2020,3 +2020,13 @@ os_move_fd(int fd)
     return newfd;
 }
 #endif
+
+/* Exported version for binary compatibility with modules which call it */
+#undef Ones
+_X_EXPORT int Ones(unsigned long);
+
+int
+Ones (unsigned long mask)
+{
+    return Xpopcountl(mask);
+}
