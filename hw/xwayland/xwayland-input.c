@@ -1605,9 +1605,13 @@ find_toplevel_callback(void *resource, XID id, void *user_data)
     WindowPtr window = resource;
     WindowPtr *toplevel = user_data;
 
-    /* Pick the first realized toplevel we find */
-    if (*toplevel == NullWindow && window->realized && xwl_window_is_toplevel(window))
-        *toplevel = window;
+    while (*toplevel == NullWindow && window) {
+        /* Pick the first realized toplevel we find */
+        if (window->realized && xwl_window_is_toplevel(window))
+            *toplevel = window;
+        else
+            window = window->parent;
+    }
 }
 
 static WindowPtr
