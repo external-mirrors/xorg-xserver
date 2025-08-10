@@ -184,7 +184,7 @@ meson:
       BUILD_XORG: true
       BUILD_XVFB: true
       BUILD_XWAYLAND: true
-      MESON_EXTRA_ARGS: ${MESON_DDX_BUILD_ARGS}
+      MESON_EXTRA_ARGS: -Dxf86bigfont=true ${MESON_DDX_BUILD_ARGS}
 
 meson-noglamor:
     extends: meson
