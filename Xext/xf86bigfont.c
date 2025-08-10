@@ -651,7 +651,7 @@ ProcXF86BigfontDispatch(ClientPtr client)
 static int _X_COLD
 SProcXF86BigfontQueryVersion(ClientPtr client)
 {
-    REQUEST(xXF86BigfontQueryVersionReq);
+    /* REQUEST(xXF86BigfontQueryVersionReq); */
     return ProcXF86BigfontQueryVersion(client);
 }
 
