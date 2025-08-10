@@ -178,8 +178,6 @@ int xthread_sigmask(int how, const sigset_t *set, sigset_t *oldest);
 extern void (*OsVendorVErrorFProc) (const char *, va_list args)
     _X_ATTRIBUTE_PRINTF(1, 0);
 
-void AbortServer(void) _X_NORETURN;
-
 void MakeClientGrabPervious(ClientPtr client);
 void MakeClientGrabImpervious(ClientPtr client);
 
