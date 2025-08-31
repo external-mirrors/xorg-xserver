@@ -71,6 +71,4 @@ void NewCurrentScreen(DeviceIntPtr pDev,
 
 Bool PointerConfinedToScreen(DeviceIntPtr pDev);
 
-void GetSpritePosition(DeviceIntPtr pDev, int *px, int *py);
-
 #endif /* _XSERVER_DIX_CURSOR_PRIV_H */

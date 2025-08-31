@@ -80,8 +80,6 @@ SOFTWARE.
 
 #include <dix-config.h>
 
-#include "dix/cursor_priv.h"
-
 #include <X11/X.h>
 #include <X11/Xproto.h>
 #include <X11/extensions/geproto.h>
