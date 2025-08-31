@@ -24,14 +24,12 @@
 
 #include <dix-config.h>
 
-#include <stdint.h>
 #include <X11/X.h>
 #include <X11/Xproto.h>
 #include <X11/extensions/render.h>
 #include <X11/extensions/renderproto.h>
 #include <X11/Xfuncproto.h>
 
-#include "dix/cursor_priv.h"
 #include "dix/dix_priv.h"
 #include "os/osdep.h"
 
@@ -56,6 +54,8 @@
 #include "panoramiX.h"
 #include "panoramiXsrv.h"
 #endif /* XINERAMA */
+
+#include <stdint.h>
 
 static int ProcRenderQueryVersion(ClientPtr pClient);
 static int ProcRenderQueryPictFormats(ClientPtr pClient);
