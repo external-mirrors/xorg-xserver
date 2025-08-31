@@ -36,7 +36,6 @@
 #include <X11/extensions/XI.h>
 #include <X11/extensions/XI2proto.h>
 
-#include "dix/cursor_priv.h"
 #include "dix/dix_priv.h"
 
 #include "inputstr.h"           /* DeviceIntPtr      */

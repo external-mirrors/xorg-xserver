@@ -86,7 +86,6 @@ Equipment Corporation.
 
 #include "config/hotplug_priv.h"
 #include "dix/callback_priv.h"
-#include "dix/cursor_priv.h"
 #include "dix/dix_priv.h"
 #include "dix/input_priv.h"
 #include "dix/gc_priv.h"
