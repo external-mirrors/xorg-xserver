@@ -34,7 +34,6 @@ and Jim Haggerty of Metheus.
 
 #include <dix-config.h>
 
-#include "dix/cursor_priv.h"
 #include "dix/eventconvert.h"
 #include "os/osdep.h"
 
@@ -722,7 +721,7 @@ RecordSendProtocolEvents(RecordClientsAndProtocolPtr pRCAP,
                  pev->u.u.type == ButtonPress ||
                  pev->u.u.type == ButtonRelease ||
                  pev->u.u.type == KeyPress || pev->u.u.type == KeyRelease)) {
-                int scr = inputInfo.pointer->spriteInfo->sprite->screen->myNum;
+                int scr = XineramaGetCursorScreen(inputInfo.pointer);
 
                 memcpy(&shiftedEvent, pev, sizeof(xEvent));
                 shiftedEvent.u.keyButtonPointer.rootX +=
