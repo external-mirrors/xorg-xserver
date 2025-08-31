@@ -5,7 +5,6 @@
 #ifndef _XSERVER_DIX_CURSOR_PRIV_H
 #define _XSERVER_DIX_CURSOR_PRIV_H
 
-#include <X11/fonts/font.h>
 #include <X11/X.h>
 #include <X11/Xmd.h>
 
@@ -48,10 +47,5 @@ int AllocGlyphCursor(Font source,
                      XID cid);
 
 CursorPtr CreateRootCursor(void);
-
-int ServerBitsFromGlyph(FontPtr pfont,
-                        unsigned int ch,
-                        CursorMetricPtr cm,
-                        unsigned char **ppbits);
 
 #endif /* _XSERVER_DIX_CURSOR_PRIV_H */

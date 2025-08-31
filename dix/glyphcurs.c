@@ -46,8 +46,6 @@ SOFTWARE.
 
 #include <dix-config.h>
 
-#include "dix/cursor_priv.h"
-
 #include "misc.h"
 #include <X11/fonts/fontstruct.h>
 #include "dixfontstr.h"
