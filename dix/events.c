@@ -118,7 +118,6 @@ Equipment Corporation.
 #include <X11/extensions/XIproto.h>
 #include <X11/extensions/XI2proto.h>
 
-#include "dix/cursor_priv.h"
 #include "dix/dix_priv.h"
 #include "dix/dixgrabs_priv.h"
 #include "dix/input_priv.h"

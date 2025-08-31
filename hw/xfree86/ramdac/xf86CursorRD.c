@@ -3,7 +3,6 @@
 #include <xorg-config.h>
 #endif
 
-#include "dix/cursor_priv.h"
 #include "mi/mipointer_priv.h"
 
 #include "xf86.h"
