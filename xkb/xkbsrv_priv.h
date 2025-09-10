@@ -8,6 +8,8 @@
 
 #include "xkbsrv.h"
 
+extern RESTYPE RT_XKBCLIENT;
+
 void xkbUnwrapProc(DeviceIntPtr, DeviceHandleProc, void *);
 
 void XkbForceUpdateDeviceLEDs(DeviceIntPtr keybd);
