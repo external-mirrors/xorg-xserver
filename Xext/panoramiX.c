@@ -743,8 +743,8 @@ PanoramiXMaybeAddDepth(DepthPtr pDepth)
 
     j = PanoramiXNumDepths;
     PanoramiXNumDepths++;
-    PanoramiXDepths = reallocarray(PanoramiXDepths,
-                                   PanoramiXNumDepths, sizeof(DepthRec));
+    PanoramiXDepths = XNFreallocarray(PanoramiXDepths,
+                                      PanoramiXNumDepths, sizeof(DepthRec));
     PanoramiXDepths[j].depth = pDepth->depth;
     PanoramiXDepths[j].numVids = 0;
     PanoramiXDepths[j].vids = NULL;
