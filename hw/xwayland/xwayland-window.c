@@ -67,6 +67,7 @@
 #define FRACTIONAL_SCALE_DENOMINATOR 120
 
 static DevPrivateKeyRec xwl_window_private_key;
+static DevPrivateKeyRec xwl_wm_window_private_key;
 static DevPrivateKeyRec xwl_damage_private_key;
 static const char *xwl_surface_tag = "xwl-surface";
 
@@ -473,8 +474,13 @@ static Bool
 window_is_wm_window(WindowPtr window)
 {
     struct xwl_screen *xwl_screen = xwl_screen_get(window->drawable.pScreen);
+    Bool *is_wm_window;
 
-    return CLIENT_ID(window->drawable.id) == xwl_screen->wm_client_id;
+    if (CLIENT_ID(window->drawable.id) == xwl_screen->wm_client_id)
+        return TRUE;
+
+    is_wm_window = dixLookupPrivate(&window->devPrivates, &xwl_wm_window_private_key);
+    return *is_wm_window;
 }
 
 static WindowPtr
@@ -1843,6 +1849,31 @@ xwl_config_notify(WindowPtr window,
 }
 
 void
+xwl_reparent_window(WindowPtr window, WindowPtr prior_parent)
+{
+    ScreenPtr screen = window->drawable.pScreen;
+    struct xwl_screen *xwl_screen = xwl_screen_get(screen);
+    WindowPtr parent = window->parent;
+    Bool *is_wm_window;
+
+    if (xwl_screen->ReparentWindow) {
+        screen->ReparentWindow = xwl_screen->ReparentWindow;
+        screen->ReparentWindow(window, prior_parent);
+        xwl_screen->ReparentWindow = screen->ReparentWindow;
+        screen->ReparentWindow = xwl_reparent_window;
+    }
+
+    if (!parent->parent ||
+        GetCurrentClient()->index != xwl_screen->wm_client_id)
+        return;
+
+    /* If the WM client reparents a window, mark the new parent as a WM window */
+    is_wm_window = dixLookupPrivate(&parent->devPrivates,
+                                    &xwl_wm_window_private_key);
+    *is_wm_window = TRUE;
+}
+
+void
 xwl_resize_window(WindowPtr window,
                   int x, int y,
                   unsigned int width, unsigned int height,
@@ -2064,6 +2095,10 @@ Bool
 xwl_window_init(void)
 {
     if (!dixRegisterPrivateKey(&xwl_window_private_key, PRIVATE_WINDOW, 0))
+        return FALSE;
+
+    if (!dixRegisterPrivateKey(&xwl_wm_window_private_key, PRIVATE_WINDOW,
+                               sizeof(Bool)))
         return FALSE;
 
     if (!dixRegisterPrivateKey(&xwl_damage_private_key, PRIVATE_WINDOW, 0))

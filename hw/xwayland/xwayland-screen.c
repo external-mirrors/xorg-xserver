@@ -1142,6 +1142,9 @@ xwl_screen_init(ScreenPtr pScreen, int argc, char **argv)
     xwl_screen->ConfigNotify = pScreen->ConfigNotify;
     pScreen->ConfigNotify = xwl_config_notify;
 
+    xwl_screen->ReparentWindow = pScreen->ReparentWindow;
+    pScreen->ReparentWindow = xwl_reparent_window;
+
     xwl_screen->ResizeWindow = pScreen->ResizeWindow;
     pScreen->ResizeWindow = xwl_resize_window;
 
