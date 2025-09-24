@@ -484,6 +484,25 @@ window_is_wm_window(WindowPtr window)
 }
 
 static WindowPtr
+get_single_input_output_child(WindowPtr window)
+{
+    WindowPtr iter, input_output_child = NULL;
+
+    for (iter = window->firstChild; iter; iter = iter->nextSib) {
+        if (iter->drawable.class != InputOutput)
+            continue;
+
+        /* We're looking for a single InputOutput child, bail if there are multiple */
+        if (input_output_child)
+            return NULL;
+
+        input_output_child = iter;
+    }
+
+    return input_output_child;
+}
+
+static WindowPtr
 window_get_client_toplevel(WindowPtr window)
 {
     assert(window);
@@ -491,14 +510,10 @@ window_get_client_toplevel(WindowPtr window)
     /* If the toplevel window is owned by the window-manager, then the
      * actual client toplevel window has been reparented to some window-manager
      * decoration/wrapper windows. In that case recurse by checking the client
-     * of the first *and only* child of the decoration/wrapper window.
+     * of the only InputOutput child of the decoration/wrapper window.
      */
-    while (window_is_wm_window(window)) {
-        if (!window->firstChild || window->firstChild != window->lastChild)
-            return NULL; /* Should never happen, skip resolution emulation */
-
-        window = window->firstChild;
-    }
+    while (window && window_is_wm_window(window))
+        window = get_single_input_output_child(window);
 
     return window;
 }
