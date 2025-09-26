@@ -393,6 +393,7 @@ xwl_window_disable_viewport(struct xwl_window *xwl_window)
     xwl_window->viewport = NULL;
     xwl_window->viewport_scale_x = 1.0;
     xwl_window->viewport_scale_y = 1.0;
+    xwl_window_set_input_region(xwl_window, wInputShape(xwl_window->toplevel));
 }
 
 /* Enable the viewport for fractional scale support with Xwayland rootful.
@@ -429,6 +430,7 @@ xwl_window_enable_viewport_for_fractional_scale(struct xwl_window *xwl_window,
 
     xwl_window->viewport_scale_x = scale;
     xwl_window->viewport_scale_y = scale;
+    xwl_window_set_input_region(xwl_window, wInputShape(xwl_window->toplevel));
 }
 
 /* Enable the viewport for Xwayland rootful fullscreen, to match the XRandR
@@ -464,6 +466,7 @@ xwl_window_enable_viewport_for_output(struct xwl_window *xwl_window,
 
     xwl_window->viewport_scale_x = (float) width / xwl_output->width;
     xwl_window->viewport_scale_y = (float) height / xwl_output->height;
+    xwl_window_set_input_region(xwl_window, wInputShape(xwl_window->toplevel));
 }
 
 static Bool
@@ -2037,12 +2040,20 @@ xwl_window_set_input_region(struct xwl_window *xwl_window,
     region = wl_compositor_create_region(xwl_window->xwl_screen->compositor);
     box = RegionRects(input_shape);
 
-    for (i = 0; i < RegionNumRects(input_shape); ++i, ++box) {
-        wl_region_add(region,
-                      box->x1,
-                      box->y1,
-                      box->x2 - box->x1,
-                      box->y2 - box->y1);
+    for (i = 0; i < RegionNumRects(input_shape); ++i) {
+        BoxRec b = box[i];
+
+        if (xwl_window->viewport_scale_x != 1.0f) {
+            b.x1 = floorf(b.x1 / xwl_window->viewport_scale_x);
+            b.x2 = ceilf(b.x2 / xwl_window->viewport_scale_x);
+        }
+
+        if (xwl_window->viewport_scale_y != 1.0f) {
+            b.y1 = floorf(b.y1 / xwl_window->viewport_scale_y);
+            b.y2 = ceilf(b.y2 / xwl_window->viewport_scale_y);
+        }
+
+        wl_region_add(region, b.x1, b.y1, b.x2 - b.x1, b.y2 - b.y1);
     }
 
     wl_surface_set_input_region(xwl_window->surface, region);
