@@ -1,5 +1,5 @@
 /* xorg-config.h.in: not at all generated.                      -*- c -*-
- * 
+ *
  * This file differs from xorg-server.h.in in that -server is installed
  * with the rest of the SDK for external drivers/modules to use, whereas
  * -config is for internal use only (i.e. building the DDX).

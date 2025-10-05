@@ -25,7 +25,7 @@
  *or other dealings in this Software without prior written authorization
  *from the XFree86 Project.
  *
- * Authors: Alexander Gottwald	
+ * Authors: Alexander Gottwald
  */
 
 #ifndef __WIN_MSG_H__

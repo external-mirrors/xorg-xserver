@@ -904,7 +904,7 @@ wait_for_mieq_init(void);
                            [e type] == NSOtherMouseDragged ||
                            [e type] == NSRightMouseDragged ||
                            [e type] == NSMouseMoved ||
-                           [e type] == NSTabletPoint || 
+                           [e type] == NSTabletPoint ||
                            [e type] == NSScrollWheel;
 
     isTabletEvent = ([e type] == NSTabletPoint) ||
@@ -987,7 +987,7 @@ wait_for_mieq_init(void);
                                 NX_DEVICELCTLKEYMASK | NX_DEVICERCTLKEYMASK,
                                 NX_DEVICELCTLKEYMASK);
     modifierFlags = ensure_flag(modifierFlags, NX_SHIFTMASK,
-                                NX_DEVICELSHIFTKEYMASK | NX_DEVICERSHIFTKEYMASK, 
+                                NX_DEVICELSHIFTKEYMASK | NX_DEVICERSHIFTKEYMASK,
                                 NX_DEVICELSHIFTKEYMASK);
     modifierFlags = ensure_flag(modifierFlags, NX_COMMANDMASK,
                                 NX_DEVICELCMDKEYMASK | NX_DEVICERCMDKEYMASK,
@@ -1203,16 +1203,16 @@ handle_mouse:
         if (source) {
             double lineHeight = CGEventSourceGetPixelsPerLine(source);
             CFRelease(source);
-            
+
             /* There's no real reason for the 1/5 ratio here other than that
              * it feels like a good ratio after some testing.
              */
-            
+
             deltaX *= lineHeight / 5.0;
             deltaY *= lineHeight / 5.0;
         }
 #endif
-        
+
         if (XQuartzScrollInDeviceDirection &&
             [e isDirectionInvertedFromDevice]) {
             deltaX *= -1;
@@ -1246,7 +1246,7 @@ handle_mouse:
                 }
 
                 /* Eat up the deficit, but ensure that something is
-                 * always sent 
+                 * always sent
                  */
                 if (fabs(deltaX) > fabs(deficit_x)) {
                     deltaX -= deficit_x;
@@ -1279,7 +1279,7 @@ handle_mouse:
                 }
 
                 /* Eat up the deficit, but ensure that something is
-                 * always sent 
+                 * always sent
                  */
                 if (fabs(deltaY) > fabs(deficit_y)) {
                     deltaY -= deficit_y;

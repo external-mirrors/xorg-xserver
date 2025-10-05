@@ -139,7 +139,7 @@ static const FbBits fbStipple1Bits[2] = {
  *  Example: srcX = 0 dstX = 8 (FB unit 32 dstBpp 8)
  *
  *	**** **** **** **** **** **** **** ****
- *	^		
+ *	^
  *	********  ********  ********  ********
  *		  ^
  *
