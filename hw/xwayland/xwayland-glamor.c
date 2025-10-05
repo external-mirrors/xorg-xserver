@@ -65,7 +65,7 @@ void
 xwl_glamor_egl_make_current(struct xwl_screen *xwl_screen)
 {
     EGLContext ctx = xwl_screen->glamor_ctx->ctx;
-    
+
     if (lastGLContext == ctx)
         return;
 

@@ -2087,6 +2087,6 @@ RRHasScanoutPixmap(ScreenPtr pScreen)
         if (crtc->scanout_pixmap)
             return TRUE;
     }
-    
+
     return FALSE;
 }

@@ -444,7 +444,7 @@ RecordFindClientOnContext(RecordContextPtr pContext,
  *
  * Side Effects:
  *	The big request is recorded with the correct length field re-inserted.
- *	
+ *
  * Note: this function exists mainly to make RecordARequest smaller.
  */
 static void
@@ -842,7 +842,7 @@ RecordFlushAllContexts(CallbackListPtr *pcbl,
  *	If oneclient is zero, recording hooks needed for all clients and
  *	protocol on the RCAP are installed.  If oneclient is non-zero,
  *	only those hooks needed for the specified client are installed.
- *	
+ *
  *	Client requestVectors may be altered.  numEnabledRCAPs will be
  *	incremented if oneclient == 0.  Callbacks may be added to
  *	various callback lists.
@@ -927,7 +927,7 @@ RecordInstallHooks(RecordClientsAndProtocolPtr pRCAP, XID oneclient)
  *	If oneclient is zero, recording hooks needed for all clients and
  *	protocol on the RCAP may be uninstalled.  If oneclient is non-zero,
  *	only those hooks needed for the specified client may be uninstalled.
- *	
+ *
  *	Client requestVectors may be altered.  numEnabledRCAPs will be
  *	decremented if oneclient == 0.  Callbacks may be deleted from
  *	various callback lists.
@@ -2760,7 +2760,7 @@ RecordAClientStateChange(CallbackListPtr *pcbl, void *nulldata,
  *
  * Side Effects:
  *	Performs any cleanup needed by RECORD at server shutdown time.
- *	
+ *
  */
 static void
 RecordCloseDown(ExtensionEntry * extEntry)

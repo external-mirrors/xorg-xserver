@@ -118,7 +118,7 @@ parse_file (FILE *file)
 
   if (!file)
     return 1;
-  
+
   yylineno = 1;
   yyin = file;
   ret = yyparse ();

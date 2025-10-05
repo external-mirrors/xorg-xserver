@@ -51,7 +51,7 @@
 /* The global pref settings */
 WINPREFS pref;
 
-/* The working menu */  
+/* The working menu */
 static MENUPARSED menu;
 
 /* Functions for parsing the tokens into out structure */
@@ -139,7 +139,7 @@ line:	NEWLINE
 	;
 
 
-newline_or_nada:	
+newline_or_nada:
 	| NEWLINE newline_or_nada
 	;
 
@@ -335,19 +335,19 @@ CloseMenu (void)
       ErrorF("LoadPreferences: Empty menu detected\n");
       return;
     }
-  
+
   if (pref.menuItems)
     pref.menu = realloc (pref.menu, (pref.menuItems+1)*sizeof(MENUPARSED));
   else
     pref.menu = malloc (sizeof(MENUPARSED));
-  
+
   memcpy (pref.menu+pref.menuItems, &menu, sizeof(MENUPARSED));
   pref.menuItems++;
 
   memset (&menu, 0, sizeof(MENUPARSED));
 }
 
-static void 
+static void
 OpenIcons (void)
 {
   if (pref.icon != NULL) {
@@ -377,7 +377,7 @@ AddIconLine (char *matchstr, char *iconfile)
   pref.iconItems++;
 }
 
-static void 
+static void
 CloseIcons (void)
 {
 }
