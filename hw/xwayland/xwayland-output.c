@@ -1189,6 +1189,8 @@ xwl_screen_init_output(struct xwl_screen *xwl_screen)
     if (!RRScreenInit(xwl_screen->screen))
         return FALSE;
 
+    xwl_screen->screen->ConstrainCursorHarder = NULL;
+
     RRScreenSetSizeRange(xwl_screen->screen, 16, 16, 32767, 32767);
 
     rp = rrGetScrPriv(xwl_screen->screen);
