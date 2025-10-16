@@ -122,6 +122,9 @@ output_handle_mode(void *data, struct wl_output *wl_output, uint32_t flags,
         xwl_output->logical_w = width;
         xwl_output->logical_h = height;
     }
+
+    xwl_output->mode_width = width;
+    xwl_output->mode_height = height;
     xwl_output->refresh = refresh;
 }
 
@@ -424,8 +427,9 @@ xwl_output_find_mode(struct xwl_output *xwl_output,
 
     /* width & height -1 means we want the actual output mode */
     if (width == -1 && height == -1) {
-        if (xwl_output->mode_width > 0 && xwl_output->mode_height > 0) {
-            /* If running rootful, use the current mode size to search for the mode */
+        if (xwl_output == xwl_output->xwl_screen->fixed_output &&
+            xwl_output->mode_width > 0 && xwl_output->mode_height > 0) {
+            /* If running rootful, use the current fixed size to search for the mode */
             width = xwl_output->mode_width;
             height = xwl_output->mode_height;
         }
