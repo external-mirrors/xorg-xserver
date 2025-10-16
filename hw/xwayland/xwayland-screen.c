@@ -134,7 +134,7 @@ xwl_screen_get_first_output(struct xwl_screen *xwl_screen)
     struct xwl_output *xwl_output;
 
     xorg_list_for_each_entry(xwl_output, &xwl_screen->output_list, link) {
-        if (xwl_output->x == 0 && xwl_output->y == 0)
+        if (xwl_output->logical_x == 0 && xwl_output->logical_y == 0)
             return xwl_output;
     }
 
