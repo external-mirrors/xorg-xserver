@@ -448,7 +448,7 @@ xwl_window_enable_viewport_for_output(struct xwl_window *xwl_window,
     if (!xwl_window_has_viewport_enabled(xwl_window)) {
         DebugF("XWAYLAND: enabling viewport %dx%d -> %dx%d\n",
                emulated_mode->width, emulated_mode->height,
-               xwl_output->width, xwl_output->height);
+               xwl_output->logical_w, xwl_output->logical_h);
         xwl_window->viewport = wp_viewporter_get_viewport(xwl_window->xwl_screen->viewporter,
                                                           xwl_window->surface);
     }
@@ -462,11 +462,11 @@ xwl_window_enable_viewport_for_output(struct xwl_window *xwl_window,
                            wl_fixed_from_int(width),
                            wl_fixed_from_int(height));
     wp_viewport_set_destination(xwl_window->viewport,
-                                xwl_output->width,
-                                xwl_output->height);
+                                xwl_output->logical_w,
+                                xwl_output->logical_h);
 
-    xwl_window->viewport_scale_x = (float) width / xwl_output->width;
-    xwl_window->viewport_scale_y = (float) height / xwl_output->height;
+    xwl_window->viewport_scale_x = (float) width / xwl_output->logical_w;
+    xwl_window->viewport_scale_y = (float) height / xwl_output->logical_h;
     xwl_window_set_input_region(xwl_window, wInputShape(xwl_window->toplevel));
 }
 
@@ -524,7 +524,7 @@ is_output_suitable_for_fullscreen(struct xwl_output *xwl_output)
     if (xwl_output == NULL)
         return FALSE;
 
-    if (xwl_output->width == 0 || xwl_output->height == 0)
+    if (xwl_output->logical_w == 0 || xwl_output->logical_h == 0)
         return FALSE;
 
     return TRUE;
@@ -606,8 +606,8 @@ xwl_window_should_enable_viewport(struct xwl_window *xwl_window,
         if (!emulated_mode)
             continue;
 
-        if (drawable->x == xwl_output->x &&
-            drawable->y == xwl_output->y &&
+        if (drawable->x == xwl_output->logical_x &&
+            drawable->y == xwl_output->logical_y &&
             drawable->width  == emulated_mode->width &&
             drawable->height == emulated_mode->height) {
 
