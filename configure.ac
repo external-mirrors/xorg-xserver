@@ -26,7 +26,7 @@ dnl
 dnl Process this file with autoconf to create configure.
 
 AC_PREREQ(2.60)
-AC_INIT([xorg-server], 21.1.19, [https://gitlab.freedesktop.org/xorg/xserver/issues], xorg-server)
+AC_INIT([xorg-server], 21.1.20, [https://gitlab.freedesktop.org/xorg/xserver/issues], xorg-server)
 RELEASE_DATE="2025-10-28"
 RELEASE_NAME="Caramel Ice Cream"
 AC_CONFIG_SRCDIR([Makefile.am])
