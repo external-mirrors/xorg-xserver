@@ -125,6 +125,34 @@ output_handle_mode(void *data, struct wl_output *wl_output, uint32_t flags,
     xwl_output->refresh = refresh;
 }
 
+static void
+output_get_logical_mode(struct xwl_output *xwl_output, int *width, int *height)
+{
+    /* When we have xdg-output support the stored size is already rotated. */
+    if (xwl_output->xdg_output == NULL ||
+        (xwl_output->rotation & (RR_Rotate_0 | RR_Rotate_180))) {
+        *width = xwl_output->logical_w;
+        *height = xwl_output->logical_h;
+    } else {
+        *width = xwl_output->logical_h;
+        *height = xwl_output->logical_w;
+    }
+}
+
+static void
+output_get_logical_extents(struct xwl_output *xwl_output, int *width, int *height)
+{
+    /* When we have xdg-output support the stored size is already rotated. */
+    if (xwl_output->xdg_output ||
+        (xwl_output->rotation & (RR_Rotate_0 | RR_Rotate_180))) {
+        *width = xwl_output->logical_w;
+        *height = xwl_output->logical_h;
+    } else {
+        *width = xwl_output->logical_h;
+        *height = xwl_output->logical_w;
+    }
+}
+
 /**
  * Decides on the maximum expanse of an output in logical space (i.e. in the
  * Wayland compositor plane) respective to some fix width and height values. The
@@ -135,15 +163,7 @@ output_get_new_size(struct xwl_output *xwl_output, int *width, int *height)
 {
     int logical_width, logical_height;
 
-    /* When we have xdg-output support the stored size is already rotated. */
-    if (xwl_output->xdg_output
-            || (xwl_output->rotation & (RR_Rotate_0 | RR_Rotate_180))) {
-        logical_width = xwl_output->logical_w;
-        logical_height = xwl_output->logical_h;
-    } else {
-        logical_width = xwl_output->logical_h;
-        logical_height = xwl_output->logical_w;
-    }
+    output_get_logical_extents(xwl_output, &logical_width, &logical_height);
 
     if (*width < xwl_output->logical_x + logical_width)
         *width = xwl_output->logical_x + logical_width;
@@ -636,17 +656,8 @@ apply_output_change(struct xwl_output *xwl_output)
     xwl_output->wl_output_done = FALSE;
     xwl_output->xdg_output_done = FALSE;
 
-    /* When we have received an xdg-output for the mode size we might need to
-     * rotate back the stored logical size it provided.
-     */
-    if (xwl_output->xdg_output == NULL
-        || xwl_output->rotation & (RR_Rotate_0 | RR_Rotate_180)) {
-        logical_width = xwl_output->logical_w;
-        logical_height = xwl_output->logical_h;
-    } else {
-        logical_width = xwl_output->logical_h;
-        logical_height = xwl_output->logical_w;
-    }
+    output_get_logical_mode(xwl_output, &logical_width, &logical_height);
+
     if (xwl_output->randr_output) {
         /* Build a fresh modes array using the current refresh rate */
         randr_modes = output_get_rr_modes(xwl_output, logical_width, logical_height, &count);
