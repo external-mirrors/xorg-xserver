@@ -111,6 +111,8 @@ void xwl_output_remove(struct xwl_output *xwl_output);
 struct xwl_emulated_mode *xwl_output_get_emulated_mode_for_client(
                             struct xwl_output *xwl_output, ClientPtr client);
 
+void output_get_logical_extents(struct xwl_output *xwl_output, int *width, int *height);
+
 RRModePtr xwl_output_find_mode(struct xwl_output *xwl_output,
                                int32_t width, int32_t height);
 void xwl_output_set_emulated_mode(struct xwl_output *xwl_output,

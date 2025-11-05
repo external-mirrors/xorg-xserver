@@ -139,7 +139,7 @@ output_get_logical_mode(struct xwl_output *xwl_output, int *width, int *height)
     }
 }
 
-static void
+void
 output_get_logical_extents(struct xwl_output *xwl_output, int *width, int *height)
 {
     /* When we have xdg-output support the stored size is already rotated. */
@@ -518,8 +518,15 @@ xwl_output_randr_emu_prop(struct xwl_screen *xwl_screen, ClientPtr client,
 
         prop->rects[index][0] = xwl_output->logical_x;
         prop->rects[index][1] = xwl_output->logical_y;
-        prop->rects[index][2] = emulated_mode->width;
-        prop->rects[index][3] = emulated_mode->height;
+
+        if (xwl_output->rotation & (RR_Rotate_0 | RR_Rotate_180)) {
+            prop->rects[index][2] = emulated_mode->width;
+            prop->rects[index][3] = emulated_mode->height;
+        } else {
+            prop->rects[index][2] = emulated_mode->height;
+            prop->rects[index][3] = emulated_mode->width;
+        }
+
         index++;
     }
 
