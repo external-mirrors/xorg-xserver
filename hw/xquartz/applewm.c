@@ -34,8 +34,6 @@
 
 #include <errno.h>
 
-#include "dix/property_priv.h"
-
 #include "quartz.h"
 
 #include "misc.h"

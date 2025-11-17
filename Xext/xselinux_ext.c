@@ -20,7 +20,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <dix-config.h>
 
 #include "dix/dix_priv.h"
-#include "dix/property_priv.h"
 
 #include "selection.h"
 #include "inputstr.h"
