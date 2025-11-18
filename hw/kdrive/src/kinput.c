@@ -53,6 +53,12 @@
 #include "inpututils.h"
 #include "optionstr.h"
 
+#include "os/cmdline.h"
+
+#if defined(CONFIG_UDEV) || defined(CONFIG_HAL)
+#include <hotplug.h>
+#endif
+
 #define AtomFromName(x) MakeAtom(x, strlen(x), 1)
 
 struct KdConfigDevice {
