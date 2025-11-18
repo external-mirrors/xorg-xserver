@@ -3,13 +3,11 @@
 
 #include <X11/X.h>
 
-#include "mi/mi_priv.h"
-
-
 #include "scrnintstr.h"
 #include <X11/extensions/shapeproto.h>
 #include "validate.h"
 #include "windowstr.h"
+#include "mi.h"
 #include "gcstruct.h"
 #include "regionstr.h"
 #include "privates.h"
