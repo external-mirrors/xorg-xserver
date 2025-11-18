@@ -34,9 +34,6 @@
 #ifdef HAVE_XWIN_CONFIG_H
 #include <xwin-config.h>
 #endif
-
-#include "mi/mi_priv.h"
-
 #include "win.h"
 
 #include "dix/dix_priv.h"
