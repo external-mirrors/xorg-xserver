@@ -50,6 +50,5 @@ void miSourceValidate(DrawablePtr pDrawable, int x, int y, int w, int h,
                       unsigned int subWindowMode);
 int miShapedWindowIn(RegionPtr universe, RegionPtr bounding, BoxPtr rect,
                      int x, int y);
-int miValidateTree(WindowPtr pParent, WindowPtr pChild, VTKind kind);
 
 #endif /* _XSERVER_MI_PRIV_H */
