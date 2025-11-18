@@ -114,6 +114,11 @@ miDoCopy(DrawablePtr pSrcDrawable,
 typedef struct _DeviceRec *DevicePtr;
 #endif
 
+extern _X_EXPORT void mieqProcessDeviceEvent(DeviceIntPtr /* dev */ ,
+                                             InternalEvent * /* event */ ,
+                                             ScreenPtr  /* screen */
+    );
+
 extern _X_EXPORT void mieqProcessInputEvents(void
     );
 
