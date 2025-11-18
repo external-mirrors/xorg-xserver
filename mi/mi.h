@@ -127,7 +127,6 @@ extern _X_EXPORT RegionPtr miHandleExposures(DrawablePtr /*pSrcDrawable */ ,
                                              int /*dsty */
     );
 
-
 extern _X_EXPORT void miWindowExposures(WindowPtr /*pWin */ ,
                                         RegionPtr /*prgn */);
 
