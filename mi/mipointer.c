@@ -115,10 +115,6 @@ static void miPointerMoveNoEvent(DeviceIntPtr pDev, ScreenPtr pScreen, int x,
 
 static InternalEvent *mipointermove_events;   /* for WarpPointer MotionNotifies */
 
-static void
-miRecolorCursor(DeviceIntPtr pDev, ScreenPtr pScr,
-                CursorPtr pCurs, Bool displayed);
-
 Bool
 miPointerInitialize(ScreenPtr pScreen,
                     miPointerSpriteFuncPtr spriteFuncs,
@@ -299,7 +295,7 @@ miPointerSetCursorPosition(DeviceIntPtr pDev, ScreenPtr pScreen,
     return TRUE;
 }
 
-static void
+void
 miRecolorCursor(DeviceIntPtr pDev, ScreenPtr pScr,
                 CursorPtr pCurs, Bool displayed)
 {
