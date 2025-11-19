@@ -46,7 +46,6 @@
 
 #include "glamor.h"
 #include "glamor_priv.h"
-#include "glamor_glx_provider.h"
 #include "dri3.h"
 
 struct glamor_egl_screen_private {
@@ -897,9 +896,6 @@ glamor_egl_screen_init(ScreenPtr screen, struct glamor_context *glamor_ctx)
 #ifdef DRI3
     glamor_screen_private *glamor_priv = glamor_get_screen_private(screen);
 #endif
-#ifdef GLXEXT
-    static Bool vendor_initialized = FALSE;
-#endif
     const char *gbm_backend_name;
 
     glamor_egl->saved_close_screen = screen->CloseScreen;
@@ -938,13 +934,6 @@ glamor_egl_screen_init(ScreenPtr screen, struct glamor_context *glamor_ctx)
             xf86DrvMsg(scrn->scrnIndex, X_ERROR,
                        "Failed to initialize DRI3.\n");
         }
-    }
-#endif
-#ifdef GLXEXT
-    if (!vendor_initialized) {
-        GlxPushProvider(&glamor_provider);
-        xorgGlxCreateVendor();
-        vendor_initialized = TRUE;
     }
 #endif
 }
