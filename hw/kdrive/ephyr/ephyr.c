@@ -30,6 +30,7 @@
 
 #include "mi/mipointer_priv.h"
 #include "os/client_priv.h"
+#include "os/osdep.h"
 
 #include "ephyr.h"
 #include "inputstr.h"
