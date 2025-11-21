@@ -100,6 +100,9 @@ Equipment Corporation.
 #include <version-config.h>
 
 #include <stddef.h>
+#include "dix/registry_priv.h"
+
+#include "windowstr.h"
 #include <X11/fonts/fontstruct.h>
 #include <X11/fonts/libxfont2.h>
 
@@ -117,6 +120,7 @@ Equipment Corporation.
 
 #include "windowstr.h"
 #include "dixfontstr.h"
+#include "dix_priv.h"
 #include "gcstruct.h"
 #include "selection.h"
 #include "colormapst.h"

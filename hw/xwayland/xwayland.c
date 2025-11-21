@@ -35,7 +35,6 @@
 #include <X11/Xatom.h>
 #include <X11/Xfuncproto.h>
 
-#include "dix/dix_priv.h"
 #include "dix/screenint_priv.h"
 #include "os/cmdline.h"
 #include "os/client_priv.h"
