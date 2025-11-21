@@ -55,7 +55,6 @@
 #include "config/hotplug_priv.h"
 #include "dix/input_priv.h"
 #include "dix/screenint_priv.h"
-#include "os/cmdline.h"
 #include "os/osdep.h"
 
 #include "servermd.h"

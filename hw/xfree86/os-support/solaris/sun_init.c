@@ -29,8 +29,6 @@
 #include <errno.h>
 #include <sys/stat.h>
 
-#include "../../../../os/cmdline.h"
-
 #include "xf86.h"
 #include "xf86Priv.h"
 #include "xf86_os_support.h"
