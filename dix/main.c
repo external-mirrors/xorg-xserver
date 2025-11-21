@@ -110,6 +110,10 @@ Equipment Corporation.
 #include "colormapst.h"
 #include "cursorstr.h"
 #include "selection.h"
+#include <X11/fonts/font.h>
+#include <X11/fonts/fontstruct.h>
+#include <X11/fonts/libxfont2.h>
+#include "opaque.h"
 #include "servermd.h"
 #include "dixfont.h"
 #include "extnsionst.h"

@@ -47,6 +47,7 @@
 #include "dix/dix_priv.h"
 
 #include "xfixesint.h"
+#include "opaque.h"
 
 static DevPrivateKeyRec ClientDisconnectPrivateKeyRec;
 

@@ -61,7 +61,6 @@ SOFTWARE.
 #include <execinfo.h>
 #endif
 
-#include "dix/dix_priv.h"
 #include "os/busfault.h"
 #include "os/serverlock.h"
 

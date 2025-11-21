@@ -184,8 +184,6 @@ Bool noGEExtension = FALSE;
 
 Bool CoreDump;
 
-Bool enableIndirectGLX = FALSE;
-
 Bool AllowByteSwappedClients = FALSE;
 
 #ifdef XINERAMA

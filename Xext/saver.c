@@ -46,6 +46,7 @@ in this Software without prior written authorization from the X Consortium.
 #include "extnsionst.h"
 #include "dixstruct.h"
 #include "resource.h"
+#include "opaque.h"
 #include "gcstruct.h"
 #include "cursorstr.h"
 #include "colormapst.h"

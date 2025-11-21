@@ -62,8 +62,6 @@
 
 #include "dix/input_priv.h"
 
-#include "dix/dix_priv.h"
-
 #include "misc.h"
 #include "xf86.h"
 #include "xf86Priv.h"
