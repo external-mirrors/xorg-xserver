@@ -20,7 +20,6 @@ is" without express or implied warranty.
 #include <X11/fonts/fontstruct.h>
 #include <X11/fonts/libxfont2.h>
 
-#include "dix/screenint_priv.h"
 #include "os/osdep.h"
 
 #include "screenint.h"

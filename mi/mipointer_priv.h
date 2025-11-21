@@ -7,7 +7,6 @@
 
 #include <X11/Xdefs.h>
 
-#include "dix/screenint_priv.h"
 #include "mi/mipointer.h"
 
 void miPointerSetScreen(DeviceIntPtr pDev, int screen_num, int x, int y);

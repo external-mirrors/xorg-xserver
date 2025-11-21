@@ -54,9 +54,9 @@
 #include "config/dbus-core.h"
 #include "config/hotplug_priv.h"
 #include "dix/input_priv.h"
-#include "dix/screenint_priv.h"
 #include "os/osdep.h"
 
+#include "input.h"
 #include "servermd.h"
 #include "windowstr.h"
 #include "scrnintstr.h"
