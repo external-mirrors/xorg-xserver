@@ -32,7 +32,6 @@ from The Open Group.
 #include <xwin-config.h>
 #endif
 
-#include "dix/dix_priv.h"
 #include "os/osdep.h"
 
 #include "win.h"
@@ -60,7 +59,6 @@ typedef WINAPI HRESULT(*SHGETFOLDERPATHPROC) (HWND hwndOwner,
                                               DWORD dwFlags, LPTSTR pszPath);
 #endif
 
-#include "dix/screenint_priv.h"
 #include "os/osdep.h"
 
 #include "winmonitors.h"

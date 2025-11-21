@@ -33,7 +33,6 @@ in this Software without prior written authorization from The Open Group.
 
 #include   <X11/X.h>
 
-#include   "dix/dix_priv.h"
 #include   "dix/gc_priv.h"
 
 #include   "misc.h"
@@ -47,7 +46,9 @@ in this Software without prior written authorization from The Open Group.
 #include   "mipointer.h"
 #include   "misprite.h"
 #include   "gcstruct.h"
+
 #include   "picturestr.h"
+
 #include "inputstr.h"
 
 /* per-screen private data */

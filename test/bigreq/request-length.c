@@ -62,7 +62,8 @@ int main(int argc, char **argv)
     free(xcb_big_requests_enable_reply(c, xcb_big_requests_enable(c), NULL));
 
     /* Manually write out the bad request.  XCB can't help us here.*/
-    write(fd, &xise_req, sizeof(xise_req));
+    int written = write(fd, &xise_req, sizeof(xise_req));
+    (void)written;
 
     /* Block until the server has processed our mess and throws an
      * error. If we get disconnected, then the server has noticed what we're

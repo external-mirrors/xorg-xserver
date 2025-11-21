@@ -66,7 +66,8 @@ static const char *server_dead = "server_dead";
 static void
 handle_sigchld(int sig)
 {
-    write(server_displayfd, server_dead, strlen(server_dead));
+    int written = write(server_displayfd, server_dead, strlen(server_dead));
+    (void)written;
 }
 
 /* Starts the X server, returning its pid. */

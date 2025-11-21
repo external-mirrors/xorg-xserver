@@ -24,7 +24,7 @@
  */
 
 #include <dix-config.h>
-
+#include "dix/dix_priv.h"
 #include <float.h>
 #include <math.h>
 #include <sys/mman.h>

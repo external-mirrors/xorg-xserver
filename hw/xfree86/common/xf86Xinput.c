@@ -50,14 +50,12 @@
 #include <xorg-config.h>
 #endif
 
-#include <string.h>             /* InputClassMatches */
 #include <X11/Xfuncproto.h>
 #include <X11/Xmd.h>
 #include <X11/extensions/XI.h>
 #include <X11/extensions/XIproto.h>
 #include <X11/Xatom.h>
 
-#include "dix/dix_priv.h"
 #include "dix/ptrveloc_priv.h"
 #include "dix/input_priv.h"
 
@@ -71,12 +69,14 @@
 #include "extinit.h"
 #include "loaderProcs.h"
 #include "systemd-logind.h"
+
 #include "exevents.h"           /* AddInputDevice */
 #include "exglobals.h"
 #include "eventstr.h"
 #include "inpututils.h"
 #include "optionstr.h"
 
+#include <string.h>             /* InputClassMatches */
 #ifdef HAVE_FNMATCH_H
 #include <fnmatch.h>
 #endif

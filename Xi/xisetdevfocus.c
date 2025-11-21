@@ -30,13 +30,11 @@
 
 #include <dix-config.h>
 
+#include "inputstr.h"           /* DeviceIntPtr      */
+#include "windowstr.h"          /* window structure  */
 #include <X11/extensions/XI2.h>
 #include <X11/extensions/XI2proto.h>
 
-#include "dix/dix_priv.h"
-
-#include "inputstr.h"           /* DeviceIntPtr      */
-#include "windowstr.h"          /* window structure  */
 #include "exglobals.h"          /* BadDevice */
 #include "xisetdevfocus.h"
 

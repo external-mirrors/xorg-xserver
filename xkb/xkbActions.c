@@ -26,7 +26,6 @@ THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #include <dix-config.h>
 
-#include <ctype.h>
 #include <stdio.h>
 #include <math.h>
 #include <ctype.h>
@@ -48,6 +47,11 @@ THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #include "mipointer.h"
 #include "inpututils.h"
 
+#include <xkbsrv.h>
+#include <ctype.h>
+#include "mi.h"
+#include "mipointer.h"
+#include "inpututils.h"
 #define EXTENSION_EVENT_BASE 64
 
 DevPrivateKeyRec xkbDevicePrivateKeyRec;

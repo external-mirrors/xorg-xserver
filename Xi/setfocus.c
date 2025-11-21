@@ -52,16 +52,15 @@ SOFTWARE.
 
 #include <dix-config.h>
 
+#include "windowstr.h"          /* focus struct      */
+#include "inputstr.h"           /* DeviceIntPtr      */
 #include <X11/extensions/XI.h>
 #include <X11/extensions/XIproto.h>
 
-#include "windowstr.h"          /* focus struct      */
-#include "inputstr.h"           /* DeviceIntPtr      */
-
-#include "dix/dix_priv.h"
-
 #include "dixevents.h"
+
 #include "exglobals.h"
+
 #include "setfocus.h"
 
 /***********************************************************************

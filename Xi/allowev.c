@@ -60,6 +60,7 @@ SOFTWARE.
 #include "dix/input_priv.h"
 
 #include "exglobals.h"
+
 #include "allowev.h"
 #include "dixevents.h"
 

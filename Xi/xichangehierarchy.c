@@ -45,12 +45,17 @@
 #include "inputstr.h"           /* DeviceIntPtr      */
 #include "windowstr.h"          /* window structure  */
 #include "scrnintstr.h"         /* screen structure  */
+#include <X11/extensions/XI.h>
+#include <X11/extensions/XI2proto.h>
+#include <X11/extensions/geproto.h>
 #include "extnsionst.h"
 #include "exglobals.h"
 #include "misc.h"
 #include "xace.h"
 #include "xiquerydevice.h"      /* for GetDeviceUse */
+
 #include "xkbsrv.h"
+
 #include "xichangehierarchy.h"
 #include "xibarriers.h"
 
