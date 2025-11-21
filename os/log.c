@@ -92,10 +92,15 @@ OR PERFORMANCE OF THIS SOFTWARE.
 #include "dix/input_priv.h"
 #include "os/audit.h"
 #include "os/client_priv.h"
-#include "os/ddx_priv.h"
 #include "os/fmt.h"
 #include "os/osdep.h"
 
+#include "os/osdep.h"
+
+#include "os/audit.h"
+#include "os/fmt.h"
+
+#include "input.h"
 #include "opaque.h"
 #include "osdep.h"
 

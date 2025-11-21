@@ -84,6 +84,14 @@ typedef struct _NewClientRec *NewClientPtr;
 #include <stdio.h>
 #include <stdarg.h>
 
+#ifdef DDXBEFORERESET
+extern void ddxBeforeReset(void);
+#endif
+
+extern _X_EXPORT Bool WaitForSomething(Bool clients_are_ready);
+
+extern _X_EXPORT int ReadRequestFromClient(ClientPtr /*client */ );
+
 extern _X_EXPORT int ReadFdFromClient(ClientPtr client);
 
 extern _X_EXPORT void SetCriticalOutputPending(void);
@@ -245,6 +253,15 @@ PrivsElevated(void);
 extern _X_EXPORT int
 GetClientFd(ClientPtr);
 
+extern _X_EXPORT Bool
+ClientIsLocal(ClientPtr client);
+
+extern _X_EXPORT int
+ddxProcessArgument(int /*argc */ , char * /*argv */ [], int /*i */ );
+
+extern _X_EXPORT void
+ddxUseMsg(void);
+
 /* stuff for ReplyCallback */
 extern _X_EXPORT CallbackListPtr ReplyCallback;
 typedef struct {
@@ -266,6 +283,10 @@ enum ExitCode {
     EXIT_ERR_DRIVERS = 3,
 };
 
+extern _X_EXPORT void
+ddxGiveUp(enum ExitCode error);
+extern _X_EXPORT void
+ddxInputThreadInit(void);
 extern _X_EXPORT int
 TimeSinceLastInputEvent(void);
 

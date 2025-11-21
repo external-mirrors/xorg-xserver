@@ -25,13 +25,11 @@
 #include "config/hotplug_priv.h"
 #include "dix/screenint_priv.h"
 #include "os/cmdline.h"
-#include "os/ddx_priv.h"
 
 #include "kdrive.h"
 #include <mivalidate.h>
 #include <dixstruct.h>
 #include "privates.h"
-
 #ifdef RANDR
 #include <randrstr.h>
 #endif

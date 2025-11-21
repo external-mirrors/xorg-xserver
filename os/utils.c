@@ -95,6 +95,7 @@ __stdcall unsigned long GetTickCount(void);
 #include <sys/stat.h>
 #include <ctype.h>              /* for isspace */
 #include <stdarg.h>
+
 #include <stdlib.h>             /* for malloc() */
 
 #if defined(TCPCONN)
@@ -107,8 +108,8 @@ __stdcall unsigned long GetTickCount(void);
 #include "dix/input_priv.h"
 #include "os/auth.h"
 #include "os/cmdline.h"
-#include "os/ddx_priv.h"
 #include "os/serverlock.h"
+#include "os/osdep.h"
 
 #include "dixstruct.h"
 #include "xkbsrv.h"
@@ -183,6 +184,8 @@ Bool noGEExtension = FALSE;
 #include <errno.h>
 
 Bool CoreDump;
+
+Bool enableIndirectGLX = FALSE;
 
 Bool AllowByteSwappedClients = FALSE;
 
