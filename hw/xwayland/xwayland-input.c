@@ -528,6 +528,7 @@ pointer_handle_enter(void *data, struct wl_pointer *pointer,
     int dx, dy;
     ScreenPtr pScreen = xwl_screen->screen;
     ValuatorMask mask;
+    DeviceEvent enter;
 
     /* There's a race here where if we create and then immediately
      * destroy a surface, we might end up in a state where the Wayland
@@ -558,8 +559,10 @@ pointer_handle_enter(void *data, struct wl_pointer *pointer,
     (*pScreen->SetCursorPosition) (dev, pScreen, dx + sx, dy + sy, TRUE);
 
     miPointerInvalidateSprite(master);
+    init_device_event(&enter, dev, currentTime.milliseconds, EVENT_SOURCE_FOCUS);
+    enter.type = ET_Enter;
 
-    CheckMotion(NULL, master);
+    CheckMotion(&enter, master);
 
     /* Ideally, X clients shouldn't see these button releases.  When
      * the pointer leaves a window with buttons down, it means that
