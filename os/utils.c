@@ -2094,12 +2094,14 @@ xstrtokenize(const char *str, const char *separators)
 void
 FormatInt64(int64_t num, char *string)
 {
+    uint64_t unum = num;
+
     if (num < 0) {
         string[0] = '-';
-        num *= -1;
+        unum = num * -1;
         string++;
     }
-    FormatUInt64(num, string);
+    FormatUInt64(unum, string);
 }
 
 /* Format a number into a string in a signal safe manner. The string should be
