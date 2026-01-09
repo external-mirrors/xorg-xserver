@@ -360,6 +360,13 @@ unregister_damage(struct xwl_window *xwl_window)
     dixSetPrivate(&surface_window->devPrivates, &xwl_damage_private_key, NULL);
 }
 
+static void
+xwl_window_maybe_commit_surface(struct xwl_window *xwl_window)
+{
+    if (!xwl_window->awaiting_initial_configure_event)
+        wl_surface_commit(xwl_window->surface);
+}
+
 static Bool
 xwl_window_update_fractional_scale(struct xwl_window *xwl_window,
                                    int fractional_scale_numerator)
@@ -828,7 +835,7 @@ xwl_window_set_fullscreen(struct xwl_window *xwl_window)
 
     xdg_toplevel_set_fullscreen(xwl_window->xdg_toplevel, wl_output);
     xwl_window_check_resolution_change_emulation(xwl_window);
-    wl_surface_commit(xwl_window->surface);
+    xwl_window_maybe_commit_surface(xwl_window);
 
     xwl_window->wl_output_fullscreen = wl_output;
 
@@ -1008,7 +1015,12 @@ handle_libdecor_configure(struct libdecor_frame *frame,
 
     xwl_window_update_libdecor_size(xwl_window, configuration,
                                     round(new_width), round(new_height));
-    wl_surface_commit(xwl_window->surface);
+
+    if (xwl_window->awaiting_initial_configure_event) {
+        xwl_window->awaiting_initial_configure_event = FALSE;
+        xwl_window_attach_buffer(xwl_window);
+        wl_surface_commit(xwl_window->surface);
+    }
 }
 
 static void
@@ -1054,7 +1066,12 @@ xdg_surface_handle_configure(void *data,
         xwl_window_set_fullscreen(xwl_window);
 
     xdg_surface_ack_configure(xdg_surface, serial);
-    wl_surface_commit(xwl_window->surface);
+
+    if (xwl_window->awaiting_initial_configure_event) {
+        xwl_window->awaiting_initial_configure_event = FALSE;
+        xwl_window_attach_buffer(xwl_window);
+        wl_surface_commit(xwl_window->surface);
+    }
 }
 
 static const struct xdg_surface_listener xdg_surface_listener = {
@@ -1095,7 +1112,7 @@ xwl_window_update_surface_scale(struct xwl_window *xwl_window)
         }
         else
 #endif
-            wl_surface_commit(xwl_window->surface);
+            xwl_window_maybe_commit_surface(xwl_window);
     }
 }
 
@@ -1280,7 +1297,7 @@ xwl_window_update_rootful_scale(struct xwl_window *xwl_window, double previous_s
     }
     else
 #endif
-        wl_surface_commit(xwl_window->surface);
+        xwl_window_maybe_commit_surface(xwl_window);
 }
 
 static void
@@ -1360,6 +1377,7 @@ xwl_create_root_surface(struct xwl_window *xwl_window)
     xwl_window_rootful_update_title(xwl_window);
     xwl_window_rootful_set_app_id(xwl_window);
     wl_surface_commit(xwl_window->surface);
+    xwl_window->awaiting_initial_configure_event = TRUE;
 
     region = wl_compositor_create_region(xwl_screen->compositor);
     if (region == NULL) {

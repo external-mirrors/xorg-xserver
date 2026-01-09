@@ -873,7 +873,9 @@ xwl_present_flip(present_vblank_ptr vblank, RegionPtr damage)
     struct xwl_present_event    *event = xwl_present_event_from_vblank(vblank);
     Bool                        implicit_sync = TRUE;
 
-    if (!xwl_window || !xwl_window->allow_commits)
+    if (!xwl_window ||
+        !xwl_window->allow_commits ||
+        xwl_window->awaiting_initial_configure_event)
         return FALSE;
 
     buffer = xwl_pixmap_get_wl_buffer(pixmap);

@@ -457,6 +457,12 @@ xwl_screen_post_damage(struct xwl_screen *xwl_screen)
         if (!xwl_window->allow_commits)
             continue;
 
+        /* Running rootful, we must wait for the initial configuration
+         * negotiation to complete before we can post damage.
+         */
+        if (xwl_window->awaiting_initial_configure_event)
+            continue;
+
         xwl_window_post_damage(xwl_window);
         xorg_list_del(&xwl_window->link_damage);
         xorg_list_append(&xwl_window->link_damage, &commit_window_list);
