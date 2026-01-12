@@ -1720,7 +1720,7 @@ xwl_glamor_gbm_init_egl(struct xwl_screen *xwl_screen)
 
     if (!xwl_gbm->fd_render_node && !xwl_gbm->drm_authenticated) {
         ErrorF("Failed to get wl_drm, disabling Glamor and DRI3\n");
-	return FALSE;
+        return FALSE;
     }
 
     xwl_gbm->gbm = gbm_create_device(xwl_gbm->drm_fd);
