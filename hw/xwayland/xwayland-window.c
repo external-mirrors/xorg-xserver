@@ -973,11 +973,11 @@ xwl_window_update_libdecor_size(struct xwl_window *xwl_window,
     double scale;
 
     if (xwl_window->libdecor_frame) {
-	scale = xwl_window_get_fractional_scale_factor(xwl_window);
-	state = libdecor_state_new(round((double) width / scale),
-	                           round((double) height / scale));
-	libdecor_frame_commit(xwl_window->libdecor_frame, state, configuration);
-	libdecor_state_free(state);
+        scale = xwl_window_get_fractional_scale_factor(xwl_window);
+        state = libdecor_state_new(round((double) width / scale),
+                                   round((double) height / scale));
+        libdecor_frame_commit(xwl_window->libdecor_frame, state, configuration);
+        libdecor_state_free(state);
     }
 }
 

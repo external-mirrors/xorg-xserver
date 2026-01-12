@@ -68,14 +68,14 @@ mode_refresh(const xRRModeInfo *mode_info)
     double vTotal = mode_info->vTotal;
 
     if (mode_info->modeFlags & RR_DoubleScan)
-	vTotal *= 2.0;
+        vTotal *= 2.0;
 
     if (mode_info->modeFlags & RR_Interlace)
-	vTotal /= 2.0;
+        vTotal /= 2.0;
 
     if (mode_info->hTotal > 0.0 && vTotal > 0.0)
-	rate = ((double) mode_info->dotClock /
-		((double) mode_info->hTotal * (double) vTotal));
+        rate = ((double) mode_info->dotClock /
+                ((double) mode_info->hTotal * (double) vTotal));
     else
         rate = 0.0;
 

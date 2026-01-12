@@ -754,7 +754,7 @@ apply_output_change(struct xwl_output *xwl_output)
         /* we did not check this output for new screen size, do it now */
         output_get_new_size(xwl_output, &logical_width, &logical_height);
 
-	--xwl_screen->expecting_event;
+        --xwl_screen->expecting_event;
     }
 
     if (xwl_screen->fixed_output == NULL)
