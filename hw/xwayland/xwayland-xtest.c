@@ -645,7 +645,6 @@ xwayland_xtest_fallback(DeviceIntPtr dev,
     }
 }
 
-
 static void
 xwayland_xtest_send_events(DeviceIntPtr dev,
                            int type, int detail, int flags, const ValuatorMask *mask)
@@ -699,7 +698,6 @@ xwayland_xtest_send_events(DeviceIntPtr dev,
         debug_ei("Not yet connected to EIS, queueing events\n");
         xwl_queue_emulated_event(xwl_ei_client, dev, type, detail, flags, mask);
     }
-
 }
 
 static bool

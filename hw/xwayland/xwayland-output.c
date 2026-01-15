@@ -955,7 +955,6 @@ xwl_output_from_wl_output(struct xwl_screen *xwl_screen,
     return NULL;
 }
 
-
 struct xwl_output *
 xwl_output_get_output_from_name(struct xwl_screen *xwl_screen, const char *name)
 {

@@ -1042,7 +1042,6 @@ xwl_screen_init(ScreenPtr pScreen, int argc, char **argv)
                              &registry_listener, xwl_screen);
     xwl_screen_roundtrip(xwl_screen);
 
-
     if (xwl_screen->fullscreen && xwl_screen->rootless) {
         ErrorF("error, cannot set fullscreen when running rootless\n");
         return FALSE;
