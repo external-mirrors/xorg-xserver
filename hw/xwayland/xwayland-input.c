@@ -753,7 +753,6 @@ dispatch_scroll_motion(struct xwl_seat *xwl_seat)
                        MotionNotify, 0, POINTER_RELATIVE, &mask);
 }
 
-
 static void
 dispatch_pointer_motion_event(struct xwl_seat *xwl_seat)
 {
@@ -1704,7 +1703,6 @@ enable_device(struct xwl_seat *xwl_seat, DeviceIntPtr dev)
     EnableDevice(dev, TRUE);
 }
 
-
 static void
 init_pointer(struct xwl_seat *xwl_seat)
 {
@@ -2525,7 +2523,6 @@ static const struct zwp_tablet_pad_ring_v2_listener tablet_pad_ring_listener = {
     tablet_pad_ring_stop,
     tablet_pad_ring_frame,
 };
-
 
 static void
 tablet_pad_strip_destroy(struct xwl_tablet_pad_strip *strip)

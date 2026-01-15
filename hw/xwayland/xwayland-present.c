@@ -47,7 +47,6 @@
 
 #define XWL_PRESENT_CAPS PresentCapabilityAsync | PresentCapabilityAsyncMayTear
 
-
 /*
  * When not flipping let Present copy with 60fps.
  * When flipping wait on frame_callback, otherwise
@@ -217,7 +216,6 @@ xwl_present_reset_timer(struct xwl_present_window *xwl_present_window)
         xwl_present_free_timer(xwl_present_window);
     }
 }
-
 
 static void
 xwl_present_execute(present_vblank_ptr vblank, uint64_t ust, uint64_t crtc_msc);
@@ -462,7 +460,6 @@ xwl_present_update_window_crtc(present_window_priv_ptr window_priv, RRCrtcPtr cr
     window_priv->msc_offset += new_msc - window_priv->msc;
     window_priv->crtc = crtc;
 }
-
 
 void
 xwl_present_cleanup(WindowPtr window)

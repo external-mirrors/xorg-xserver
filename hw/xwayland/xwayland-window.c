@@ -1327,7 +1327,6 @@ xwl_create_root_surface(struct xwl_window *xwl_window)
     WindowPtr window = xwl_window->toplevel;
     struct wl_region *region;
 
-
 #ifdef XWL_HAS_LIBDECOR
     if (xwl_screen->decorate) {
         xwl_window->libdecor_frame =
