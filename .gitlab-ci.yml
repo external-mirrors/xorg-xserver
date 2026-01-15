@@ -334,6 +334,13 @@ check-commits:
       junit: results.xml
   allow_failure: true
 
+check-whitespace:
+  extends:
+    - .fdo.ci-fairy
+  stage: test
+  script:
+    - .gitlab-ci/whitespace-check.py $(git ls-files hw/xwayland)
+
 #
 # Workflow rules needed due to:
 # https://gitlab.freedesktop.org/freedesktop/freedesktop/-/issues/438
