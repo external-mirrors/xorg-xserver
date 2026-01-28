@@ -77,6 +77,7 @@ struct xwl_seat {
     uint32_t id;
     uint32_t pointer_enter_serial;
     uint8_t pointer_enter_count;
+    Bool caps_initialized;
     struct xorg_list link;
     CursorPtr x_cursor;
     OsTimerPtr x_cursor_timer;

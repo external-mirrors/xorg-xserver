@@ -1928,7 +1928,10 @@ seat_handle_capabilities(void *data, struct wl_seat *seat,
         release_touch(xwl_seat);
     }
 
-    xwl_seat->xwl_screen->expecting_event--;
+    if (xwl_seat->caps_initialized == FALSE) {
+        xwl_seat->caps_initialized = TRUE;
+        xwl_seat->xwl_screen->expecting_event--;
+    }
 }
 
 static void
@@ -1979,6 +1982,7 @@ create_input_device(struct xwl_screen *xwl_screen, uint32_t id, uint32_t version
         wl_registry_bind(xwl_screen->registry, id,
                          &wl_seat_interface, min(version, seat_version));
     xwl_seat->id = id;
+    xwl_seat->caps_initialized = FALSE;
 
     xwl_cursor_init(&xwl_seat->cursor, xwl_seat->xwl_screen,
                     xwl_seat_update_cursor);
