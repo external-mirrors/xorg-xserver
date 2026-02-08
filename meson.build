@@ -8,6 +8,9 @@ project('xserver', 'c',
 )
 release_date = '2021-07-05'
 
+error('\n This is the now defunct "master" branch of the xserver repository.',
+      '\n Ongoing development has moved to the "main" branch instead.')
+
 add_project_arguments('-DHAVE_DIX_CONFIG_H', language: ['c', 'objc'])
 cc = meson.get_compiler('c')
 

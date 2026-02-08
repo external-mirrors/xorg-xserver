@@ -1,3 +1,9 @@
+************************************************************************
+* This is the now defunct 'master' branch of the xserver repository.   *
+* Ongoing development has moved to the 'main' branch instead.          *
+************************************************************************
+
+
 X Server
 --------
 
