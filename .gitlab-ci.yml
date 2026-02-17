@@ -326,7 +326,7 @@ check-commits:
   script:
     - ci-fairy check-commits --junit-xml=results.xml
   except:
-    - master@xorg/xserver
+    - main@xorg/xserver
   variables:
     GIT_DEPTH: 100
   artifacts:
