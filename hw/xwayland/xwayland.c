@@ -110,7 +110,6 @@ ddxUseMsg(void)
 #ifdef XWL_HAS_GLAMOR
     ErrorF("-glamor [gl|es|off]    use given API for Glamor acceleration. Incompatible with -shm option\n");
 #endif
-    ErrorF("-verbose [n]           verbose startup messages\n");
     ErrorF("-version               show the server version and exit\n");
     ErrorF("-noTouchPointerEmulation  disable touch pointer emulation\n");
     ErrorF("-force-xrandr-emulation   force non-native modes to be exposed when viewporter is not exposed by the compositor\n");
@@ -126,7 +125,6 @@ static int init_fd = -1;
 static int wm_fd = -1;
 static int listen_fds[5] = { -1, -1, -1, -1, -1 };
 static int listen_fd_count = 0;
-static int verbosity = 0;
 
 static void
 xwl_show_version(void)
@@ -222,21 +220,6 @@ ddxProcessArgument(int argc, char *argv[], int i)
         return 2;
     }
 #endif
-    else if (strcmp(argv[i], "-verbose") == 0) {
-        if (++i < argc && argv[i]) {
-            char *end;
-            long val;
-
-            val = strtol(argv[i], &end, 0);
-            if (*end == '\0') {
-                verbosity = val;
-                LogSetParameter(XLOG_VERBOSITY, verbosity);
-                return 2;
-            }
-        }
-        LogSetParameter(XLOG_VERBOSITY, ++verbosity);
-        return 1;
-    }
     else if (strcmp(argv[i], "-version") == 0) {
         xwl_show_version();
         exit(0);
