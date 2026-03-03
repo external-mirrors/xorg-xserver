@@ -247,7 +247,7 @@ xwl_get_rrmodes_from_connector_id(int drm, int32_t connector_id, int *nmode, int
         return NULL;
     }
 
-    /* This spaghetti brought to you courtesey of xf86RandrR12.c
+    /* This spaghetti brought to you courtesy of xf86RandrR12.c
      * It adds preferred modes first, then non-preferred modes */
     for (pref = 1; pref >= 0; pref--) {
         for (i = 0; i < conn->count_modes; ++i) {

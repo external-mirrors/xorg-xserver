@@ -90,7 +90,7 @@ Adjust to the scale of the outputs when running rootful in windowing mode.
 This option is not compatible with rootless mode (\fI-rootless\fP).
 .TP 8
 .B \-host-grab
-Disable host keyboard shorcuts and confine the pointer when running rootful.
+Disable host keyboard shortcuts and confine the pointer when running rootful.
 
 This feature relies on the protocol for inhibiting the compositor keyboard
 shortcuts and on the protocol for pointer locking and confinement and may
