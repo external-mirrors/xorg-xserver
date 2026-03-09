@@ -2,6 +2,8 @@ srcs = [
     'xwayland.c',
     'xwayland-input.c',
     'xwayland-input.h',
+    'xwayland-selection.c',
+    'xwayland-selection.h',
     'xwayland-cursor.c',
     'xwayland-cursor.h',
     'xwayland-drm-lease.h',

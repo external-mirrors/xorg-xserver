@@ -39,6 +39,7 @@
 #include "xwayland-glamor.h"
 #include "xwayland-drm-lease.h"
 #include "xwayland-dmabuf.h"
+#include "xwayland-selection.h"
 
 #ifdef XWL_HAS_LIBDECOR
 #include <libdecor.h>
@@ -121,6 +122,7 @@ struct xwl_screen {
     struct xdg_system_bell_v1 *system_bell;
     struct wl_data_device_manager *data_device_manager;
     struct zwp_primary_selection_device_manager_v1 *primary_selection_manager;
+    struct xwl_selection *selection_bridge;
     struct xorg_list drm_lease_devices;
     struct xorg_list queued_drm_lease_devices;
     struct xorg_list drm_leases;

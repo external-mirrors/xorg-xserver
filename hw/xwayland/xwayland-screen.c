@@ -56,6 +56,7 @@
 #include "xwayland-pixmap.h"
 #include "xwayland-present.h"
 #include "xwayland-shm.h"
+#include "xwayland-selection.h"
 #ifdef XWL_HAS_EI
 #include "xwayland-xtest.h"
 #endif
