@@ -998,6 +998,9 @@ xwl_screen_init(ScreenPtr pScreen, int argc, char **argv)
         else if (strcmp(argv[i], "-hidpi") == 0) {
             xwl_screen->hidpi = 1;
         }
+        else if (strcmp(argv[i], "-clipboard") == 0) {
+            xwl_screen->clipboard = 1;
+        }
     }
 
     if (!xwl_screen->rootless) {

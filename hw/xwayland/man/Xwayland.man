@@ -65,6 +65,12 @@ option with Xwayland.
 This option has no effect if the compositor doesn't support the relevant
 XDG portal or if Xwayland was not compiled with EI and OEFFIS support.
 .TP 8
+.B \-clipboard
+Enable the Xwayland clipboard selection bridge, syncing the X11 CLIPBOARD
+and PRIMARY selections with the Wayland clipboard and primary selection.
+
+The Xwayland clipboard selection bridge is not enabled by default.
+.TP 8
 .B \-fullscreen
 Set the Xwayland window fullscreen when running rootful.
 

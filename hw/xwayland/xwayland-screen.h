@@ -68,6 +68,7 @@ struct xwl_screen {
     int enable_ei_portal;
     int nokeymap;
     int hidpi;
+    int clipboard;
 
     ClipNotifyProcPtr ClipNotify;
     CreateScreenResourcesProcPtr CreateScreenResources;

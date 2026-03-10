@@ -44,6 +44,7 @@
 #include "xwayland-input.h"
 #include "xwayland-window.h"
 #include "xwayland-screen.h"
+#include "xwayland-selection.h"
 
 #ifdef XWL_HAS_EI
 #include "xwayland-xtest.h"
@@ -1994,11 +1995,15 @@ create_input_device(struct xwl_screen *xwl_screen, uint32_t id, uint32_t version
 
     xorg_list_init(&xwl_seat->touches);
     xorg_list_init(&xwl_seat->sync_pending);
+
+    if (xwl_screen->clipboard)
+        xwl_selection_init(xwl_seat);
 }
 
 void
 xwl_seat_destroy(struct xwl_seat *xwl_seat)
 {
+    struct xwl_screen *xwl_screen = xwl_seat->xwl_screen;
     struct xwl_touch *xwl_touch, *next_xwl_touch;
     struct sync_pending *p, *npd;
 
@@ -2016,6 +2021,8 @@ xwl_seat_destroy(struct xwl_seat *xwl_seat)
     release_tablet_manager_seat(xwl_seat);
 
     release_grab(xwl_seat);
+    if (xwl_screen->clipboard)
+        xwl_selection_fini(xwl_seat);
     wl_seat_destroy(xwl_seat->seat);
     xwl_cursor_release(&xwl_seat->cursor);
     wl_array_release(&xwl_seat->keys);
