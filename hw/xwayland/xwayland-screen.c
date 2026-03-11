@@ -73,6 +73,7 @@
 #include "xwayland-shell-v1-client-protocol.h"
 #include "tearing-control-v1-client-protocol.h"
 #include "fractional-scale-v1-client-protocol.h"
+#include "primary-selection-unstable-v1-client-protocol.h"
 
 static DevPrivateKeyRec xwl_screen_private_key;
 static DevPrivateKeyRec xwl_client_private_key;
@@ -258,6 +259,14 @@ xwl_close_screen(ScreenPtr screen)
         xwl_seat_destroy(xwl_seat);
 
     xwl_screen_release_tablet_manager(xwl_screen);
+    if (xwl_screen->data_device_manager) {
+        wl_data_device_manager_destroy(xwl_screen->data_device_manager);
+        xwl_screen->data_device_manager = NULL;
+    }
+    if (xwl_screen->primary_selection_manager) {
+        zwp_primary_selection_device_manager_v1_destroy(xwl_screen->primary_selection_manager);
+        xwl_screen->primary_selection_manager = NULL;
+    }
 
     struct xwl_drm_lease_device *device_data, *next;
     xorg_list_for_each_entry_safe(device_data, next,
@@ -550,6 +559,14 @@ registry_global(void *data, struct wl_registry *registry, uint32_t id,
     else if (strcmp(interface, wp_fractional_scale_manager_v1_interface.name) == 0) {
         xwl_screen->fractional_scale_manager =
             wl_registry_bind(registry, id, &wp_fractional_scale_manager_v1_interface, 1);
+    }
+    else if (!xwl_screen->rootless && strcmp(interface, wl_data_device_manager_interface.name) == 0) {
+        xwl_screen->data_device_manager =
+            wl_registry_bind(registry, id, &wl_data_device_manager_interface, 1);
+    }
+    else if (!xwl_screen->rootless && strcmp(interface, zwp_primary_selection_device_manager_v1_interface.name) == 0) {
+        xwl_screen->primary_selection_manager =
+            wl_registry_bind(registry, id, &zwp_primary_selection_device_manager_v1_interface, 1);
     }
 #ifdef XWL_HAS_GLAMOR
     else if (xwl_screen->glamor) {

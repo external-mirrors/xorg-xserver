@@ -52,6 +52,7 @@ tearing_xml = protodir / 'staging' / 'tearing-control' / 'tearing-control-v1.xml
 fractional_scale_xml = protodir / 'staging' / 'fractional-scale' / 'fractional-scale-v1.xml'
 syncobj_xml = protodir / 'staging' / 'linux-drm-syncobj' / 'linux-drm-syncobj-v1.xml'
 system_bell_xml = protodir / 'staging' / 'xdg-system-bell' / 'xdg-system-bell-v1.xml'
+primary_selection_xml = protodir / 'unstable' / 'primary-selection' / 'primary-selection-unstable-v1.xml'
 
 proto_xml = [
     relative_xml,
@@ -70,6 +71,7 @@ proto_xml = [
     fractional_scale_xml,
     syncobj_xml,
     system_bell_xml,
+    primary_selection_xml,
 ]
 
 client_header = generator(scanner,
