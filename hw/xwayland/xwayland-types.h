@@ -32,5 +32,6 @@ struct xwl_screen;
 struct xwl_drm_lease;
 struct xwl_output;
 struct xwl_window_buffer;
+struct xwl_seat;
 
 #endif /* XWAYLAND_TYPES_H */
