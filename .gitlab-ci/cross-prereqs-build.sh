@@ -62,8 +62,8 @@ CFLAGS="-fcommon" build 'https://gitlab.freedesktop.org/xorg/lib/libX11.git' 'li
 build 'https://gitlab.freedesktop.org/xorg/lib/libxkbfile.git' 'libxkbfile-1.1.0'
 # freetype needs an explicit --build to know it's cross-compiling
 # disable png as freetype tries to use libpng-config, even when cross-compiling
-build 'git://git.savannah.gnu.org/freetype/freetype2.git' 'VER-2-10-1' "--build=$(cc -dumpmachine) --with-png=no"
-build 'https://gitlab.freedesktop.org/xorg//font/util.git' 'font-util-1.3.2'
+build 'https://gitlab.freedesktop.org/freetype/freetype.git' 'VER-2-10-1' "--build=$(cc -dumpmachine) --with-png=no"
+build 'https://gitlab.freedesktop.org/xorg/font/util.git' 'font-util-1.3.2'
 build 'https://gitlab.freedesktop.org/xorg/lib/libfontenc.git' 'libfontenc-1.1.4'
 build 'https://gitlab.freedesktop.org/xorg/lib/libXfont.git'  'libXfont2-2.0.3'
 build 'https://gitlab.freedesktop.org/xorg/lib/libXdmcp.git' 'libXdmcp-1.1.3'
