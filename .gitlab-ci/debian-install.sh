@@ -5,18 +5,12 @@ set -o xtrace
 
 # Packages which are needed by this script, but not for the xserver build
 EPHEMERAL="
-	libcairo2-dev
-	libexpat-dev
-	libgles2-mesa-dev
-	libxkbcommon-dev
 	x11-utils
 	x11-xserver-utils
 	xauth
 	xvfb
 	"
 
-# Add bullseye-backports for the newer linux-libc-dev & meson packages
-echo 'deb http://deb.debian.org/debian bullseye-backports main' >> /etc/apt/sources.list
 apt update
 
 apt-get install -y \
@@ -36,6 +30,7 @@ apt-get install -y \
 	libcairo2 \
 	libcairo2-dev \
 	libdbus-1-dev \
+	libdecor-0-dev \
 	libdrm-dev \
 	libegl1-mesa-dev \
 	libepoxy-dev \
@@ -85,6 +80,7 @@ apt-get install -y \
 	libxcb-xv0-dev \
 	libxcb1-dev \
 	libxcursor-dev \
+	libxcvt-dev \
 	libxdamage-dev \
 	libxdmcp-dev \
 	libxext-dev \
@@ -108,9 +104,9 @@ apt-get install -y \
 	libxvmc-dev \
 	libxxf86vm-dev \
 	libz-mingw-w64-dev \
-	linux-libc-dev/bullseye-backports \
+	linux-libc-dev \
 	mesa-common-dev \
-	meson/bullseye-backports \
+	meson \
 	mingw-w64-tools \
 	nettle-dev \
 	pkg-config \
@@ -132,6 +128,7 @@ apt-get install -y \
 cd /root
 
 # Xwayland requires drm 2.4.116 for drmSyncobjEventfd
+# but Debian bookworm has only 2.4.114
 git clone https://gitlab.freedesktop.org/mesa/drm --depth 1 --branch=libdrm-2.4.116
 cd drm
 meson _build
@@ -139,15 +136,8 @@ ninja -C _build -j${FDO_CI_CONCURRENT:-4} install
 cd ..
 rm -rf drm
 
-# xserver requires libxcvt
-git clone https://gitlab.freedesktop.org/xorg/lib/libxcvt.git --depth 1 --branch=libxcvt-0.1.0
-cd libxcvt
-meson _build
-ninja -C _build -j${FDO_CI_CONCURRENT:-4} install
-cd ..
-rm -rf libxcvt
-
 # xserver requires xorgproto >= 2024.1 for XWAYLAND
+# but Debian bookworm has only 2022.1
 git clone https://gitlab.freedesktop.org/xorg/proto/xorgproto.git --depth 1 --branch=xorgproto-2024.1
 pushd xorgproto
 ./autogen.sh
@@ -155,7 +145,17 @@ make -j${FDO_CI_CONCURRENT:-4} install
 popd
 rm -rf xorgproto
 
-# wayland-protocols requires wayland-scanner 1.20, but Debian bullseye has 1.18 only
+# xserver requires xtrans >= 1.5.1 to build with gcc 12
+# but Debian bookworm has only 1.4.0
+git clone https://gitlab.freedesktop.org/xorg/lib/libxtrans.git --depth 1 --branch=xtrans-1.6.0
+pushd libxtrans
+./autogen.sh
+make -j${FDO_CI_CONCURRENT:-4} install
+popd
+rm -rf libxtrans
+
+# wayland-protocols 1.38 requires either wayland-scanner 1.23 or a build with
+# dtd_validation=false, but Debian bookworm has only 1.21 w/ dtd_validation=true
 git clone https://gitlab.freedesktop.org/wayland/wayland.git --depth 1 --branch=1.21.0
 cd wayland
 meson -Dtests=false -Ddocumentation=false -Ddtd_validation=false _build
@@ -163,7 +163,7 @@ ninja -C _build -j${FDO_CI_CONCURRENT:-4} install
 cd ..
 rm -rf wayland
 
-# Xwayland requires wayland-protocols >= 1.38, but Debian bullseye has 1.20 only
+# Xwayland requires wayland-protocols >= 1.38, but Debian bookworm has 1.31 only
 git clone https://gitlab.freedesktop.org/wayland/wayland-protocols.git --depth 1 --branch=1.38
 cd wayland-protocols
 meson _build
@@ -171,15 +171,7 @@ ninja -C _build -j${FDO_CI_CONCURRENT:-4} install
 cd ..
 rm -rf wayland-protocols
 
-# Install libdecor for Xwayland
-git clone https://gitlab.freedesktop.org/libdecor/libdecor.git --depth 1 --branch=0.1.1
-cd libdecor
-meson _build -D{demo,install_demo}=false
-ninja -C _build -j${FDO_CI_CONCURRENT:-4} install
-cd ..
-rm -rf libdecor
-
-# Install libei for Xwayland
+# Install libei for Xwayland, as Debian didn't add until trixie
 git clone https://gitlab.freedesktop.org/libinput/libei.git --depth 1 --branch=1.0.0
 cd libei
 meson setup _build -Dtests=disabled -Ddocumentation=[] -Dliboeffis=enabled
