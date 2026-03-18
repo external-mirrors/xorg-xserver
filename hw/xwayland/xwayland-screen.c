@@ -883,6 +883,63 @@ xwl_screen_update_global_surface_scale(struct xwl_screen *xwl_screen)
 }
 
 Bool
+xwl_screen_validate_options(int argc, char **argv)
+{
+    int i;
+    int width, height;
+    Bool use_fixed_size = FALSE;
+    Bool fullscreen = FALSE;
+    Bool decorate = FALSE;
+    Bool host_grab = FALSE;
+    Bool rootless = FALSE;
+
+    for (i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "-geometry") == 0) {
+            sscanf(argv[i + 1], "%ix%i", &width, &height);
+            if (width == 0 || height == 0) {
+                ErrorF("Invalid argument, '-geometry %s'\n", argv[i + 1]);
+                return FALSE;
+            }
+            use_fixed_size = TRUE;
+        }
+        else if (strcmp(argv[i], "-fullscreen") == 0) {
+            fullscreen = TRUE;
+        }
+        else if (strcmp(argv[i], "-decorate") == 0) {
+            decorate = TRUE;
+        }
+        else if (strcmp(argv[i], "-host-grab") == 0) {
+            host_grab = TRUE;
+        }
+        else if (strcmp(argv[i], "-rootless") == 0) {
+            rootless = TRUE;
+        }
+    }
+
+    if (rootless && use_fixed_size) {
+        ErrorF("Invalid argument, cannot set '-geometry' with '-rootless'\n");
+        return FALSE;
+    }
+
+    if (fullscreen && rootless) {
+        ErrorF("Invalid argument, cannot set '-fullscreen' with '-rootless'\n");
+        return FALSE;
+    }
+
+    if (fullscreen && decorate) {
+        ErrorF("Invalid argument, cannot use '-decorate' with '-fullscreen'\n");
+        return FALSE;
+    }
+
+    if (host_grab && rootless) {
+        ErrorF("Invalid argument, cannot use '-host-grab' with '-rootless'\n");
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+Bool
 xwl_screen_init(ScreenPtr pScreen, int argc, char **argv)
 {
     static const char allow_commits[] = "_XWAYLAND_ALLOW_COMMITS";
@@ -952,7 +1009,7 @@ xwl_screen_init(ScreenPtr pScreen, int argc, char **argv)
             else if (strncmp(argv[i + 1], "off", 3) == 0)
                 xwl_screen->glamor = XWL_GLAMOR_NONE;
             else
-                ErrorF("Xwayland glamor: unknown rendering API selected\n");
+                ErrorF("glamor: ignoring unknown rendering API selected\n");
         }
 #endif
         else if (strcmp(argv[i], "-force-xrandr-emulation") == 0) {
@@ -960,10 +1017,6 @@ xwl_screen_init(ScreenPtr pScreen, int argc, char **argv)
         }
         else if (strcmp(argv[i], "-geometry") == 0) {
             sscanf(argv[i + 1], "%ix%i", &xwl_width, &xwl_height);
-            if (xwl_width == 0 || xwl_height == 0) {
-                ErrorF("invalid argument for -geometry %s\n", argv[i + 1]);
-                return FALSE;
-            }
             use_fixed_size = 1;
         }
         else if (strcmp(argv[i], "-fullscreen") == 0) {
@@ -1007,9 +1060,6 @@ xwl_screen_init(ScreenPtr pScreen, int argc, char **argv)
         use_fixed_size = 1;
         xwl_screen->width = xwl_width;
         xwl_screen->height = xwl_height;
-    } else if (use_fixed_size) {
-        ErrorF("error, cannot set a geometry when running rootless\n");
-        return FALSE;
     }
 
     xwl_screen->display = wl_display_connect(NULL);
@@ -1060,24 +1110,9 @@ xwl_screen_init(ScreenPtr pScreen, int argc, char **argv)
                              &registry_listener, xwl_screen);
     xwl_screen_roundtrip(xwl_screen);
 
-    if (xwl_screen->fullscreen && xwl_screen->rootless) {
-        ErrorF("error, cannot set fullscreen when running rootless\n");
-        return FALSE;
-    }
-
-    if (xwl_screen->fullscreen && xwl_screen->decorate) {
-        ErrorF("error, cannot use the decorate option when running fullscreen\n");
-        return FALSE;
-    }
-
     if (xwl_screen->fullscreen && !xwl_screen_has_viewport_support(xwl_screen)) {
         ErrorF("missing viewport support in the compositor, ignoring fullscreen\n");
         xwl_screen->fullscreen = FALSE;
-    }
-
-    if (xwl_screen->host_grab && xwl_screen->rootless) {
-        ErrorF("error, cannot use host grab when running rootless\n");
-        return FALSE;
     }
 
     if (!xwl_screen->rootless && !xwl_screen->xdg_wm_base) {

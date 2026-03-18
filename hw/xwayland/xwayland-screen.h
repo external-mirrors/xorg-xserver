@@ -178,6 +178,7 @@ int xwl_screen_get_width(struct xwl_screen *xwl_screen);
 int xwl_screen_get_height(struct xwl_screen *xwl_screen);
 
 Bool xwl_close_screen(ScreenPtr screen);
+Bool xwl_screen_verify_command_line(int argc, char **argv);
 Bool xwl_screen_init(ScreenPtr pScreen, int argc, char **argv);
 void xwl_sync_events (struct xwl_screen *xwl_screen);
 void xwl_screen_roundtrip (struct xwl_screen *xwl_screen);
@@ -188,5 +189,6 @@ int xwl_screen_get_next_output_serial(struct xwl_screen * xwl_screen);
 void xwl_screen_lost_focus(struct xwl_screen *xwl_screen);
 Bool xwl_screen_update_global_surface_scale(struct xwl_screen *xwl_screen);
 Bool xwl_screen_should_use_fractional_scale(struct xwl_screen *xwl_screen);
+Bool xwl_screen_validate_options(int argc, char **argv);
 
 #endif /* XWAYLAND_SCREEN_H */

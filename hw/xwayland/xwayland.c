@@ -438,6 +438,10 @@ InitOutput(ScreenInfo * screen_info, int argc, char **argv)
 
     wl_log_set_handler_client(xwl_log_handler);
 
+    if (!xwl_screen_validate_options(argc, argv)) {
+        FatalError("Invalid command line arguments\n");
+    }
+
     if (AddScreen(xwl_screen_init, argc, argv) == -1) {
         FatalError("Couldn't add screen\n");
     }
