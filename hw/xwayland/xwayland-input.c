@@ -24,6 +24,7 @@
  * SOFTWARE.
  */
 
+#include <math.h>
 #include <xwayland-config.h>
 
 #include <linux/input.h>
@@ -3329,26 +3330,30 @@ xwl_pointer_warp_emulator_set_fake_pos(struct xwl_pointer_warp_emulator *warp_em
 {
     struct zwp_locked_pointer_v1 *locked_pointer =
         warp_emulator->locked_pointer;
+    struct xwl_window *focus_window;
     WindowPtr window;
     int sx, sy;
 
     if (!warp_emulator->locked_pointer)
         return;
 
-    if (!warp_emulator->xwl_seat->focus_window)
+    focus_window = warp_emulator->xwl_seat->focus_window;
+    if (!focus_window)
         return;
 
-    window = warp_emulator->xwl_seat->focus_window->toplevel;
+    window = focus_window->toplevel;
     if (x >= window->drawable.x ||
         y >= window->drawable.y ||
         x < (window->drawable.x + window->drawable.width) ||
         y < (window->drawable.y + window->drawable.height)) {
-        sx = x - window->drawable.x;
-        sy = y - window->drawable.y;
+        sx = round((double) (x - window->drawable.x) /
+                             focus_window->viewport_scale_x);
+        sy = round((double) (y - window->drawable.y) /
+                             focus_window->viewport_scale_y);
         zwp_locked_pointer_v1_set_cursor_position_hint(locked_pointer,
                                                        wl_fixed_from_int(sx),
                                                        wl_fixed_from_int(sy));
-        wl_surface_commit(warp_emulator->xwl_seat->focus_window->surface);
+        wl_surface_commit(focus_window->surface);
     }
 }
 
