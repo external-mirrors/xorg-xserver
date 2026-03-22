@@ -210,7 +210,7 @@ desktop_file = configure_file(
 )
 datadir = join_paths(get_option('prefix'), get_option('datadir'))
 desktopdir = join_paths(datadir, 'applications')
-install_data(desktop_file, install_dir : desktopdir)
+install_data(desktop_file, install_dir : desktopdir, install_tag : 'runtime')
 
 meson.override_find_program('Xwayland', xwayland_server)
 meson.override_dependency('xwayland', declare_dependency(
