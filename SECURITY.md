@@ -18,27 +18,8 @@ https://oss-security.openwall.org/wiki/mailing-lists/oss-security mailing list.
 
 # Security model and trust boundaries
 
-Only the Xorg server is expected to run with elevated privileges.
-(Some distros may run Xorg with a wrapper to only grant these privileges when
-necessary.)  The Xorg server usually requires root access to hardware devices
-and I/O registers when using a UMS (Userspace Mode Setting) driver, and not
-when using a KMS (Kernel Mode Setting) driver, or drivers which do not require
-actual hardware access (such as xf86-video-dummy).
-
-All other X servers (Xephyr, Xnest, Xvfb, etc.) are expected to run with only
-the privileges of the user who started the server.  They should not require
-direct access to any devices.
-
-The Xorg server uses configuration files to control various aspects of its
-operation (see the xorg.conf(5) man page), including specifying loadable
-object modules to run code from with the full privileges of the X server.
-There is no attempt to sandbox these modules - they are considered to be fully
-trusted, and thus anyone who can edit a config file is considered to be fully
-trusted - a module being able to control or crash the X server is not considered
-a security vulnerability (though a crash would be a non-security bug in the
-module).  The configuration file loading mechanism takes steps to verify that
-config files are owned by trusted users before reading them, and failure to do
-so would be considered a security vulnerability.
+Xwayland is expected to run with only the privileges of the user who started
+the server.  It should not require direct access to any devices.
 
 Access control for which clients can connect to the X server is provided by
 a number of mechanisms, see the Xsecurity(7) man page for details.  Once a
