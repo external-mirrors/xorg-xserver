@@ -1020,8 +1020,9 @@ handle_libdecor_configure(struct libdecor_frame *frame,
     if (xwl_window->awaiting_initial_configure_event) {
         xwl_window->awaiting_initial_configure_event = FALSE;
         xwl_window_attach_buffer(xwl_window);
-        wl_surface_commit(xwl_window->surface);
     }
+
+    wl_surface_commit(xwl_window->surface);
 }
 
 static void
@@ -1071,8 +1072,9 @@ xdg_surface_handle_configure(void *data,
     if (xwl_window->awaiting_initial_configure_event) {
         xwl_window->awaiting_initial_configure_event = FALSE;
         xwl_window_attach_buffer(xwl_window);
-        wl_surface_commit(xwl_window->surface);
     }
+
+    wl_surface_commit(xwl_window->surface);
 }
 
 static const struct xdg_surface_listener xdg_surface_listener = {
