@@ -94,7 +94,13 @@ def main():
         reset = ""
 
     for file in args.files:
-        lines = [l.rstrip("\n") for l in file.open().readlines()]
+        try:
+            lines = [l.rstrip("\n") for l in file.open().readlines()]
+        except UnicodeDecodeError as e:
+            print(f"{red}ERROR: {e} in {file}:{reset}", file=sys.stderr)
+            print(f"{'-' * 72}", file=sys.stderr)
+            have_errors = True
+            continue
 
         errors = []
         errors.extend(test_tab_indent(lines))
