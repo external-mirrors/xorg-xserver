@@ -98,6 +98,8 @@ struct xwl_pixmap {
 static DevPrivateKeyRec xwl_gbm_private_key;
 static DevPrivateKeyRec xwl_auth_state_private_key;
 
+static void xwl_glamor_maybe_destroy_context(struct xwl_screen *xwl_screen);
+
 static inline struct xwl_gbm_private *
 xwl_gbm_get(struct xwl_screen *xwl_screen)
 {
@@ -610,10 +612,21 @@ xwl_glamor_pixmap_get_wl_buffer(PixmapPtr pixmap)
     return xwl_pixmap->buffer;
 }
 
-static void
+void
 xwl_glamor_gbm_cleanup(struct xwl_screen *xwl_screen)
 {
-    struct xwl_gbm_private *xwl_gbm = xwl_gbm_get(xwl_screen);
+    struct xwl_gbm_private *xwl_gbm;
+
+    if (!xwl_screen->glamor)
+        return;
+
+    if (xwl_screen->egl_display != EGL_NO_DISPLAY) {
+        xwl_glamor_maybe_destroy_context(xwl_screen);
+        eglTerminate(xwl_screen->egl_display);
+        xwl_screen->egl_display = EGL_NO_DISPLAY;
+    }
+
+    xwl_gbm = xwl_gbm_get(xwl_screen);
 
     if (!xwl_gbm)
         return;
@@ -1740,12 +1753,6 @@ xwl_glamor_gbm_init_egl(struct xwl_screen *xwl_screen)
 #endif /* DRI3 */
     return TRUE;
 error:
-    if (xwl_screen->egl_display != EGL_NO_DISPLAY) {
-        xwl_glamor_maybe_destroy_context(xwl_screen);
-        eglTerminate(xwl_screen->egl_display);
-        xwl_screen->egl_display = EGL_NO_DISPLAY;
-    }
-
     xwl_glamor_gbm_cleanup(xwl_screen);
     return FALSE;
 }
