@@ -1150,6 +1150,8 @@ keyboard_handle_key(void *data, struct wl_keyboard *keyboard, uint32_t serial,
     xwl_seat->keys.size = (char *) end - (char *) xwl_seat->keys.data;
     if (state) {
         k = wl_array_add(&xwl_seat->keys, sizeof *k);
+        if (!k)
+            return;
         *k = key;
     }
 
