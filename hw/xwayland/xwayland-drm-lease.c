@@ -161,9 +161,11 @@ xwl_randr_request_lease(ClientPtr client, ScreenPtr screen, RRLeasePtr rrLease)
         }
     }
 
+    lease_private = calloc(1, sizeof(struct xwl_drm_lease));
+    if (!lease_private)
+        return BadAlloc;
     req = wp_drm_lease_device_v1_create_lease_request(
             lease_device->drm_lease_device);
-    lease_private = calloc(1, sizeof(struct xwl_drm_lease));
     for (i = 0; i < rrLease->numOutputs; ++i) {
         output = rrLease->outputs[i]->devPrivate;
         output->lease = lease_private;
@@ -451,10 +453,15 @@ static const struct wp_drm_lease_device_v1_listener drm_lease_device_listener = 
 void
 xwl_screen_add_drm_lease_device(struct xwl_screen *xwl_screen, uint32_t id)
 {
-    struct wp_drm_lease_device_v1 *lease_device = wl_registry_bind(
-        xwl_screen->registry, id, &wp_drm_lease_device_v1_interface, 1);
-    struct xwl_drm_lease_device *device_data = malloc(sizeof(struct xwl_drm_lease_device));
+    struct wp_drm_lease_device_v1 *lease_device;
+    struct xwl_drm_lease_device *device_data = calloc(1, sizeof(struct xwl_drm_lease_device));
 
+    if (!device_data) {
+        ErrorF("xwl_screen_add_drm_lease_device: allocation failure\n");
+        return;
+    }
+
+    lease_device = wl_registry_bind(xwl_screen->registry, id, &wp_drm_lease_device_v1_interface, 1);
     device_data->drm_lease_device = lease_device;
     device_data->xwl_screen = xwl_screen;
     device_data->drm_read_only_fd = -1;
