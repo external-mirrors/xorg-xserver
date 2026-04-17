@@ -285,6 +285,11 @@ AddInputDevice(ClientPtr client, DeviceProc deviceProc, Bool autoStart)
     dev->deviceGrab.ActivateGrab = ActivateKeyboardGrab;
     dev->deviceGrab.DeactivateGrab = DeactivateKeyboardGrab;
     dev->deviceGrab.sync.event = calloc(1, sizeof(InternalEvent));
+    if (!dev->deviceGrab.sync.event) {
+        dixFreePrivates(dev->devPrivates, PRIVATE_DEVICE);
+        free(dev);
+        return NULL;
+    }
 
     dev->sendEventsProc = XTestDeviceSendEvents;
 
@@ -299,6 +304,7 @@ AddInputDevice(ClientPtr client, DeviceProc deviceProc, Bool autoStart)
      */
     if (XaceHookDeviceAccess(client, dev, DixCreateAccess)) {
         dixFreePrivates(dev->devPrivates, PRIVATE_DEVICE);
+        free(dev->deviceGrab.sync.event);
         free(dev);
         return NULL;
     }
@@ -1704,6 +1710,8 @@ InitTouchClassDeviceStruct(DeviceIntPtr device, unsigned int max_touches,
 
     device->touch = touch;
     device->last.touches = calloc(max_touches, sizeof(*device->last.touches));
+    if (!device->last.touches)
+        goto err;
     device->last.num_touches = touch->num_touches;
     for (i = 0; i < touch->num_touches; i++)
         TouchInitDDXTouchPoint(device, &device->last.touches[i]);
@@ -1716,6 +1724,7 @@ InitTouchClassDeviceStruct(DeviceIntPtr device, unsigned int max_touches,
 
     free(touch->touches);
     free(touch);
+    device->touch = NULL;
 
     return FALSE;
 }
@@ -2863,6 +2872,15 @@ AllocDevicePair(ClientPtr client, const char *name,
     if (IsMaster(pointer)) {
         pointer->unused_classes = calloc(1, sizeof(ClassesRec));
         keyboard->unused_classes = calloc(1, sizeof(ClassesRec));
+        if (!pointer->unused_classes || !keyboard->unused_classes) {
+            free(pointer->unused_classes);
+            pointer->unused_classes = NULL;
+            free(keyboard->unused_classes);
+            keyboard->unused_classes = NULL;
+            RemoveDevice(keyboard, FALSE);
+            RemoveDevice(pointer, FALSE);
+            return BadAlloc;
+        }
     }
 
     *ptr = pointer;
