@@ -3250,14 +3250,14 @@ sprite_check_lost_focus(SpritePtr sprite, WindowPtr window)
     pointer_crossing = (xwl_seat->pointer_enter_count > 0);
     master = GetMaster(device, POINTER_OR_FLOAT);
     if (!master || !master->lastSlave)
-        return !pointer_crossing;
+        return FALSE;
 
     /* We do want the last active slave, we only check on slave xwayland
      * devices so we can find out the xwl_seat, but those don't actually own
      * their sprite, so the match doesn't mean a lot.
      */
     if (master->lastSlave != get_pointer_device(xwl_seat))
-        return !pointer_crossing;
+        return FALSE;
 
     /* If we left the surface with a button down, it means the wayland compositor
      * has grabbed the pointer so we will not get button release events from the
