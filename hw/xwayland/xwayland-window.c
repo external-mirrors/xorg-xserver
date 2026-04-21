@@ -1913,6 +1913,7 @@ xwl_reparent_window(WindowPtr window, WindowPtr prior_parent)
     ScreenPtr screen = window->drawable.pScreen;
     struct xwl_screen *xwl_screen = xwl_screen_get(screen);
     WindowPtr parent = window->parent;
+    ClientPtr current_client;
     Bool *is_wm_window;
 
     if (xwl_screen->ReparentWindow) {
@@ -1922,8 +1923,10 @@ xwl_reparent_window(WindowPtr window, WindowPtr prior_parent)
         screen->ReparentWindow = xwl_reparent_window;
     }
 
+    current_client = GetCurrentClient();
     if (!parent->parent ||
-        GetCurrentClient()->index != xwl_screen->wm_client_id)
+        !current_client ||
+        current_client->index != xwl_screen->wm_client_id)
         return;
 
     /* If the WM client reparents a window, mark the new parent as a WM window */
