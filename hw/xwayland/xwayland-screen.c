@@ -1022,6 +1022,7 @@ xwl_screen_init(ScreenPtr pScreen, int argc, char **argv)
         else if (strcmp(argv[i], "-geometry") == 0) {
             sscanf(argv[i + 1], "%ix%i", &xwl_width, &xwl_height);
             use_fixed_size = 1;
+            xwl_screen->has_geometry = 1;
         }
         else if (strcmp(argv[i], "-fullscreen") == 0) {
             use_fixed_size = 1;

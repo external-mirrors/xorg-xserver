@@ -61,6 +61,7 @@ struct xwl_screen {
     xwl_glamor_mode_flags glamor;
     int present;
     int force_xrandr_emulation;
+    int has_geometry;
     int fullscreen;
     int host_grab;
     int has_grab;

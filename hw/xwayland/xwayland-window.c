@@ -947,6 +947,9 @@ xwl_window_maybe_resize(struct xwl_window *xwl_window, double width, double heig
     xwl_output_set_mode_fixed(xwl_output, mode);
 
     xwl_window_attach_buffer(xwl_window);
+
+    if (xwl_screen->fullscreen)
+        xwl_window_check_resolution_change_emulation(xwl_window);
 }
 
 #ifdef XWL_HAS_LIBDECOR
@@ -1233,14 +1236,15 @@ xdg_toplevel_handle_configure(void *data,
     if (width == 0 && height == 0)
         return;
 
-    if (!xwl_screen->fullscreen) {
-        new_width = (double) (width * xwl_screen->global_surface_scale);
-        new_height = (double) (height * xwl_screen->global_surface_scale);
+    new_width = (double) (width * xwl_screen->global_surface_scale);
+    new_height = (double) (height * xwl_screen->global_surface_scale);
 
-        scale = xwl_window_get_fractional_scale_factor(xwl_window);
-        new_width *= scale;
-        new_height *= scale;
+    scale = xwl_window_get_fractional_scale_factor(xwl_window);
+    new_width *= scale;
+    new_height *= scale;
 
+    /* Resize except when fullscreen + geometry (in which case we use the viewport). */
+    if (!xwl_screen->fullscreen || !xwl_screen->has_geometry) {
         /* This will be committed by the xdg_surface.configure handler */
         xwl_window_maybe_resize(xwl_window, new_width, new_height);
     }
