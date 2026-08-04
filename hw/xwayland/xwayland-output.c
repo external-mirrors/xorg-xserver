@@ -725,10 +725,12 @@ apply_output_change(struct xwl_output *xwl_output)
         randr_modes = output_get_rr_modes(xwl_output, logical_width, logical_height,
                                           &count, &logical_mode);
 
-        RROutputSetModes(xwl_output->randr_output, randr_modes, count, 1);
-        RRCrtcNotify(xwl_output->randr_crtc, randr_modes[logical_mode],
-                     xwl_output->logical_x, xwl_output->logical_y,
-                     xwl_output->rotation, NULL, 1, &xwl_output->randr_output);
+        if (count > 0) {
+            RROutputSetModes(xwl_output->randr_output, randr_modes, count, 1);
+            RRCrtcNotify(xwl_output->randr_crtc, randr_modes[logical_mode],
+                         xwl_output->logical_x, xwl_output->logical_y,
+                         xwl_output->rotation, NULL, 1, &xwl_output->randr_output);
+        }
         /* RROutputSetModes takes ownership of the passed in modes, so we only
          * have to free the pointer array.
          */
