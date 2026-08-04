@@ -357,12 +357,14 @@ output_get_rr_modes(struct xwl_output *xwl_output,
 
     rr_modes = xallocarray(ARRAY_SIZE(xwl_output_fake_modes) + 1, sizeof(RRModePtr));
     if (!rr_modes)
-        goto err;
+        FatalError("Failed to allocate memory for list of RR modes");
+
+    *count = 0;
 
     /* Add actual output mode */
     rr_modes[0] = xwayland_cvt(width, height, xwl_output->refresh / 1000.0, 0, 0);
     if (!rr_modes[0])
-        goto err;
+        goto bail;
 
     *count = 1;
 
@@ -384,15 +386,17 @@ output_get_rr_modes(struct xwl_output *xwl_output,
         rr_modes[*count] = xwayland_cvt(xwl_output_fake_modes[i][0],
                                         xwl_output_fake_modes[i][1],
                                         xwl_output->refresh / 1000.0, 0, 0);
-        if (!rr_modes[*count])
-            goto err;
-
-        (*count)++;
+        if (rr_modes[*count])
+            (*count)++;
     }
 
     return rr_modes;
-err:
-    FatalError("Failed to allocate memory for list of RR modes");
+bail:
+    for (i = 0; i < *count; i++)
+        RRModeDestroy(rr_modes[i]);
+    *count = 0;
+    free(rr_modes);
+    return NULL;
 }
 
 RRModePtr
