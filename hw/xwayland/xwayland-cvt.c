@@ -29,7 +29,7 @@
 
 #include "xwayland-cvt.h"
 
-static void
+static Bool
 xwayland_modeinfo_from_cvt(xRRModeInfo *modeinfo,
                            int hdisplay, int vdisplay, float vrefresh,
                            Bool reduced, Bool interlaced)
@@ -38,6 +38,9 @@ xwayland_modeinfo_from_cvt(xRRModeInfo *modeinfo,
 
     libxcvt_mode_info =
         libxcvt_gen_mode_info(hdisplay, vdisplay, vrefresh, reduced, interlaced);
+
+    if (!libxcvt_mode_info)
+        return FALSE;
 
     modeinfo->width      = libxcvt_mode_info->hdisplay;
     modeinfo->height     = libxcvt_mode_info->vdisplay;
@@ -51,6 +54,8 @@ xwayland_modeinfo_from_cvt(xRRModeInfo *modeinfo,
     modeinfo->modeFlags  = libxcvt_mode_info->mode_flags;
 
     free(libxcvt_mode_info);
+
+    return TRUE;
 }
 
 RRModePtr
@@ -59,9 +64,16 @@ xwayland_cvt(int hdisplay, int vdisplay, float vrefresh, Bool reduced,
 {
     char name[128];
     xRRModeInfo modeinfo = { 0, };
+    Bool valid_mode;
 
-    xwayland_modeinfo_from_cvt(&modeinfo,
-                               hdisplay, vdisplay, vrefresh, reduced, interlaced);
+    valid_mode = xwayland_modeinfo_from_cvt(&modeinfo,
+                                            hdisplay, vdisplay, vrefresh,
+                                            reduced, interlaced);
+
+    if (!valid_mode) {
+        DebugF("XWAYLAND: Warning, invalid mode: %ix%i@%.2f\n", hdisplay, vdisplay, vrefresh);
+        return NULL;
+    }
 
     /* Horizontal granularity in libxcvt is 8, so if our horizontal size is not
      * divisible by 8, libxcvt will round it up, and we will advertise a wrong
