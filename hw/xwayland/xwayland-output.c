@@ -647,10 +647,13 @@ apply_output_change(struct xwl_output *xwl_output)
     if (xwl_output->randr_output) {
         /* Build a fresh modes array using the current refresh rate */
         randr_modes = output_get_rr_modes(xwl_output, mode_width, mode_height, &count);
-        RROutputSetModes(xwl_output->randr_output, randr_modes, count, 1);
-        RRCrtcNotify(xwl_output->randr_crtc, randr_modes[0],
-                     xwl_output->x, xwl_output->y,
-                     xwl_output->rotation, NULL, 1, &xwl_output->randr_output);
+
+        if (count > 0) {
+            RROutputSetModes(xwl_output->randr_output, randr_modes, count, 1);
+            RRCrtcNotify(xwl_output->randr_crtc, randr_modes[0],
+                         xwl_output->x, xwl_output->y,
+                         xwl_output->rotation, NULL, 1, &xwl_output->randr_output);
+        }
         /* RROutputSetModes takes ownership of the passed in modes, so we only
          * have to free the pointer array.
          */
