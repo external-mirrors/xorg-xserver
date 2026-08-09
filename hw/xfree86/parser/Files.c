@@ -56,6 +56,7 @@
 #endif
 
 #include <X11/Xos.h>
+#include "os.h"
 #include "xf86Parser.h"
 #include "xf86tokens.h"
 #include "Configint.h"
@@ -108,7 +109,7 @@ xf86parseFilesSection(void)
                     j = TRUE;
                 }
             }
-            ptr->file_fontpath = realloc(ptr->file_fontpath, i);
+            ptr->file_fontpath = XNFrealloc(ptr->file_fontpath, i);
             if (j)
                 strcat(ptr->file_fontpath, ",");
 
@@ -133,7 +134,7 @@ xf86parseFilesSection(void)
                     l = TRUE;
                 }
             }
-            ptr->file_modulepath = realloc(ptr->file_modulepath, k);
+            ptr->file_modulepath = XNFrealloc(ptr->file_modulepath, k);
             if (l)
                 strcat(ptr->file_modulepath, ",");
 
