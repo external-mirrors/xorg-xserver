@@ -1,4 +1,4 @@
-project('xserver', 'c',
+project('xorg-server', 'c',
         default_options: [
             'buildtype=debugoptimized',
             'c_std=gnu99',
