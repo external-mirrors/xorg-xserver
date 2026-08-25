@@ -922,6 +922,7 @@ glamor_close_screen(ScreenPtr screen)
     screen->CreatePixmap = glamor_priv->saved_procs.create_pixmap;
     screen->DestroyPixmap = glamor_priv->saved_procs.destroy_pixmap;
     screen->GetSpans = glamor_priv->saved_procs.get_spans;
+    screen->GetImage = glamor_priv->saved_procs.get_image;
     screen->ChangeWindowAttributes =
         glamor_priv->saved_procs.change_window_attributes;
     screen->CopyWindow = glamor_priv->saved_procs.copy_window;
