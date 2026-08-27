@@ -249,10 +249,10 @@ endif
 int10 = get_option('int10')
 if int10 == 'auto'
     int10 = 'x86emu'
-    if host_machine.cpu() == 'ppc' and host_machine.system() == 'freebsd'
+    if host_machine.cpu_family() == 'ppc' and host_machine.system() == 'freebsd'
         int10 = 'stub'
     endif
-    if host_machine.cpu() == 'arm'
+    if host_machine.cpu_family() == 'arm'
         int10 = 'stub'
     endif
 endif
@@ -503,9 +503,9 @@ endif
 build_acpi = false
 if (get_option('linux_acpi') == true and
    host_machine.system() == 'linux')
-    if (host_machine.cpu() == 'x86' or
-       host_machine.cpu() == 'x86_64' or
-       host_machine.cpu() == 'ia64')
+    if (host_machine.cpu_family() == 'x86' or
+       host_machine.cpu_family() == 'x86_64' or
+       host_machine.cpu_family() == 'ia64')
         build_acpi = true
     endif
 endif
