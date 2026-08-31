@@ -105,6 +105,9 @@ xkbcomp_dep = dependency('xkbcomp', required: false)
 xkbfile_dep = dependency('xkbfile')
 xfont2_dep = dependency('xfont2', version: '>= 2.0')
 
+gbm_dep = dependency('gbm', version: gbm_req, required: false)
+epoxy_dep = dependency('epoxy', required: false)
+
 build_systemd = get_option('systemd_notify') == 'true'
 # libsystemd-daemon was moved into libsystemd in version 209
 libsystemd_daemon_dep = dependency('libsystemd', version: '>= 209', required: false)
@@ -223,13 +226,6 @@ if build_ipv6 and not have_AF_INET6
     error('ipv6 support needs AF_INET6')
 endif
 message('IPv6 support: ' + (build_ipv6 ? 'YES' : 'NO'))
-
-gbm_dep = dependency('', required: false)
-epoxy_dep = dependency('', required: false)
-if build_glamor
-    gbm_dep = dependency('gbm', version: gbm_req, required: false)
-    epoxy_dep = dependency('epoxy', required: false)
-endif
 
 libdecor_dep = dependency('libdecor-0', required: false)
 libdecor_option = get_option('libdecor')
