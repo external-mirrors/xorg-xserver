@@ -165,7 +165,7 @@ ms_present_abort_vblank(RRCrtcPtr crtc, uint64_t event_id, uint64_t msc)
 {
     ScreenPtr screen = crtc->pScreen;
     ScrnInfoPtr scrn = xf86ScreenToScrn(screen);
-#ifdef GLAMOR_HAS_GBM
+#ifdef HAVE_GBM
     xf86CrtcPtr xf86_crtc = crtc->devPrivate;
 
     /* Check if this is a fake flip routed through TearFree and abort it */
@@ -182,7 +182,7 @@ ms_present_abort_vblank(RRCrtcPtr crtc, uint64_t event_id, uint64_t msc)
 static void
 ms_present_flush(WindowPtr window)
 {
-#ifdef GLAMOR_HAS_GBM
+#ifdef HAVE_GBM
     ScreenPtr screen = window->drawable.pScreen;
     ScrnInfoPtr scrn = xf86ScreenToScrn(screen);
     modesettingPtr ms = modesettingPTR(scrn);
@@ -192,7 +192,7 @@ ms_present_flush(WindowPtr window)
 #endif
 }
 
-#ifdef GLAMOR_HAS_GBM
+#ifdef HAVE_GBM
 
 /**
  * Callback for the DRM event queue when a flip has completed on all pipes
@@ -488,7 +488,7 @@ static present_screen_info_rec ms_present_screen_info = {
     .flush = ms_present_flush,
 
     .capabilities = PresentCapabilityNone,
-#ifdef GLAMOR_HAS_GBM
+#ifdef HAVE_GBM
     .check_flip = NULL,
     .check_flip2 = ms_present_check_flip,
     .flip = ms_present_flip,
