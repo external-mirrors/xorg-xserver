@@ -1754,10 +1754,10 @@ xwl_window_dispose(struct xwl_window *xwl_window)
 #ifdef XWL_HAS_GLAMOR
     xwl_dmabuf_feedback_destroy(&xwl_window->feedback);
 
-#ifdef GLAMOR_HAS_GBM
+#ifdef HAVE_GBM
     if (xwl_window->xwl_screen->present)
         xwl_present_for_each_frame_callback(xwl_window, xwl_present_unrealize_window);
-#endif /* GLAMOR_HAS_GBM */
+#endif /* HAVE_GBM */
 #endif /* XWL_HAS_GLAMOR */
 
     if (xwl_window->tearing_control)
