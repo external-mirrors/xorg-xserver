@@ -36,7 +36,7 @@
 #include <damage.h>
 #include <X11/extensions/dpmsconst.h>
 #include <shadow.h>
-#ifdef GLAMOR_HAS_GBM
+#ifdef HAVE_GBM
 #define GLAMOR_FOR_XORG 1
 #include "glamor.h"
 #include <gbm.h>
@@ -156,7 +156,7 @@ typedef struct _modesettingRec {
         void (*UpdatePacked)(ScreenPtr, shadowBufPtr);
     } shadow;
 
-#ifdef GLAMOR_HAS_GBM
+#ifdef HAVE_GBM
     /* glamor API */
     struct {
         Bool (*back_pixmap_from_fd)(PixmapPtr, int, CARD16, CARD16, CARD16,
@@ -229,7 +229,7 @@ void ms_vblank_close_screen(ScreenPtr screen);
 
 Bool ms_present_screen_init(ScreenPtr screen);
 
-#ifdef GLAMOR_HAS_GBM
+#ifdef HAVE_GBM
 
 typedef void (*ms_pageflip_handler_proc)(modesettingPtr ms,
                                          uint64_t frame,
