@@ -91,6 +91,7 @@ conf_data.set('HAVE_LIBBSD', libbsd_dep.found() ? '1' : false)
 conf_data.set('HAVE_SYSTEMD_DAEMON', build_systemd ? '1' : false)
 conf_data.set('HAVE_XSHMFENCE', xshmfence_dep.found() ? '1' : false)
 conf_data.set('WITH_LIBDRM', libdrm_required ? '1' : false)
+conf_data.set('HAVE_LIBXCVT', libxcvt_dep.found() ? '1' : false)
 conf_data.set('HAVE_GBM', gbm_dep.found() ? '1' : false)
 conf_data.set('HAVE_EPOXY', epoxy_dep.found() ? '1' : false)
 conf_data.set('HAVE_EGL_QUERY_DMABUF',
