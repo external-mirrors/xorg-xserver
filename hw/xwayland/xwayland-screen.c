@@ -328,6 +328,10 @@ xwl_cursor_warped_to(DeviceIntPtr device,
     if (!xwl_seat)
         xwl_seat = xwl_screen_get_default_seat(xwl_screen);
 
+    /* Without an xwl_seat, no need to do anything on the Wayland side */
+    if (!xwl_seat)
+        return;
+
     if (!window)
         window = XYToWindow(sprite, x, y);
 
