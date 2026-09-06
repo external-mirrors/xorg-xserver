@@ -17,7 +17,7 @@ add_project_arguments('-Wvla', language: 'c')
 
 add_project_link_arguments('-fvisibility=hidden', language : 'c')
 
-if cc.get_id() == 'gcc' or cc.get_id() == 'clang'
+if cc.get_id() in ['gcc', 'clang']
     test_wflags = [
         '-Wall',
         '-Wpointer-arith',
@@ -177,13 +177,13 @@ endif
 glamor_option = get_option('glamor')
 
 hal_option = get_option('hal')
-if ['windows', 'darwin', 'cygwin'].contains(host_machine.system())
+if host_machine.system() in ['windows', 'darwin', 'cygwin']
     hal_option = 'false'
 endif
 
 build_udev = get_option('udev')
 build_udev_kms = get_option('udev_kms')
-if ['windows', 'darwin', 'cygwin', 'freebsd', 'netbsd', 'openbsd', 'sunos'].contains(host_machine.system())
+if host_machine.system() in ['windows', 'darwin', 'cygwin', 'freebsd', 'netbsd', 'openbsd', 'sunos']
     build_udev = false
     build_udev_kms = false
 endif
@@ -202,8 +202,7 @@ endif
 build_xorg = false
 if (host_machine.system() != 'windows')
     if get_option('xorg') == 'auto'
-        build_xorg = (host_machine.system() != 'darwin' and
-                      host_machine.system() != 'windows')
+        build_xorg = host_machine.system() not in ['darwin', 'windows']
     else
         build_xorg = get_option('xorg') == 'true'
     endif
@@ -230,8 +229,7 @@ endif
 
 build_xwin = false
 if get_option('xwin') == 'auto'
-    if (host_machine.system() == 'cygwin' or
-        host_machine.system() == 'windows')
+    if host_machine.system() in ['cygwin', 'windows']
             build_xwin = true
     endif
 else
@@ -492,9 +490,7 @@ build_modesetting = libdrm_dep.found() and dri2proto_dep.found()
 
 build_vgahw = false
 if get_option('vgahw') == 'auto'
-    if (host_machine.system() != 'darwin' and
-        host_machine.system() != 'windows' and
-        host_machine.system() != 'cygwin')
+    if host_machine.system() not in ['darwin', 'windows', 'cygwin']
         build_vgahw = true
     endif
 else
@@ -552,9 +548,7 @@ endif
 build_acpi = false
 if (get_option('linux_acpi') == true and
    host_machine.system() == 'linux')
-    if (host_machine.cpu_family() == 'x86' or
-       host_machine.cpu_family() == 'x86_64' or
-       host_machine.cpu_family() == 'ia64')
+    if host_machine.cpu_family() in ['x86', 'x86_64', 'ia64']
         build_acpi = true
     endif
 endif
@@ -838,8 +832,7 @@ if build_xorg
 
     # On Windows, modules built with the SDK will need to link with server and
     # module implibs to resolve symbols
-    if (host_machine.system() == 'cygwin' or
-        host_machine.system() == 'windows')
+    if host_machine.system() in ['cygwin', 'windows']
         sdkconfig.set('XORG_DRIVER_LIBS', '-lXorg.exe -L\${moduledir} -lshadow -no-undefined')
     endif
 
