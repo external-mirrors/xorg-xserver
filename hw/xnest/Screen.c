@@ -257,7 +257,6 @@ xnestOpenScreen(ScreenPtr pScreen, int argc, char *argv[])
     pScreen->blackPixel = xnestBlackPixel;
     /* GCperDepth */
     /* defaultStipple */
-    pScreen->devPrivate = NULL;
     /* WindowPrivateLen */
     /* WindowPrivateSizes */
     /* totalWindowSize */
