@@ -24,11 +24,7 @@ def test_tab_indent(lines: list[str]) -> list[WhitespaceError]:
     errors = []
     for idx, l in enumerate(lines):
         if re.match("^\t+.*", l):
-            errors.append(
-                WhitespaceError(
-                    "Tab indent", idx, ncolumns=2
-                )
-            )
+            errors.append(WhitespaceError("Tab indent", idx, ncolumns=2))
     return errors
 
 
