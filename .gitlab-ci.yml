@@ -341,11 +341,11 @@ ruff-format:
   script:
     - uvx ruff format --check --diff
 
-ruff-check-pyxtest:
+ruff-check:
   extends: .fdo.ci-fairy
   stage: build-and-test
   script:
-    - uvx ruff check test/pyxtest
+    - uvx ruff check
 
 #
 # Workflow rules needed due to:
