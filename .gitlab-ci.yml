@@ -179,11 +179,11 @@ check-whitespace:
   script:
     - .gitlab-ci/whitespace-check.py $(git ls-files hw/xwayland)
 
-ruff-format-pyxtest:
+ruff-format:
   extends: .fdo.ci-fairy
   stage: build-and-test
   script:
-    - uvx ruff format --check --diff test/pyxtest
+    - uvx ruff format --check --diff
 
 ruff-check-pyxtest:
   extends: .fdo.ci-fairy
