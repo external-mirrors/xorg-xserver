@@ -362,11 +362,9 @@ output_get_rr_modes(struct xwl_output *xwl_output,
     *count = 0;
 
     /* Add actual output mode */
-    rr_modes[0] = xwayland_cvt(width, height, xwl_output->refresh / 1000.0, 0, 0);
-    if (!rr_modes[0])
-        goto bail;
-
-    *count = 1;
+    rr_modes[*count] = xwayland_cvt(width, height, xwl_output->refresh / 1000.0, 0, 0);
+    if (rr_modes[*count])
+        (*count)++;
 
     if (!xwl_screen_has_resolution_change_emulation(xwl_screen) && !xwl_screen->force_xrandr_emulation)
         return rr_modes;
@@ -391,12 +389,6 @@ output_get_rr_modes(struct xwl_output *xwl_output,
     }
 
     return rr_modes;
-bail:
-    for (i = 0; i < *count; i++)
-        RRModeDestroy(rr_modes[i]);
-    *count = 0;
-    free(rr_modes);
-    return NULL;
 }
 
 RRModePtr
