@@ -388,16 +388,26 @@ output_get_rr_modes(struct xwl_output *xwl_output,
         FatalError("Failed to allocate memory for list of RR modes");
 
     *count = 0;
+    *logical_mode = 0;
+
+    /* Every time we add a mode, we assign the current count value to the
+     * logical_mode index, prior to incrementing count, so that if later the
+     * logical CVT fails, the logical_mode index points to the next size up in
+     * the list (i.e. the closest larger mode) as a fallback.
+     *
+     * If CVT fails for the logical mode and every larger mode, *logical_mode
+     * stays 0. The first smaller fake mode added after is stored at index 0,
+     * so *logical_mode then refers to that closest smaller mode.
+     */
 
     if (xwl_screen_has_resolution_change_emulation(xwl_screen) &&
         (width != xwl_output->mode_width || height != xwl_output->mode_height)) {
         /* Add native output mode as preferred */
-        rr_modes[0] = xwayland_cvt(xwl_output->mode_width, xwl_output->mode_height,
-                                   xwl_output->refresh / 1000.0, 0, 0);
-        if (!rr_modes[0])
-            goto bail;
+        rr_modes[*count] = xwayland_cvt(xwl_output->mode_width, xwl_output->mode_height,
+                                        xwl_output->refresh / 1000.0, 0, 0);
 
-        *count = 1;
+        if (rr_modes[*count])
+            *logical_mode = (*count)++;
 
         /* Add fake modes larger than logical mode */
         for (; i < ARRAY_SIZE(xwl_output_fake_modes); i++) {
@@ -414,16 +424,14 @@ output_get_rr_modes(struct xwl_output *xwl_output,
                                             xwl_output_fake_modes[i][1],
                                             xwl_output->refresh / 1000.0, 0, 0);
             if (rr_modes[*count])
-                (*count)++;
+                *logical_mode = (*count)++;
         }
     }
 
     /* Add logical output mode */
     rr_modes[*count] = xwayland_cvt(width, height, xwl_output->refresh / 1000.0, 0, 0);
-    if (!rr_modes[*count])
-        goto bail;
-
-    *logical_mode = (*count)++;
+    if (rr_modes[*count])
+        *logical_mode = (*count)++;
 
     if (!xwl_screen_has_resolution_change_emulation(xwl_screen) && !xwl_screen->force_xrandr_emulation)
         return rr_modes;
@@ -453,12 +461,6 @@ output_get_rr_modes(struct xwl_output *xwl_output,
     }
 
     return rr_modes;
-bail:
-    for (i = 0; i < *count; i++)
-        RRModeDestroy(rr_modes[i]);
-    *count = 0;
-    free(rr_modes);
-    return NULL;
 }
 
 RRModePtr
