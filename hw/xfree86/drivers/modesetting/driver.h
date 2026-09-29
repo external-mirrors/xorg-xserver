@@ -62,6 +62,7 @@ typedef enum {
     OPTION_USE_GAMMA_LUT,
     OPTION_ASYNC_FLIP_SECONDARIES,
     OPTION_TEARFREE,
+    OPTION_CURSOR_SIZE_OPTIM,
 } modesettingOpts;
 
 typedef struct
@@ -129,6 +130,7 @@ typedef struct _modesettingRec {
     DamagePtr damage;
     Bool dirty_enabled;
 
+    Bool allow_cursor_size_optim;
     uint32_t min_cursor_width, min_cursor_height;
     uint32_t max_cursor_width, max_cursor_height;
 

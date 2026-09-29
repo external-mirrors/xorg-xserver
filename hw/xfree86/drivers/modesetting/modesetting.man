@@ -49,6 +49,14 @@ are supported:
 Selects software cursor.  The default is
 .B off.
 .TP
+.BI "Option \*qCursorSizeOptimization\*q \*q" boolean \*q
+Enable or disable size optimization for the hardware cursor, to minimize power
+usage. The default is to enable optimization on display hardware for which it is
+considered safe, and to disable it on all other hardware. This option is for
+hardware testing or working around bugs in the cursor hardware. If you experience
+a broken cursor, try setting this to
+.B off.
+.TP
 .BI "Option \*qkmsdev\*q \*q" string \*q
 The framebuffer device to use. Default: /dev/dri/card0.
 .TP

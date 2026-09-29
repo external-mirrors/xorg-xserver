@@ -1870,7 +1870,8 @@ drmmode_load_cursor_argb_check(xf86CrtcPtr crtc, CARD32 *image)
     ptr = (uint32_t *) (drmmode_crtc->cursor_bo->ptr);
 
     /* FIXME deal with rotation */
-    if (crtc->rotation == RR_Rotate_0) {
+    /* Only enabled for some kms drivers, as some display hw is known broken with this */
+    if (crtc->rotation == RR_Rotate_0 && ms->allow_cursor_size_optim) {
         for (width = ms->min_cursor_width; width < cursor->bits->width; )
             width *= 2;
         for (height = ms->min_cursor_height; height < cursor->bits->height; )
