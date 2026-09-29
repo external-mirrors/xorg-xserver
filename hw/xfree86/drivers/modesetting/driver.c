@@ -144,6 +144,7 @@ static SymTabRec Chipsets[] = {
 
 static const OptionInfoRec Options[] = {
     {OPTION_SW_CURSOR, "SWcursor", OPTV_BOOLEAN, {0}, FALSE},
+    {OPTION_CURSOR_SIZE_OPTIM, "CursorSizeOptimization", OPTV_BOOLEAN, {0}, FALSE},
     {OPTION_DEVICE_PATH, "kmsdev", OPTV_STRING, {0}, FALSE},
     {OPTION_SHADOW_FB, "ShadowFB", OPTV_BOOLEAN, {0}, FALSE},
     {OPTION_ACCEL_METHOD, "AccelMethod", OPTV_STRING, {0}, FALSE},
@@ -1279,6 +1280,8 @@ PreInit(ScrnInfoPtr pScrn, int flags)
     int ret;
     int bppflags, connector_count;
     int defaultdepth, defaultbpp;
+    drmVersionPtr version;
+    MessageType from;
 
     if (pScrn->numEntities != 1)
         return FALSE;
@@ -1365,6 +1368,29 @@ PreInit(ScrnInfoPtr pScrn, int flags)
         ms->drmmode.sw_cursor = TRUE;
     }
 
+    /*
+     * Try to detect if kms driver and cursor hw safely support dynamic hw cursor
+     * size optimizations. Assume it is not safe to use on failed detection.
+     * The optimizations are known to trigger hardware or kms driver issues on at
+     * least some AMD hw and likely NVidia hw, therefore we are conservative here.
+     */
+    ms->allow_cursor_size_optim = FALSE;
+    if ((version = drmGetVersion(ms->drmmode.fd))) {
+        /* Intel hw should work, as current code was written and tested by Intel. */
+        if (!strncmp("i915", version->name, version->name_len) ||
+            !strncmp("xe", version->name, version->name_len)) {
+            ms->allow_cursor_size_optim = TRUE;
+        }
+
+        drmFreeVersion(version);
+    }
+
+    /* Allow override of auto-detected cursor optimizations enable. */
+    from = xf86GetOptValBool(ms->drmmode.Options, OPTION_CURSOR_SIZE_OPTIM,
+                             &ms->allow_cursor_size_optim) ? X_CONFIG : X_DEFAULT;
+    xf86DrvMsg(pScrn->scrnIndex, from, "Cursor size optimization: %sabled\n",
+               ms->allow_cursor_size_optim ? "en" : "dis");
+
     ms->max_cursor_width = 64;
     ms->max_cursor_height = 64;
     ret = drmGetCap(ms->fd, DRM_CAP_CURSOR_WIDTH, &value);
@@ -1404,8 +1430,8 @@ PreInit(ScrnInfoPtr pScrn, int flags)
         ms->drmmode.shadow_enable2 = msShouldDoubleShadow(pScrn, ms);
     } else {
         if (!pScrn->is_gpu) {
-            MessageType from = xf86GetOptValBool(ms->drmmode.Options, OPTION_VARIABLE_REFRESH,
-                                                 &ms->vrr_support) ? X_CONFIG : X_DEFAULT;
+            from = xf86GetOptValBool(ms->drmmode.Options, OPTION_VARIABLE_REFRESH,
+                                     &ms->vrr_support) ? X_CONFIG : X_DEFAULT;
             xf86DrvMsg(pScrn->scrnIndex, from, "VariableRefresh: %sabled\n",
                        ms->vrr_support ? "en" : "dis");
 
